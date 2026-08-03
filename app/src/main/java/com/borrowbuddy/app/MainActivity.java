@@ -5,16 +5,15 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+import com.borrowbuddy.app.activities.MyListingsActivity;
 
+public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Open Add Item Screen
-        Intent intent = new Intent(MainActivity.this, AddItemActivity.class);
+        Intent intent = new Intent(MainActivity.this, MyListingsActivity.class);
         startActivity(intent);
-
         finish();
     }
 }

@@ -1,4 +1,4 @@
-package com.borrowbuddy.app;
+package com.borrowbuddy.app.activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -8,7 +8,6 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
-import android.widget.TextView;
 import android.app.DatePickerDialog;
 import java.util.Calendar;
 
@@ -34,6 +33,8 @@ import android.provider.MediaStore;
 import android.net.Uri;
 import android.graphics.Bitmap;
 
+import com.borrowbuddy.app.R;
+
 public class AddItemActivity extends AppCompatActivity {
 
     EditText etItemName, etDescription, etRentalPrice,
@@ -46,7 +47,7 @@ public class AddItemActivity extends AppCompatActivity {
 
     Button btnUploadImage, btnListItem, btnCurrentLocation;
 
-    TextView tvLocation;
+    EditText etPickupLocation;;
 
     LocationManager locationManager;
 
@@ -66,13 +67,23 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
+        com.google.android.material.appbar.MaterialToolbar toolbar =
+                findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Submit Item Request");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
         // Initialize Views
         etItemName = findViewById(R.id.etItemName);
         etDescription = findViewById(R.id.etDescription);
         etRentalPrice = findViewById(R.id.etRentalPrice);
         etSecurityDeposit = findViewById(R.id.etSecurityDeposit);
         btnCurrentLocation = findViewById(R.id.btnCurrentLocation);
-        tvLocation = findViewById(R.id.tvLocation);
+        etPickupLocation = findViewById(R.id.etPickupLocation);
         etAvailability = findViewById(R.id.etAvailability);
         etContact = findViewById(R.id.etContact);
 
@@ -245,12 +256,10 @@ public class AddItemActivity extends AppCompatActivity {
         }
 
 
-        if (tvLocation.getText().toString()
-                .equals("Selected Address: Not Selected")) {
+        if (etPickupLocation.getText().toString().trim().isEmpty()) {
 
-            Toast.makeText(this,
-                    "Please select current location",
-                    Toast.LENGTH_SHORT).show();
+            etPickupLocation.setError("Enter Pickup Location");
+            etPickupLocation.requestFocus();
 
             return;
         }
@@ -286,7 +295,7 @@ public class AddItemActivity extends AppCompatActivity {
         }
 
         Toast.makeText(this,
-                "Item Listed Successfully",
+                "Item request submitted successfully. Waiting for admin approval.",
                 Toast.LENGTH_LONG).show();
 
 
@@ -460,9 +469,7 @@ public class AddItemActivity extends AppCompatActivity {
                                 .getAddressLine(0);
 
 
-                tvLocation.setText(
-                        "Selected Address: " + address
-                );
+                etPickupLocation.setText(address);
 
 
                 Toast.makeText(
@@ -527,5 +534,11 @@ public class AddItemActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

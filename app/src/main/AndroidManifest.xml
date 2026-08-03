@@ -22,15 +22,45 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BorrowBuddy">
-        <activity android:name=".AddItemActivity" />
+
+        <activity android:name=".activities.MyItemRequestsActivity" />
+
+        <activity
+            android:name=".activities.HelpSupportActivity"/>
+
+        <activity
+            android:name=".activities.OwnerDashboardActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity>
+
+        <activity
+            android:name=".activities.EarningsActivity"/>
+
+
+        <activity android:name=".activities.BorrowerRatingActivity"/>
+
+        <activity
+            android:name=".activities.RentalHistoryActivity" />
+
+
+        <activity
+            android:name=".activities.RequestStatusActivity" />
+
+
+        <activity android:name=".activities.MyListingsActivity" />
+
+        <activity android:name=".activities.AddItemActivity" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
