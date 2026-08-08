@@ -1,6 +1,7 @@
 package com.borrowbuddy.app.activities;
 
 import android.os.Bundle;
+import android.graphics.Color;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -17,6 +18,10 @@ import java.util.List;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import com.google.android.material.appbar.MaterialToolbar;
 
 public class RentalHistoryActivity extends AppCompatActivity {
 
@@ -36,8 +41,30 @@ public class RentalHistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rental_history);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
+
+
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIconTint(Color.WHITE);
+
+// Make back arrow white
+        Drawable upArrow = toolbar.getNavigationIcon();
+        if (upArrow != null) {
+            upArrow.setTint(Color.WHITE);
+        }
+
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(Color.WHITE);
+        }
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Rental History");

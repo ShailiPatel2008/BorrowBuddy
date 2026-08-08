@@ -35,6 +35,10 @@ import android.graphics.Bitmap;
 
 import com.borrowbuddy.app.R;
 
+import android.graphics.Color;
+import com.google.android.material.appbar.MaterialToolbar;
+
+
 public class AddItemActivity extends AppCompatActivity {
 
     EditText etItemName, etDescription, etRentalPrice,
@@ -67,8 +71,17 @@ public class AddItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_item);
 
-        com.google.android.material.appbar.MaterialToolbar toolbar =
-                findViewById(R.id.toolbar);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(Color.WHITE);
+        }
 
         setSupportActionBar(toolbar);
 
@@ -94,6 +107,8 @@ public class AddItemActivity extends AppCompatActivity {
         btnListItem = findViewById(R.id.btnListItem);
 
         imgItem = findViewById(R.id.imgItem);
+
+
 
         btnCurrentLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,16 +177,12 @@ public class AddItemActivity extends AppCompatActivity {
                         "🖼️ Photos"
                 };
 
-
                 AlertDialog.Builder builder =
                         new AlertDialog.Builder(AddItemActivity.this);
 
-
                 builder.setTitle("Upload Item Image");
 
-
                 builder.setItems(options, (dialog, which) -> {
-
 
                     if (which == 0) {
 
@@ -179,7 +190,6 @@ public class AddItemActivity extends AppCompatActivity {
                                 AddItemActivity.this,
                                 Manifest.permission.CAMERA)
                                 != PackageManager.PERMISSION_GRANTED) {
-
 
                             ActivityCompat.requestPermissions(
                                     AddItemActivity.this,
@@ -197,8 +207,6 @@ public class AddItemActivity extends AppCompatActivity {
 
                     } else {
 
-                        // Open Gallery
-
                         Intent galleryIntent =
                                 new Intent(Intent.ACTION_PICK);
 
@@ -208,14 +216,10 @@ public class AddItemActivity extends AppCompatActivity {
                                 galleryIntent,
                                 IMAGE_PICK_REQUEST
                         );
-
                     }
-
                 });
 
-
                 builder.show();
-
             }
         });
 
