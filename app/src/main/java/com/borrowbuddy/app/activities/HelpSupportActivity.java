@@ -10,6 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.borrowbuddy.app.R;
 
+import android.graphics.Color;
+import com.google.android.material.appbar.MaterialToolbar;
+
 public class HelpSupportActivity extends AppCompatActivity {
 
     Button btnCallAdmin, btnEmailSupport;
@@ -19,7 +22,18 @@ public class HelpSupportActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_help_support);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(Color.WHITE);
+        }
+
         setSupportActionBar(toolbar);
 
         if(getSupportActionBar()!=null){

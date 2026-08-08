@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.borrowbuddy.app.R;
 import com.google.android.material.appbar.MaterialToolbar;
 
+import android.graphics.Color;
+import com.google.android.material.appbar.MaterialToolbar;
+
 public class EarningsActivity extends AppCompatActivity {
 
     @Override
@@ -19,6 +22,17 @@ public class EarningsActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(Color.WHITE);
+        }
+
+
+        setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Earnings");
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -27,5 +41,11 @@ public class EarningsActivity extends AppCompatActivity {
         toolbar.setNavigationOnClickListener(v -> {
             finish();
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

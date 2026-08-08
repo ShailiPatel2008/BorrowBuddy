@@ -14,6 +14,10 @@ import com.google.android.material.appbar.MaterialToolbar;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Color;
+import com.google.android.material.appbar.MaterialToolbar;
+
+
 import android.widget.TextView;
 
 public class MyItemRequestsActivity extends AppCompatActivity {
@@ -29,6 +33,18 @@ public class MyItemRequestsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_item_requests);
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(Color.WHITE);
+        }
 
         toolbar = findViewById(R.id.toolbar);
         recyclerRequests = findViewById(R.id.recyclerRequests);
@@ -76,5 +92,11 @@ public class MyItemRequestsActivity extends AppCompatActivity {
 
         adapter = new RequestAdapter(requestList);
         recyclerRequests.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

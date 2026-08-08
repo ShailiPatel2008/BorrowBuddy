@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false"/>
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -22,46 +21,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BorrowBuddy">
-
-        <activity android:name=".activities.MyItemRequestsActivity" />
-
         <activity
-            android:name=".activities.HelpSupportActivity"/>
-
+            android:name=".activities.TermsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:exported="false" />
+        <activity android:name=".activities.OwnerProfileActivity" />
+        <activity android:name=".activities.EditOwnerProfileActivity" />
+        <activity android:name=".activities.ChangePasswordActivity" />
+        <activity android:name=".activities.MyItemRequestsActivity" />
+        <activity android:name=".activities.HelpSupportActivity" />
         <activity
             android:name=".activities.OwnerDashboardActivity"
             android:exported="true">
-
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-        <activity
-            android:name=".activities.EarningsActivity"/>
-
-
-        <activity android:name=".activities.BorrowerRatingActivity"/>
-
-        <activity
-            android:name=".activities.RentalHistoryActivity" />
-
-
-        <activity
-            android:name=".activities.RequestStatusActivity" />
-
-
+        <activity android:name=".activities.EarningsActivity" />
+        <activity android:name=".activities.BorrowerRatingActivity" />
+        <activity android:name=".activities.RentalHistoryActivity" />
+        <activity android:name=".activities.RequestStatusActivity" />
         <activity android:name=".activities.MyListingsActivity" />
-
         <activity android:name=".activities.AddItemActivity" />
-
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

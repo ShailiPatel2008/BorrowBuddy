@@ -16,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Color;
+import com.google.android.material.appbar.MaterialToolbar;
 
 public class MyListingsActivity extends AppCompatActivity {
 
@@ -30,6 +32,18 @@ public class MyListingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_listings);
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        if (toolbar.getNavigationIcon() != null) {
+            toolbar.getNavigationIcon().setTint(Color.WHITE);
+        }
 
         // Initialize Views
         toolbar = findViewById(R.id.toolbar);

@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        app:backgroundTint="?attr/colorPrimary"
+        android:background="#6C4AB6"
         android:title="My Listings"
         android:titleTextColor="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
