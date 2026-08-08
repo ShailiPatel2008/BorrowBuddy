@@ -1,6 +1,5 @@
 package com.borrowbuddy.app;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -14,17 +13,24 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    private CardView cardProfile, cardPassword,
-            cardAbout, cardContact, cardLogout;
+    private CardView cardProfile;
+    private CardView cardPassword;
+    private CardView cardAbout;
+    private CardView cardContact;
+    private CardView cardLogout;
 
-    private SwitchMaterial switchDark, switchNotification;
+    private SwitchMaterial switchDark;
+    private SwitchMaterial switchNotification;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_settings);
 
+        // =========================
         // Initialize Views
+        // =========================
 
         cardProfile = findViewById(R.id.cardProfile);
         cardPassword = findViewById(R.id.cardPassword);
@@ -35,81 +41,90 @@ public class SettingsActivity extends AppCompatActivity {
         switchDark = findViewById(R.id.switchDark);
         switchNotification = findViewById(R.id.switchNotification);
 
-        // =============================
+
+        // =========================
         // My Profile
-        // =============================
+        // =========================
 
         cardProfile.setOnClickListener(v -> {
 
             Intent intent = new Intent(
                     SettingsActivity.this,
-                    MyProfileActivity.class);
+                    MyProfileActivity.class
+            );
 
             startActivity(intent);
-
         });
 
-        // =============================
+
+        // =========================
         // Change Password
-        // =============================
+        // =========================
 
         cardPassword.setOnClickListener(v -> {
 
             Intent intent = new Intent(
                     SettingsActivity.this,
-                    CreateNewPasswordActivity.class);
+                    CreateNewPasswordActivity.class
+            );
 
             startActivity(intent);
-
         });
 
-        // =============================
+
+        // =========================
         // Dark Mode
-        // =============================
+        // =========================
 
-        switchDark.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        switchDark.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> {
 
-            if (isChecked) {
+                    if (isChecked) {
 
-                AppCompatDelegate.setDefaultNightMode(
-                        AppCompatDelegate.MODE_NIGHT_YES);
+                        AppCompatDelegate.setDefaultNightMode(
+                                AppCompatDelegate.MODE_NIGHT_YES
+                        );
 
-            } else {
+                    } else {
 
-                AppCompatDelegate.setDefaultNightMode(
-                        AppCompatDelegate.MODE_NIGHT_NO);
+                        AppCompatDelegate.setDefaultNightMode(
+                                AppCompatDelegate.MODE_NIGHT_NO
+                        );
+                    }
+                }
+        );
 
-            }
 
-        });
-
-        // =============================
+        // =========================
         // Notifications
-        // =============================
+        // =========================
 
-        switchNotification.setOnCheckedChangeListener((buttonView, isChecked) -> {
+        switchNotification.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> {
 
-            if (isChecked) {
+                    if (isChecked) {
 
-                Toast.makeText(
-                        this,
-                        "Notifications Enabled",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                                SettingsActivity.this,
+                                "Notifications Enabled",
+                                Toast.LENGTH_SHORT
+                        ).show();
 
-            } else {
+                    } else {
 
-                Toast.makeText(
-                        this,
-                        "Notifications Disabled",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.makeText(
+                                SettingsActivity.this,
+                                "Notifications Disabled",
+                                Toast.LENGTH_SHORT
+                        ).show();
+                    }
+                }
+        );
 
-            }
 
-        });
-
-        // =============================
+        // =========================
         // About App
-        // =============================
+        // =========================
 
         cardAbout.setOnClickListener(v -> {
 
@@ -118,16 +133,18 @@ public class SettingsActivity extends AppCompatActivity {
                     .setMessage(
                             "BorrowBuddy\n\n" +
                                     "Version : 1.0\n\n" +
+                                    "Borrow. Share. Connect.\n\n" +
                                     "Developed By\n" +
-                                    "Fency Patel")
+                                    "Fency Patel"
+                    )
                     .setPositiveButton("OK", null)
                     .show();
-
         });
 
-        // =============================
+
+        // =========================
         // Contact Us
-        // =============================
+        // =========================
 
         cardContact.setOnClickListener(v -> {
 
@@ -135,267 +152,48 @@ public class SettingsActivity extends AppCompatActivity {
                     .setTitle("Contact Us")
                     .setMessage(
                             "Email : borrowbuddy@gmail.com\n\n" +
-                                    "Phone : +91 9537492163" +
-                                    "" +
-                                    "2" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "" +
-                                    "\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")
+                                    "Phone : +91 95374921632"
+                    )
                     .setPositiveButton("OK", null)
                     .show();
-
         });
 
-        // =============================
+
+        // =========================
         // Logout
-        // =============================
+        // =========================
 
         cardLogout.setOnClickListener(v -> {
 
             new AlertDialog.Builder(SettingsActivity.this)
                     .setTitle("Logout")
-                    .setMessage("Are you sure you want to Logout?")
-                    .setPositiveButton("Logout",
+                    .setMessage(
+                            "Are you sure you want to Logout?"
+                    )
+                    .setPositiveButton(
+                            "Logout",
                             (dialog, which) -> {
 
                                 Intent intent = new Intent(
                                         SettingsActivity.this,
-                                        LoginActivity.class);
+                                        LoginActivity.class
+                                );
 
                                 intent.setFlags(
                                         Intent.FLAG_ACTIVITY_NEW_TASK |
-                                                Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                                Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                );
 
                                 startActivity(intent);
+
                                 finish();
-
-                            })
-                    .setNegativeButton("Cancel", null)
+                            }
+                    )
+                    .setNegativeButton(
+                            "Cancel",
+                            null
+                    )
                     .show();
-
         });
-
     }
 }
