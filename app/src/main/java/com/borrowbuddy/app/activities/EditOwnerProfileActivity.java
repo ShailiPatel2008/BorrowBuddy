@@ -46,7 +46,7 @@ public class EditOwnerProfileActivity extends AppCompatActivity {
         // Temporary sample data
         etName.setText("Shaili Patel");
         etEmail.setText("owner@gmail.com");
-        etPhone.setText("9876543210");
+        etPhone.setText("9898733203");
         etLocation.setText("Surat, Gujarat");
 
         // Change Photo

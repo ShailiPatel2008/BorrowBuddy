@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F7F5FA">
+
+    <!-- Toolbar -->
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#6C4AB6"
+        android:title="My Reviews"
+        android:titleTextColor="@android:color/white"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@android:color/white" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Overall Rating Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="5dp"
+                app:cardBackgroundColor="#EEE8F5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center"
+                    android:padding="24dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4.7"
+                        android:textSize="40sp"
+                        android:textStyle="bold"
+                        android:textColor="#3F3748" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBarOverall"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:rating="4.7"
+                        android:stepSize="0.1"
+                        android:isIndicator="true" />
+
+                    <TextView
+                        android:id="@+id/tvTotalReviews"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="Based on 12 reviews"
+                        android:textSize="15sp"
+                        android:textColor="#77717F" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!-- Rating Summary -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="5dp"
+                app:cardBackgroundColor="#EEE8F5">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rating Summary"
+                        android:textSize="20sp"
+                        android:textStyle="bold"
+                        android:textColor="#3F3748"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="5 ⭐     8 reviews"
+                        android:textSize="15sp"
+                        android:textColor="#55505C"
+                        android:padding="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4 ⭐     3 reviews"
+                        android:textSize="15sp"
+                        android:textColor="#55505C"
+                        android:padding="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3 ⭐     1 review"
+                        android:textSize="15sp"
+                        android:textColor="#55505C"
+                        android:padding="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2 ⭐     0 reviews"
+                        android:textSize="15sp"
+                        android:textColor="#55505C"
+                        android:padding="4dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1 ⭐     0 reviews"
+                        android:textSize="15sp"
+                        android:textColor="#55505C"
+                        android:padding="4dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!-- Reviews Heading -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Customer Reviews"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#3F3748"
+                android:layout_marginBottom="12dp" />
+
+
+            <!-- Review 1 -->
+            <include
+                layout="@layout/item_review"
+                android:id="@+id/review1" />
+
+            <!-- Review 2 -->
+            <include
+                layout="@layout/item_review"
+                android:id="@+id/review2" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

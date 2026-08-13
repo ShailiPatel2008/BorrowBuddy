@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="14dp"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="4dp"
+    app:cardBackgroundColor="#EEE8F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="18dp">
+
+        <!-- Borrower Name -->
+        <TextView
+            android:id="@+id/tvReviewerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rahul"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#3F3748" />
+
+        <!-- Rating -->
+        <TextView
+            android:id="@+id/tvReviewRating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="⭐⭐⭐⭐⭐"
+            android:textSize="18sp" />
+
+        <!-- Review -->
+        <TextView
+            android:id="@+id/tvReviewText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="The owner was very helpful and the item was in good condition."
+            android:textSize="15sp"
+            android:textColor="#55505C"
+            android:lineSpacingExtra="3dp" />
+
+        <!-- Item -->
+        <TextView
+            android:id="@+id/tvItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Item: Electric Drill"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#6C4AB6" />
+
+        <!-- Date -->
+        <TextView
+            android:id="@+id/tvReviewDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Rental: 10 Aug 2026"
+            android:textSize="13sp"
+            android:textColor="#77717F" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
