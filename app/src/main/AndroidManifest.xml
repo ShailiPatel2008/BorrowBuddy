@@ -10,8 +10,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BorrowBuddy">
+
         <activity
-            android:name=".SplashActivity"
+            android:name=".activities.TermsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SettingsActivity"
+            android:exported="false" />
+        <activity android:name=".activities.OwnerProfileActivity" />
+        <activity android:name=".activities.EditOwnerProfileActivity" />
+        <activity android:name=".activities.ChangePasswordActivity" />
+        <activity android:name=".activities.MyItemRequestsActivity" />
+        <activity android:name=".activities.HelpSupportActivity" />
+        <activity
+            android:name=".activities.RatingsReviewsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.OwnerDashboardActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

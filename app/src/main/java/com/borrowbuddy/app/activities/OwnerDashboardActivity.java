@@ -26,7 +26,9 @@ public class OwnerDashboardActivity extends AppCompatActivity {
 
     private MaterialCardView cardMyItemRequests;
 
-     private MaterialCardView cardProfile;
+    private MaterialCardView cardProfile;
+
+    private MaterialCardView myReviewsCard;
 
 
     @Override
@@ -59,6 +61,7 @@ public class OwnerDashboardActivity extends AppCompatActivity {
         cardReviews = findViewById(R.id.cardReviews);
         cardMyItemRequests = findViewById(R.id.cardMyItemRequests);
         cardProfile = findViewById(R.id.cardProfile);
+        myReviewsCard = findViewById(R.id.myReviewsCard);
 
         View dashboardContainer = findViewById(R.id.dashboardContainer);
 
@@ -130,6 +133,15 @@ public class OwnerDashboardActivity extends AppCompatActivity {
 
             startActivity(intent);
 
+        });
+
+        myReviewsCard.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                    OwnerDashboardActivity.this,
+                    RatingsReviewsActivity.class
+            );
+
+            startActivity(intent);
         });
     }
 }
