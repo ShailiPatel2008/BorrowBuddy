@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="BorrowBuddy"
-            android:textColor="#3F51B5"
+            android:textColor="@color/primary_color"
             android:textSize="28sp"
             android:textStyle="bold" />
 
@@ -61,7 +61,6 @@
             android:id="@+id/loginCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             app:cardCornerRadius="16dp"
             app:cardElevation="8dp"
             app:cardBackgroundColor="@color/surface_color">
@@ -119,7 +118,7 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="10dp"
                     android:text="Forgot Password?"
-                    android:textColor="#3F51B5"
+                    android:textColor="@color/primary_color"
                     android:textStyle="bold" />
 
                 <!-- Login Button -->
@@ -129,9 +128,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="#3F51B5"
+                    android:backgroundTint="@color/primary_color"
                     android:text="USER LOGIN"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     app:cornerRadius="15dp" />
 
@@ -155,7 +154,7 @@
                     android:layout_marginTop="20dp"
                     android:backgroundTint="#4CAF50"
                     android:text="Create New Account"
-                    android:textColor="#FFFFFF" />
+                    android:textColor="@color/white" />
 
                 <!-- Back -->
 
@@ -166,7 +165,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:text="← Back"
-                    android:textColor="#3F51B5"
+                    android:textColor="@color/primary_color"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:clickable="true"

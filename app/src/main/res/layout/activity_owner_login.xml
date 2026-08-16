@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F8FF">
+    android:background="@color/background_color">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,6 +13,8 @@
         android:gravity="center"
         android:padding="24dp">
 
+        <!-- Logo -->
+
         <ImageView
             android:id="@+id/imgOwnerLogo"
             android:layout_width="100dp"
@@ -20,44 +22,55 @@
             android:layout_marginTop="40dp"
             android:src="@mipmap/ic_launcher" />
 
+        <!-- App Name -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="BorrowBuddy"
-            android:textColor="#3F51B5"
+            android:textColor="@color/primary_color"
             android:textSize="30sp"
             android:textStyle="bold" />
+
+        <!-- Title -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="35dp"
             android:text="Owner Login"
-            android:textColor="#000000"
+            android:textColor="@color/text_primary"
             android:textSize="26sp"
             android:textStyle="bold" />
+
+        <!-- Subtitle -->
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
             android:text="Login to manage your items"
-            android:textColor="#777777"
+            android:textColor="@color/text_secondary"
             android:textSize="15sp" />
+
+        <!-- Owner Login Card -->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/ownerCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="18dp"
-            app:cardElevation="8dp">
+            app:cardElevation="8dp"
+            app:cardBackgroundColor="@color/surface_color">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:padding="20dp">
+
+                <!-- Owner Email -->
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/ownerEmailLayout"
@@ -74,6 +87,8 @@
                         android:singleLine="true" />
 
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <!-- Password -->
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/ownerPasswordLayout"
@@ -93,6 +108,8 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <!-- Forgot Password -->
+
                 <TextView
                     android:id="@+id/txtOwnerForgot"
                     android:layout_width="wrap_content"
@@ -100,27 +117,34 @@
                     android:layout_gravity="end"
                     android:layout_marginTop="10dp"
                     android:text="Forgot Password?"
-                    android:textColor="#3F51B5"
+                    android:textColor="@color/primary_color"
                     android:textStyle="bold" />
+
+                <!-- Login Button -->
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnOwnerLogin"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="25dp"
-                    android:backgroundTint="#3F51B5"
+                    android:backgroundTint="@color/primary_color"
                     android:text="OWNER LOGIN"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/white"
                     android:textStyle="bold"
                     app:cornerRadius="15dp" />
+
+                <!-- OR -->
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:text="──────── OR ────────"
-                    android:textColor="#999999"
+                    android:textColor="@color/text_secondary"
                     android:textSize="16sp" />
+
+                <!-- Create Account -->
 
                 <Button
                     android:id="@+id/btnOwnerCreate"
@@ -129,8 +153,10 @@
                     android:layout_marginTop="20dp"
                     android:backgroundTint="#4CAF50"
                     android:text="Create New Account"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/white"
                     android:textStyle="bold" />
+
+                <!-- Back -->
 
                 <TextView
                     android:id="@+id/txtOwnerBack"
@@ -139,7 +165,7 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
                     android:text="← Back"
-                    android:textColor="#3F51B5"
+                    android:textColor="@color/primary_color"
                     android:textSize="16sp"
                     android:textStyle="bold" />
 
