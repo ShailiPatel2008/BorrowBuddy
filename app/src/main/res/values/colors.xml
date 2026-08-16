@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="background_color">#F5F7FA</color>
+    <color name="surface_color">#FFFFFF</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="card_stroke">#E0E0E0</color>
+    <color name="primary_color">#6C4AB6</color>
+
+    <!-- Reviews screen -->
+    <color name="reviews_background">#F5F7FA</color>
+    <color name="reviews_card">#FFFFFF</color>
+    <color name="reviews_text">#212121</color>
+
 </resources>

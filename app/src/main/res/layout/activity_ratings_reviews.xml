@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#F7F5FA">
+    android:background="@color/reviews_background">
 
     <!-- Toolbar -->
 
@@ -17,7 +17,7 @@
         android:title="My Reviews"
         android:titleTextColor="@android:color/white"
         app:navigationIcon="@drawable/ic_arrow_back"
-        app:navigationIconTint="@android:color/white" />
+        app:navigationIconTint="@android:color/white"/>
 
 
     <ScrollView
@@ -38,7 +38,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="5dp"
-                app:cardBackgroundColor="#EEE8F5">
+                app:cardBackgroundColor="@color/reviews_card">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                         android:text="4.7"
                         android:textSize="40sp"
                         android:textStyle="bold"
-                        android:textColor="#3F3748" />
+                        android:textColor="@color/reviews_text" />
 
                     <RatingBar
                         android:id="@+id/ratingBarOverall"
@@ -72,7 +72,7 @@
                         android:layout_marginTop="8dp"
                         android:text="Based on 12 reviews"
                         android:textSize="15sp"
-                        android:textColor="#77717F" />
+                        android:textColor="@color/reviews_text" />
 
                 </LinearLayout>
 
@@ -86,7 +86,7 @@
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="20dp"
                 app:cardElevation="5dp"
-                app:cardBackgroundColor="#EEE8F5">
+                app:cardBackgroundColor="@color/reviews_card">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -100,7 +100,7 @@
                         android:text="Rating Summary"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        android:textColor="#3F3748"
+                        android:textColor="@color/reviews_text"
                         android:layout_marginBottom="12dp" />
 
                     <TextView
@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:text="5 ⭐     8 reviews"
                         android:textSize="15sp"
-                        android:textColor="#55505C"
+                        android:textColor="@color/reviews_text"
                         android:padding="4dp" />
 
                     <TextView
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:text="4 ⭐     3 reviews"
                         android:textSize="15sp"
-                        android:textColor="#55505C"
+                        android:textColor="@color/reviews_text"
                         android:padding="4dp" />
 
                     <TextView
@@ -124,7 +124,7 @@
                         android:layout_height="wrap_content"
                         android:text="3 ⭐     1 review"
                         android:textSize="15sp"
-                        android:textColor="#55505C"
+                        android:textColor="@color/reviews_text"
                         android:padding="4dp" />
 
                     <TextView
@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:text="2 ⭐     0 reviews"
                         android:textSize="15sp"
-                        android:textColor="#55505C"
+                        android:textColor="@color/reviews_text"
                         android:padding="4dp" />
 
                     <TextView
@@ -140,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:text="1 ⭐     0 reviews"
                         android:textSize="15sp"
-                        android:textColor="#55505C"
+                        android:textColor="@color/reviews_text"
                         android:padding="4dp" />
 
                 </LinearLayout>
@@ -155,7 +155,7 @@
                 android:text="Customer Reviews"
                 android:textSize="22sp"
                 android:textStyle="bold"
-                android:textColor="#3F3748"
+                android:textColor="@color/reviews_text"
                 android:layout_marginBottom="12dp" />
 
 

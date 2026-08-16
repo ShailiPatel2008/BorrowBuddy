@@ -47,7 +47,7 @@ public class HelpSupportActivity extends AppCompatActivity {
         btnCallAdmin.setOnClickListener(v -> {
 
             Intent intent = new Intent(Intent.ACTION_DIAL);
-            intent.setData(Uri.parse("tel:9898733202"));
+            intent.setData(Uri.parse("tel:9898733203"));
             startActivity(intent);
 
         });

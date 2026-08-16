@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.borrowbuddy.app.activities.OwnerDashboardActivity;
+
 public class OTPActivity extends AppCompatActivity {
 
     private EditText etOtp;
@@ -127,7 +129,7 @@ public class OTPActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(
                             OTPActivity.this,
-                            OwnerHomeActivity.class
+                            OwnerDashboardActivity.class
                     );
 
                     startActivity(intent);

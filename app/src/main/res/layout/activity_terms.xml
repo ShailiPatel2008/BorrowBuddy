@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F7FA">
+    android:background="@color/background_color">
 
     <!-- Toolbar -->
 
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="3dp"
-                app:strokeColor="#E0E0E0"
+                app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
 
                 <LinearLayout
@@ -68,7 +68,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Welcome to BorrowBuddy"
-                        android:textColor="#212121"
+                        android:textColor="@color/text_primary"
                         android:textSize="22sp"
                         android:textStyle="bold" />
 
@@ -77,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
                         android:text="These Terms &amp; Conditions explain the rules for using BorrowBuddy and renting or sharing items through the platform."
-                        android:textColor="#666666"
+                        android:textColor="@color/text_secondary"
                         android:textSize="15sp"
                         android:lineSpacingExtra="4dp" />
 
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
                 android:text="1. Using BorrowBuddy"
-                android:textColor="#212121"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -101,7 +101,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Users must provide accurate information while creating and using their account. The account should be used only by the registered user."
-                android:textColor="#666666"
+                android:textColor="@color/text_secondary"
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
@@ -112,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="2. Item Rentals"
-                android:textColor="#212121"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -121,7 +121,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Owners are responsible for providing correct information about their items, including condition, rental price, availability, and required security deposit."
-                android:textColor="#666666"
+                android:textColor="@color/text_secondary"
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="3. Owner Responsibilities"
-                android:textColor="#212121"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -141,7 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Owners should provide items in the condition described in the listing and communicate clearly with customers regarding pickup, return, and rental conditions."
-                android:textColor="#666666"
+                android:textColor="@color/text_secondary"
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
@@ -152,7 +152,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="4. Customer Responsibilities"
-                android:textColor="#212121"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -161,7 +161,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Customers must use rented items responsibly and return them in the agreed condition and within the agreed rental period."
-                android:textColor="#666666"
+                android:textColor="@color/text_secondary"
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
@@ -172,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="5. Payments &amp; Security Deposit"
-                android:textColor="#212121"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -181,7 +181,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Rental charges and security deposits must be handled according to the rental agreement. Any applicable charges should be clearly communicated before confirming a rental."
-                android:textColor="#666666"
+                android:textColor="@color/text_secondary"
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
@@ -192,7 +192,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="6. Cancellation &amp; Returns"
-                android:textColor="#212121"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -201,7 +201,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Rental cancellations and returns should follow the conditions agreed between the owner and customer. Users should communicate any issues as soon as possible."
-                android:textColor="#666666"
+                android:textColor="@color/text_secondary"
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
@@ -212,7 +212,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="7. Privacy"
-                android:textColor="#212121"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -221,7 +221,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="BorrowBuddy should be used responsibly. Users should not misuse, share, or attempt to access another user's account or personal information."
-                android:textColor="#666666"
+                android:textColor="@color/text_secondary"
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
@@ -232,7 +232,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="8. Admin Rights"
-                android:textColor="#212121"
+                android:textColor="@color/text_primary"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -241,7 +241,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="The admin may review item listings, manage users, and take appropriate action when platform rules are violated."
-                android:textColor="#666666"
+                android:textColor="@color/text_secondary"
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
@@ -254,7 +254,7 @@
                 android:layout_marginBottom="24dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="2dp"
-                app:strokeColor="#E0E0E0"
+                app:strokeColor="@color/card_stroke"
                 app:strokeWidth="1dp">
 
                 <TextView
@@ -262,7 +262,7 @@
                     android:layout_height="wrap_content"
                     android:padding="18dp"
                     android:text="By using BorrowBuddy, you agree to follow these Terms &amp; Conditions."
-                    android:textColor="#555555"
+                    android:textColor="@color/text_secondary"
                     android:textSize="15sp"
                     android:textStyle="italic"
                     android:lineSpacingExtra="4dp" />

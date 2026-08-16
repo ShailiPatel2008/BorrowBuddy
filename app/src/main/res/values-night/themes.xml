@@ -3,6 +3,9 @@
 
     <style name="Theme.BorrowBuddy" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your theme here -->
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">#BDBDBD</item>
+        <item name="colorOnSurface">@android:color/white</item>
     </style>
 
 </resources>

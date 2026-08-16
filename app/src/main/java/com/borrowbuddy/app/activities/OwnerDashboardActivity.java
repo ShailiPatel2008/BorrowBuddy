@@ -8,9 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.borrowbuddy.app.R;
 import com.google.android.material.card.MaterialCardView;
 
-import android.content.Intent;
 import android.widget.ImageButton;
-import com.google.android.material.card.MaterialCardView;
+
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -39,7 +38,12 @@ public class OwnerDashboardActivity extends AppCompatActivity {
         ImageButton btnSettings = findViewById(R.id.btnSettings);
 
         btnSettings.setOnClickListener(v -> {
-            
+            Intent intent = new Intent(
+                    OwnerDashboardActivity.this,
+                    SettingsActivity.class
+            );
+
+            startActivity(intent);
         });
 
         ImageButton btnProfile = findViewById(R.id.btnProfile);
