@@ -2,8 +2,6 @@ package com.borrowbuddy.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Patterns;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,7 +12,8 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class AdminLoginActivity extends AppCompatActivity {
 
-    private TextInputEditText etAdminEmail, etAdminPassword;
+    private TextInputEditText etAdminEmail;
+    private TextInputEditText etAdminPassword;
     private MaterialButton btnAdminLogin;
     private TextView txtBack;
 
@@ -23,42 +22,31 @@ public class AdminLoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login);
 
-        // Initialize Views
         etAdminEmail = findViewById(R.id.etAdminEmail);
         etAdminPassword = findViewById(R.id.etAdminPassword);
         btnAdminLogin = findViewById(R.id.btnAdminLogin);
         txtBack = findViewById(R.id.txtBack);
 
-        // Login Button
         btnAdminLogin.setOnClickListener(v -> {
 
             String email = etAdminEmail.getText().toString().trim();
             String password = etAdminPassword.getText().toString().trim();
 
-            // Email Empty
-            if (TextUtils.isEmpty(email)) {
+            if (email.isEmpty()) {
                 etAdminEmail.setError("Enter Admin Email");
                 etAdminEmail.requestFocus();
                 return;
             }
 
-            // Email Format
-            if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                etAdminEmail.setError("Enter Valid Email");
-                etAdminEmail.requestFocus();
-                return;
-            }
-
-            // Password Empty
-            if (TextUtils.isEmpty(password)) {
+            if (password.isEmpty()) {
                 etAdminPassword.setError("Enter Password");
                 etAdminPassword.requestFocus();
                 return;
             }
 
             // Admin Login
-            if (email.equals("admin@gmail.com") &&
-                    password.equals("123456")) {
+            if (email.equals("admin@gmail.com")
+                    && password.equals("123456")) {
 
                 Toast.makeText(
                         AdminLoginActivity.this,
@@ -66,9 +54,10 @@ public class AdminLoginActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT
                 ).show();
 
+                // Directly open Welcome Admin page
                 Intent intent = new Intent(
                         AdminLoginActivity.this,
-                        AdminDashboardActivity.class
+                        AdminHomeActivity.class
                 );
 
                 startActivity(intent);
@@ -78,16 +67,13 @@ public class AdminLoginActivity extends AppCompatActivity {
 
                 Toast.makeText(
                         AdminLoginActivity.this,
-                        "Invalid Admin Credentials",
+                        "Invalid Admin Email or Password",
                         Toast.LENGTH_SHORT
                 ).show();
-
             }
-
         });
 
-        // Back
+        // Back to Choose Role
         txtBack.setOnClickListener(v -> finish());
-
     }
 }

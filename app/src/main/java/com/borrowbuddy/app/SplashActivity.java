@@ -17,22 +17,29 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_splash);
 
-        // Initialize Logo
         imgLogo = findViewById(R.id.imgLogo);
 
-        // Load Animation
-        Animation logoAnim = AnimationUtils.loadAnimation(this, R.anim.logo_zoom);
+        Animation logoAnim =
+                AnimationUtils.loadAnimation(
+                        this,
+                        R.anim.logo_zoom
+                );
 
-        // Start Animation
         imgLogo.startAnimation(logoAnim);
 
-        // Open Login Screen after 3 seconds
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
-            Intent intent = new Intent(SplashActivity.this, ChooseRoleActivity.class);
+
+            Intent intent = new Intent(
+                    SplashActivity.this,
+                    ChooseRoleActivity.class
+            );
+
             startActivity(intent);
             finish();
+
         }, 3000);
     }
 }

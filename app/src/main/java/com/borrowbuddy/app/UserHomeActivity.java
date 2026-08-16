@@ -37,7 +37,6 @@ public class UserHomeActivity extends AppCompatActivity {
                         R.anim.card_slide_up
                 );
 
-        // Start Animations
         imgLogo.startAnimation(logoAnim);
         homeCard.startAnimation(cardAnim);
     }
