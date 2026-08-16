@@ -13,8 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private static final int SPLASH_TIME = 2500;
-
     private ImageView imgLogo;
     private TextView txtAppName;
     private TextView txtTagline;
@@ -29,23 +27,22 @@ public class SplashActivity extends AppCompatActivity {
         txtAppName = findViewById(R.id.txtAppName);
         txtTagline = findViewById(R.id.txtTagline);
 
-        // Logo animation
-        Animation logoAnim = AnimationUtils.loadAnimation(
-                this,
-                R.anim.logo_zoom
-        );
+        Animation logoAnimation =
+                AnimationUtils.loadAnimation(
+                        this,
+                        R.anim.logo_zoom
+                );
 
-        // Text animation
-        Animation textAnim = AnimationUtils.loadAnimation(
-                this,
-                R.anim.fade_in
-        );
+        Animation textAnimation =
+                AnimationUtils.loadAnimation(
+                        this,
+                        R.anim.fade_in
+                );
 
-        imgLogo.startAnimation(logoAnim);
-        txtAppName.startAnimation(textAnim);
-        txtTagline.startAnimation(textAnim);
+        imgLogo.startAnimation(logoAnimation);
+        txtAppName.startAnimation(textAnimation);
+        txtTagline.startAnimation(textAnimation);
 
-        // Open Choose Role
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
 
             Intent intent = new Intent(
@@ -56,6 +53,6 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
 
-        }, SPLASH_TIME);
+        }, 2500);
     }
 }

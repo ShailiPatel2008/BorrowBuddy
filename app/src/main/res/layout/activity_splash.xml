@@ -11,8 +11,8 @@
 
     <ImageView
         android:id="@+id/imgLogo"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@mipmap/ic_launcher"
         android:contentDescription="BorrowBuddy Logo" />
 
@@ -20,19 +20,21 @@
         android:id="@+id/txtAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="22dp"
         android:text="BorrowBuddy"
         android:textColor="#FFFFFF"
-        android:textSize="34sp"
-        android:textStyle="bold" />
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:gravity="center" />
 
     <TextView
         android:id="@+id/txtTagline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:text="Borrow • Rent • Share"
         android:textColor="#E1BEE7"
-        android:textSize="17sp" />
+        android:textSize="18sp"
+        android:gravity="center" />
 
 </LinearLayout>

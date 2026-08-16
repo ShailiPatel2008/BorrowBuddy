@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
@@ -15,12 +16,14 @@
         <activity
             android:name=".SplashActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
 
         <!-- ================= CHOOSE ROLE ================= -->
 
@@ -29,90 +32,100 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
-        <!-- ================= USER LOGIN ================= -->
+
+        <!-- ================= USER ================= -->
 
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".UserHomeActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="false" />
 
-        <!-- ================= OWNER LOGIN ================= -->
+
+        <!-- ================= OWNER ================= -->
 
         <activity
             android:name=".OwnerLoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".OwnerHomeActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="false" />
 
-        <!-- ================= ADMIN LOGIN ================= -->
+
+        <!-- ================= ADMIN ================= -->
 
         <activity
             android:name=".AdminLoginActivity"
             android:exported="false" />
+
         <activity
             android:name=".AdminHomeActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="false" />
 
-        <!-- ================= COMMON AUTHENTICATION ================= -->
+
+        <!-- ================= AUTHENTICATION ================= -->
 
         <activity
             android:name=".RegisterActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="false" />
+
         <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false" />
+
         <activity
             android:name=".CreateNewPasswordActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="false" />
+
         <activity
             android:name=".OTPActivity"
             android:exported="false" />
+
 
         <!-- ================= PROFILE ================= -->
 
         <activity
             android:name=".MyProfileActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:exported="false" />
 
-        <!-- ================= FRIEND'S OWNER MODULE ================= -->
+
+        <!-- ================= OWNER MODULE ================= -->
 
         <activity
             android:name=".activities.TermsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.OwnerProfileActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.EditOwnerProfileActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.ChangePasswordActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.MyItemRequestsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.HelpSupportActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.RatingsReviewsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.OwnerDashboardActivity"
             android:exported="false" />
-        <activity
-            android:name=".fade_in"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

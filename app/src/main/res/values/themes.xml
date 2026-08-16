@@ -5,9 +5,12 @@
         name="Base.Theme.BorrowBuddy"
         parent="Theme.Material3.DayNight.NoActionBar">
 
-        <item name="android:windowActionModeOverlay">true</item>
+        <!-- Android 12+ Single Splash -->
+        <!-- Android 12+ Single Splash -->
+        <item name="android:windowSplashScreenBackground">#4A148C</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
 
-        <!-- Dark Purple background -->
+        <!-- App background -->
         <item name="android:windowBackground">#4A148C</item>
 
     </style>
