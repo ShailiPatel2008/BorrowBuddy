@@ -8,7 +8,7 @@
     android:layout_marginBottom="14dp"
     app:cardCornerRadius="18dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="#EEE8F5">
+    app:cardBackgroundColor="@color/reviews_card">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             android:text="Rahul"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#3F3748" />
+            android:textColor="@color/reviews_text" />
 
         <!-- Rating -->
         <TextView
@@ -43,7 +43,7 @@
             android:layout_marginTop="10dp"
             android:text="The owner was very helpful and the item was in good condition."
             android:textSize="15sp"
-            android:textColor="#55505C"
+            android:textColor="@color/reviews_text"
             android:lineSpacingExtra="3dp" />
 
         <!-- Item -->
@@ -65,7 +65,7 @@
             android:layout_marginTop="4dp"
             android:text="Rental: 10 Aug 2026"
             android:textSize="13sp"
-            android:textColor="#77717F" />
+            android:textColor="@color/reviews_text" />
 
     </LinearLayout>
 

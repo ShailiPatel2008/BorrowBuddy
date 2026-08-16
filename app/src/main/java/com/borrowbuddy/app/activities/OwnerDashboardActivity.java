@@ -8,9 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.borrowbuddy.app.R;
 import com.google.android.material.card.MaterialCardView;
 
-import android.content.Intent;
 import android.widget.ImageButton;
-import com.google.android.material.card.MaterialCardView;
+
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;

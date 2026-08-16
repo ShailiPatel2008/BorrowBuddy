@@ -393,23 +393,27 @@ public class AddItemActivity extends AppCompatActivity {
 
     private void getCurrentLocation() {
 
-        Toast.makeText(this,
+        Toast.makeText(
+                this,
                 "Getting Location...",
-                Toast.LENGTH_SHORT).show();
-
+                Toast.LENGTH_SHORT
+        ).show();
 
         locationManager =
                 (LocationManager) getSystemService(LOCATION_SERVICE);
 
-
+        // Check location permission
         if (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+                Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
-
 
         locationManager.requestLocationUpdates(
                 LocationManager.NETWORK_PROVIDER,
@@ -420,25 +424,18 @@ public class AddItemActivity extends AppCompatActivity {
                     @Override
                     public void onLocationChanged(Location location) {
 
-
-                        double latitude =
-                                location.getLatitude();
-
-                        double longitude =
-                                location.getLongitude();
-
+                        double latitude = location.getLatitude();
+                        double longitude = location.getLongitude();
 
                         convertLocationToAddress(
                                 latitude,
                                 longitude
                         );
 
-
                         locationManager.removeUpdates(this);
-
                     }
-                });
-
+                }
+        );
     }
 
 
