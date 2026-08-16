@@ -7,12 +7,17 @@ import android.os.Looper;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
+    private static final int SPLASH_TIME = 2500;
+
     private ImageView imgLogo;
+    private TextView txtAppName;
+    private TextView txtTagline;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,15 +26,26 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         imgLogo = findViewById(R.id.imgLogo);
+        txtAppName = findViewById(R.id.txtAppName);
+        txtTagline = findViewById(R.id.txtTagline);
 
-        Animation logoAnim =
-                AnimationUtils.loadAnimation(
-                        this,
-                        R.anim.logo_zoom
-                );
+        // Logo animation
+        Animation logoAnim = AnimationUtils.loadAnimation(
+                this,
+                R.anim.logo_zoom
+        );
+
+        // Text animation
+        Animation textAnim = AnimationUtils.loadAnimation(
+                this,
+                R.anim.fade_in
+        );
 
         imgLogo.startAnimation(logoAnim);
+        txtAppName.startAnimation(textAnim);
+        txtTagline.startAnimation(textAnim);
 
+        // Open Choose Role
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
 
             Intent intent = new Intent(
@@ -40,6 +56,6 @@ public class SplashActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
 
-        }, 3000);
+        }, SPLASH_TIME);
     }
 }
