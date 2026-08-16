@@ -23,10 +23,17 @@ public class OTPActivity extends AppCompatActivity {
     private ImageView imgLogo;
     private CardView otpCard;
 
+    // Role
+    private String role;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_otp);
+
+        // Get role from Login page
+        role = getIntent().getStringExtra("role");
 
         // Initialize Views
         etOtp = findViewById(R.id.etOtp);
@@ -37,31 +44,73 @@ public class OTPActivity extends AppCompatActivity {
         otpCard = findViewById(R.id.otpCard);
 
         // Logo Animation
-        Animation logoAnim = AnimationUtils.loadAnimation(this, R.anim.logo_zoom);
+        Animation logoAnim =
+                AnimationUtils.loadAnimation(
+                        this,
+                        R.anim.logo_zoom
+                );
+
         imgLogo.startAnimation(logoAnim);
 
         // Card Animation
-        Animation cardAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        Animation cardAnim =
+                AnimationUtils.loadAnimation(
+                        this,
+                        R.anim.card_slide_up
+                );
+
         otpCard.startAnimation(cardAnim);
 
-        // Back to Login
+        // Back To Login
         txtBackLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(OTPActivity.this, LoginActivity.class);
-            startActivity(intent);
+
+            if ("owner".equals(role)) {
+
+                Intent intent = new Intent(
+                        OTPActivity.this,
+                        OwnerLoginActivity.class
+                );
+
+                startActivity(intent);
+
+            } else if ("admin".equals(role)) {
+
+                Intent intent = new Intent(
+                        OTPActivity.this,
+                        AdminLoginActivity.class
+                );
+
+                startActivity(intent);
+
+            } else {
+
+                Intent intent = new Intent(
+                        OTPActivity.this,
+                        LoginActivity.class
+                );
+
+                startActivity(intent);
+            }
+
             finish();
         });
 
         // Verify OTP
         btnVerify.setOnClickListener(v -> {
 
-            String otp = etOtp.getText().toString().trim();
+            String otp =
+                    etOtp.getText().toString().trim();
 
+            // Empty OTP
             if (TextUtils.isEmpty(otp)) {
+
                 etOtp.setError("Enter OTP");
                 etOtp.requestFocus();
+
                 return;
             }
 
+            // Correct OTP
             if (otp.equals("1234")) {
 
                 Toast.makeText(
@@ -70,38 +119,56 @@ public class OTPActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT
                 ).show();
 
-                String role = getIntent().getStringExtra("role");
-
-                Intent intent;
+                // =========================
+                // OWNER
+                // =========================
 
                 if ("owner".equals(role)) {
 
-                    intent = new Intent(
+                    Intent intent = new Intent(
                             OTPActivity.this,
                             OwnerHomeActivity.class
                     );
 
-                } else if ("admin".equals(role)) {
+                    startActivity(intent);
+                    finish();
 
-                    intent = new Intent(
+                }
+
+                // =========================
+                // ADMIN
+                // =========================
+
+                else if ("admin".equals(role)) {
+
+                    Intent intent = new Intent(
                             OTPActivity.this,
-                            AdminDashboardActivity.class
+                            AdminHomeActivity.class
                     );
 
-                } else {
+                    startActivity(intent);
+                    finish();
 
-                    intent = new Intent(
+                }
+
+                // =========================
+                // USER
+                // =========================
+
+                else {
+
+                    Intent intent = new Intent(
                             OTPActivity.this,
                             UserHomeActivity.class
                     );
 
+                    startActivity(intent);
+                    finish();
                 }
-
-                startActivity(intent);
-                finish();
 
             } else {
 
+                // Wrong OTP
                 etOtp.setError("Invalid OTP");
                 etOtp.requestFocus();
 
@@ -111,7 +178,6 @@ public class OTPActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT
                 ).show();
             }
-
         });
     }
 }

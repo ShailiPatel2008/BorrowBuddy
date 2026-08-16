@@ -20,6 +20,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView txtForgot;
     private ImageView imgLogo;
     private CardView loginCard;
+    private TextView txtBackLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         btnCreate = findViewById(R.id.btnCreate);
 
         txtForgot = findViewById(R.id.txtForgot);
+        txtBackLogin = findViewById(R.id.txtBackLogin);
 
         // Animation
         Animation logoAnim = AnimationUtils.loadAnimation(this, R.anim.logo_zoom);
@@ -100,7 +102,10 @@ public class LoginActivity extends AppCompatActivity {
 
             startActivity(intent);
 
-        });
 
+        });
+        txtBackLogin.setOnClickListener(v -> {
+            finish();
+        });
     }
 }

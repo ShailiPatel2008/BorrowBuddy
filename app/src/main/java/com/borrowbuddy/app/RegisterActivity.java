@@ -20,14 +20,25 @@ public class RegisterActivity extends AppCompatActivity {
     private ImageView imgLogo;
     private CardView registerCard;
 
-    private TextInputEditText etName, etEmail, etPassword, etConfirmPassword;
+    private TextInputEditText etName;
+    private TextInputEditText etEmail;
+    private TextInputEditText etPassword;
+    private TextInputEditText etConfirmPassword;
+
     private MaterialButton btnRegister;
     private TextView txtLogin;
+
+    // Role
+    private String role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_register);
+
+        // Get role
+        role = getIntent().getStringExtra("role");
 
         // Logo & Card
         imgLogo = findViewById(R.id.imgLogo);
@@ -39,70 +50,183 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
 
-        // Button & Login Text
+        // Buttons
         btnRegister = findViewById(R.id.btnRegister);
         txtLogin = findViewById(R.id.txtLogin);
 
         // Logo Animation
-        Animation logoAnim = AnimationUtils.loadAnimation(this, R.anim.logo_zoom);
+        Animation logoAnim =
+                AnimationUtils.loadAnimation(
+                        this,
+                        R.anim.logo_zoom
+                );
+
         imgLogo.startAnimation(logoAnim);
 
         // Card Animation
-        Animation cardAnim = AnimationUtils.loadAnimation(this, R.anim.slide_up);
+        Animation cardAnim =
+                AnimationUtils.loadAnimation(
+                        this,
+                        R.anim.slide_up
+                );
+
         registerCard.startAnimation(cardAnim);
 
-        // Register Button
+        // =========================
+        // REGISTER
+        // =========================
+
         btnRegister.setOnClickListener(v -> {
 
-            Animation clickAnim = AnimationUtils.loadAnimation(this, R.anim.button_scale);
+            Animation clickAnim =
+                    AnimationUtils.loadAnimation(
+                            this,
+                            R.anim.button_scale
+                    );
+
             btnRegister.startAnimation(clickAnim);
 
-            String name = etName.getText().toString().trim();
-            String email = etEmail.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
-            String confirmPassword = etConfirmPassword.getText().toString().trim();
+            String name =
+                    etName.getText().toString().trim();
 
+            String email =
+                    etEmail.getText().toString().trim();
+
+            String password =
+                    etPassword.getText().toString().trim();
+
+            String confirmPassword =
+                    etConfirmPassword.getText().toString().trim();
+
+
+            // Name
             if (TextUtils.isEmpty(name)) {
+
                 etName.setError("Enter Full Name");
                 etName.requestFocus();
+
                 return;
             }
 
+
+            // Email
             if (TextUtils.isEmpty(email)) {
+
                 etEmail.setError("Enter Email");
                 etEmail.requestFocus();
+
                 return;
             }
 
+
+            // Password
             if (TextUtils.isEmpty(password)) {
+
                 etPassword.setError("Enter Password");
                 etPassword.requestFocus();
+
                 return;
             }
 
+
+            // Confirm Password
             if (TextUtils.isEmpty(confirmPassword)) {
-                etConfirmPassword.setError("Confirm Password");
+
+                etConfirmPassword.setError(
+                        "Confirm Password"
+                );
+
                 etConfirmPassword.requestFocus();
+
                 return;
             }
 
+
+            // Password Match
             if (!password.equals(confirmPassword)) {
-                Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+
+                Toast.makeText(
+                        RegisterActivity.this,
+                        "Passwords do not match",
+                        Toast.LENGTH_SHORT
+                ).show();
+
                 return;
             }
 
-            Toast.makeText(this, "Registration Successful", Toast.LENGTH_SHORT).show();
 
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+            Toast.makeText(
+                    RegisterActivity.this,
+                    "Registration Successful",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+
+            // =========================
+            // GO TO CORRECT LOGIN
+            // =========================
+
+            openCorrectLogin();
         });
 
-        // Already have an account? Login
+
+        // =========================
+        // ALREADY HAVE ACCOUNT
+        // =========================
+
         txtLogin.setOnClickListener(v -> {
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-            startActivity(intent);
-            finish();
+
+            openCorrectLogin();
         });
+    }
+
+
+    // =========================
+    // CORRECT LOGIN PAGE
+    // =========================
+
+    private void openCorrectLogin() {
+
+        Intent intent;
+
+
+        // OWNER
+        if ("owner".equals(role)) {
+
+            intent = new Intent(
+                    RegisterActivity.this,
+                    OwnerLoginActivity.class
+            );
+
+            intent.putExtra("role", "owner");
+
+        }
+
+        // ADMIN
+        else if ("admin".equals(role)) {
+
+            intent = new Intent(
+                    RegisterActivity.this,
+                    AdminLoginActivity.class
+            );
+
+            intent.putExtra("role", "admin");
+
+        }
+
+        // USER
+        else {
+
+            intent = new Intent(
+                    RegisterActivity.this,
+                    LoginActivity.class
+            );
+
+            intent.putExtra("role", "user");
+        }
+
+
+        startActivity(intent);
+        finish();
     }
 }

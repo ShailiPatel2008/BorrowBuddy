@@ -38,12 +38,6 @@ public class AdminHomeActivity extends AppCompatActivity {
         // Settings Button
         btnSettings.setOnClickListener(v -> {
 
-            Intent intent = new Intent(
-                    AdminHomeActivity.this,
-                    SettingsActivity.class);
-
-            startActivity(intent);
-
         });
 
     }

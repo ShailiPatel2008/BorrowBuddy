@@ -13,13 +13,17 @@ public class ChooseRoleActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_choose_role);
 
         cardUser = findViewById(R.id.cardUser);
         cardOwner = findViewById(R.id.cardOwner);
         cardAdmin = findViewById(R.id.cardAdmin);
 
+        // =========================
         // USER
+        // =========================
+
         cardUser.setOnClickListener(v -> {
 
             Intent intent = new Intent(
@@ -28,24 +32,32 @@ public class ChooseRoleActivity extends AppCompatActivity {
             );
 
             intent.putExtra("role", "user");
-            startActivity(intent);
 
+            startActivity(intent);
         });
 
+
+        // =========================
         // OWNER
+        // =========================
+
         cardOwner.setOnClickListener(v -> {
 
             Intent intent = new Intent(
                     ChooseRoleActivity.this,
-                    LoginActivity.class
+                    OwnerLoginActivity.class
             );
 
             intent.putExtra("role", "owner");
-            startActivity(intent);
 
+            startActivity(intent);
         });
 
+
+        // =========================
         // ADMIN
+        // =========================
+
         cardAdmin.setOnClickListener(v -> {
 
             Intent intent = new Intent(
@@ -53,8 +65,9 @@ public class ChooseRoleActivity extends AppCompatActivity {
                     AdminLoginActivity.class
             );
 
-            startActivity(intent);
+            intent.putExtra("role", "admin");
 
+            startActivity(intent);
         });
     }
 }

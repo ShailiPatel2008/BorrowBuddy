@@ -37,11 +37,7 @@ public class OwnerDashboardActivity extends AppCompatActivity {
         ImageButton btnSettings = findViewById(R.id.btnSettings);
 
         btnSettings.setOnClickListener(v -> {
-            Intent intent = new Intent(
-                    OwnerDashboardActivity.this,
-                    SettingsActivity.class
-            );
-            startActivity(intent);
+            
         });
 
         ImageButton btnProfile = findViewById(R.id.btnProfile);
