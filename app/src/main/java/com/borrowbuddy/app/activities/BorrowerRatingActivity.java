@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.borrowbuddy.app.R;
 
+import com.google.android.material.appbar.MaterialToolbar;
 
 public class BorrowerRatingActivity extends AppCompatActivity {
 
@@ -24,6 +25,16 @@ public class BorrowerRatingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_borrower_rating);
+
+        MaterialToolbar toolbar = findViewById(R.id.toolbar);
+
+        toolbar.setTitle("Borrower Rating");
+
+        toolbar.setTitleTextColor(
+                getResources().getColor(android.R.color.white)
+        );
+
+        toolbar.setNavigationOnClickListener(v -> finish());
 
 
         ratingBarBorrower =
