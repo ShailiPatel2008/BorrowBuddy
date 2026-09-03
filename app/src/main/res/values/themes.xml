@@ -5,13 +5,12 @@
         name="Base.Theme.BorrowBuddy"
         parent="Theme.Material3.DayNight.NoActionBar">
 
-        <!-- Android 12+ Single Splash -->
-        <!-- Android 12+ Single Splash -->
+        <!-- Android 12+ Splash Screen -->
         <item name="android:windowSplashScreenBackground">#4A148C</item>
         <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
 
         <!-- App background -->
-        <item name="android:windowBackground">#4A148C</item>
+        <item name="android:windowBackground">?android:colorBackground</item>
 
     </style>
 

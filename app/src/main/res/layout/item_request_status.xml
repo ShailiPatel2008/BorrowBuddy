@@ -1,126 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<androidx.cardview.widget.CardView
+<com.google.android.material.card.MaterialCardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    card_view:cardCornerRadius="12dp"
-    card_view:cardElevation="5dp">
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
 
+    app:cardBackgroundColor="@color/surface_color"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="3dp"
+    app:strokeColor="@color/card_stroke"
+    app:strokeWidth="1dp">
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="14dp">
 
-
-        <!-- Item Image -->
-
-        <ImageView
-            android:id="@+id/imgRequestItem"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:src="@android:drawable/ic_menu_gallery"
-            android:layout_gravity="center_horizontal"/>
-
-
-        <!-- Item Name -->
-
-        <TextView
-            android:id="@+id/txtRequestItemName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="DSLR Camera"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:paddingTop="8dp"/>
-
-
-        <!-- Customer Name -->
-
-        <TextView
-            android:id="@+id/txtCustomerName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Requested by: Shaili Patel"
-            android:textSize="15sp"/>
-
-
-        <!-- Mobile -->
-
-        <TextView
-            android:id="@+id/txtCustomerMobile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Mobile: 9876543210"
-            android:textSize="15sp"/>
-
-
-        <!-- Rental Period -->
-
-        <TextView
-            android:id="@+id/txtRentalPeriod"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Rental Period: 05 Aug - 10 Aug"
-            android:textSize="15sp"/>
-
-
-        <!-- Rent -->
-
-        <TextView
-            android:id="@+id/txtRequestRent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Rent: ₹500/day"
-            android:textSize="15sp"/>
-
-
-        <!-- Status -->
-
-        <TextView
-            android:id="@+id/txtRequestStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pending"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            android:padding="6dp"/>
-
-
-        <!-- Buttons -->
-
+        <!-- Top Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <!-- Item Image -->
+            <ImageView
+                android:id="@+id/imgRequestItem"
+                android:layout_width="78dp"
+                android:layout_height="78dp"
+                android:background="@color/background_color"
+                android:contentDescription="Item image"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_gallery" />
 
-            <Button
-                android:id="@+id/btnAccept"
-                android:layout_width="wrap_content"
+            <!-- Item + Customer -->
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="Accept"/>
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
 
+                <TextView
+                    android:id="@+id/tvItemName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="DSLR Camera"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btnReject"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Reject"
-                android:layout_marginStart="20dp"/>
+                <TextView
+                    android:id="@+id/tvCustomerName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Customer: Rahul"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="14sp" />
 
+                <!-- Status -->
+                <TextView
+                    android:id="@+id/tvStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:background="@color/background_color"
+                    android:paddingStart="10dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="10dp"
+                    android:paddingBottom="4dp"
+                    android:text="Pending"
+                    android:textColor="@color/primary_color"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="14dp"
+            android:background="@color/card_stroke" />
+
+        <!-- Request Information -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <!-- Rental Period -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rental Period"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvDates"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="3 days"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- Quantity -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Quantity"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="2"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- View Details Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnViewDetails"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="14dp"
+            android:text="View Request Details"
+            android:textAllCaps="false"
+            android:textSize="14sp"
+            app:cornerRadius="12dp" />
 
     </LinearLayout>
 
-
-</androidx.cardview.widget.CardView>
+</com.google.android.material.card.MaterialCardView>

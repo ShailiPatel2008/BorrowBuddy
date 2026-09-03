@@ -1,145 +1,258 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <com.google.android.material.card.MaterialCardView
-    android:id="@+id/cardListing"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
+    android:id="@+id/cardListing"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
+    android:layout_marginTop="8dp"
+    android:layout_marginBottom="8dp"
 
-    app:cardCornerRadius="20dp"
-    app:cardElevation="8dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="3dp"
     app:cardBackgroundColor="?attr/colorSurface"
-    app:strokeColor="?attr/colorOutline"
-    app:strokeWidth="1dp">
+    app:strokeWidth="1dp"
+    app:strokeColor="#E0E0E0">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="12dp">
+        android:orientation="vertical">
 
-        <!-- Item Image -->
-        <ImageView
-            android:id="@+id/imgItem"
+        <!-- ================= IMAGE SECTION ================= -->
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="180dp"
-            android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_gallery" />
+            android:layout_height="230dp">
 
-        <!-- Item Name -->
-        <TextView
-            android:id="@+id/txtItemName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Drill Machine"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#000000"/>
+            <!-- Multiple Product Images -->
 
-        <!-- Category -->
-        <TextView
-            android:id="@+id/txtCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="Category: Tools"
-            android:textSize="16sp"
-            android:textColor="#000000"/>
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/viewPagerImages"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
-        <!-- Description -->
-        <TextView
-            android:id="@+id/txtDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:maxLines="3"
-            android:ellipsize="end"
-            android:text="Heavy duty electric drill for home and construction work."
-            android:textSize="15sp"
-            android:textColor="#000000"/>
+            <!-- Image Dots -->
 
-        <!-- Price -->
-        <TextView
-            android:id="@+id/txtPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="₹150 / Day"
-            android:textStyle="bold"
-            android:textSize="16sp"
-            android:textColor="#000000"/>
+            <LinearLayout
+                android:id="@+id/dotsContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:gravity="center" />
 
-        <!-- Security Deposit -->
-        <TextView
-            android:id="@+id/txtSecurityDeposit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Security Deposit: ₹0"
-            android:textColor="#000000"/>
+            <!-- Status Badge -->
 
-        <!-- Location -->
-        <TextView
-            android:id="@+id/txtLocation"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="📍 Adajan, Surat"
-            android:textSize="15sp"
-            android:textColor="#000000"/>
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_margin="12dp"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:text="Available"
+                android:textColor="@android:color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:background="@drawable/status_available" />
 
-        <!-- Mobile Number -->
-        <TextView
-            android:id="@+id/txtMobile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="📞 9876543210"
-            android:textSize="15sp"
-            android:textColor="#000000"/>
+        </FrameLayout>
 
-        <!-- Status -->
-        <TextView
-            android:id="@+id/txtStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:padding="6dp"
-            android:text="Available"
-            android:textColor="@android:color/white"
-            android:background="@drawable/status_available"/>
 
-        <!-- Buttons -->
+        <!-- ================= PRODUCT INFORMATION ================= -->
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="3">
+            android:orientation="vertical"
+            android:padding="14dp">
 
-            <Button
-                android:id="@+id/btnEdit"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Edit"/>
+            <!-- Item Name -->
 
-            <Button
-                android:id="@+id/btnDelete"
-                android:layout_width="0dp"
+            <TextView
+                android:id="@+id/txtItemName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Delete"/>
+                android:text="Drill Machine"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:maxLines="2"
+                android:ellipsize="end" />
 
-            <Button
-                android:id="@+id/btnChangeStatus"
-                android:layout_width="0dp"
+
+            <!-- Category -->
+
+            <TextView
+                android:id="@+id/txtCategory"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Status"/>
+                android:layout_marginTop="3dp"
+                android:text="Tools"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="13sp" />
+
+
+            <!-- Rating style -->
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="★ 4.5"
+                    android:textColor="#F5A623"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Owner Listing"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="13sp" />
+
+            </LinearLayout>
+
+
+            <!-- Price -->
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:text="₹150 / day"
+                android:textColor="?attr/colorOnSurface"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+
+            <!-- Quantity -->
+
+            <TextView
+                android:id="@+id/txtQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="3 available"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+
+            <!-- Security Deposit -->
+
+            <TextView
+                android:id="@+id/txtSecurityDeposit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="Security deposit: ₹500"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+
+            <!-- Location -->
+
+            <TextView
+                android:id="@+id/txtLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="📍 Adajan, Surat"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+
+            <!-- Mobile -->
+
+            <TextView
+                android:id="@+id/txtMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="📞 9876543210"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+
+            <!-- Description -->
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:text="Heavy duty electric drill for home and construction work."
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                android:maxLines="2"
+                android:ellipsize="end" />
+
+
+            <!-- ================= BUTTONS ================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:weightSum="3">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnEdit"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="4dp"
+                    android:text="Edit"
+                    android:textAllCaps="false"
+                    android:textSize="13sp"
+                    app:cornerRadius="10dp" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDelete"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginEnd="4dp"
+                    android:text="Delete"
+                    android:textAllCaps="false"
+                    android:textSize="13sp"
+                    app:cornerRadius="10dp"
+                    app:backgroundTint="#E53935" />
+
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChangeStatus"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="4dp"
+                    android:text="Status"
+                    android:textAllCaps="false"
+                    android:textSize="13sp"
+                    app:cornerRadius="10dp" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

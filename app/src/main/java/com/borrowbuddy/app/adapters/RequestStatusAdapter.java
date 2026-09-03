@@ -1,183 +1,214 @@
 package com.borrowbuddy.app.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.borrowbuddy.app.R;
+import com.borrowbuddy.app.activities.RequestDetailsActivity;
 import com.borrowbuddy.app.models.RequestModel;
 
 import java.util.List;
+import java.util.ArrayList;
 
-
-public class RequestStatusAdapter extends RecyclerView.Adapter<RequestStatusAdapter.ViewHolder> {
-
+public class RequestStatusAdapter
+        extends RecyclerView.Adapter<RequestStatusAdapter.ViewHolder> {
 
     private Context context;
     private List<RequestModel> requestList;
 
-
-    public RequestStatusAdapter(Context context, List<RequestModel> requestList) {
+    public RequestStatusAdapter(
+            Context context,
+            List<RequestModel> requestList) {
 
         this.context = context;
         this.requestList = requestList;
-
     }
-
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+    public ViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent,
+            int viewType) {
 
         View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_request_status, parent, false);
-
+                .inflate(
+                        R.layout.item_request_status,
+                        parent,
+                        false
+                );
 
         return new ViewHolder(view);
-
     }
 
-
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-
+    public void onBindViewHolder(
+            @NonNull ViewHolder holder,
+            int position) {
 
         RequestModel request = requestList.get(position);
 
-
-        holder.txtItemName.setText(request.getItemName());
-
-        holder.txtCustomerName.setText(
-                "Requested by: " + request.getCustomerName()
+        // Item name
+        holder.tvItemName.setText(
+                request.getItemName()
         );
 
-
-        holder.txtCustomerMobile.setText(
-                "Mobile: " + request.getCustomerMobile()
+        // Customer name
+        holder.tvCustomerName.setText(
+                request.getCustomerName()
         );
 
-
-        holder.txtRentalPeriod.setText(
+        // Rental period
+        holder.tvDates.setText(
                 "Rental Period: " + request.getRentalPeriod()
         );
 
-
-        holder.txtRent.setText(
-                "Rent: ₹" + request.getRent() + "/day"
+        // Quantity
+        holder.tvQuantity.setText(
+                "Quantity: " + request.getQuantity()
         );
 
-
-        holder.txtStatus.setText(
-                "Status: " + request.getStatus()
+        // Status
+        holder.tvStatus.setText(
+                request.getStatus()
         );
 
-
-        // Temporary image
-        holder.imgItem.setImageResource(
+        // Temporary item image
+        holder.imgRequestItem.setImageResource(
                 android.R.drawable.ic_menu_gallery
         );
 
+        // View Details
+        holder.btnViewDetails.setOnClickListener(v -> {
 
-        holder.btnAccept.setOnClickListener(v -> {
-
-
-            holder.txtStatus.setText("Status: Approved");
-
-
-            Toast.makeText(
+            Intent intent = new Intent(
                     context,
-                    "Request Accepted",
-                    Toast.LENGTH_SHORT
-            ).show();
+                    RequestDetailsActivity.class
+            );
+
+            intent.putExtra(
+                    "itemName",
+                    request.getItemName()
+            );
+
+            intent.putExtra(
+                    "customerName",
+                    request.getCustomerName()
+            );
+
+            intent.putExtra(
+                    "customerMobile",
+                    request.getCustomerMobile()
+            );
+
+            intent.putExtra(
+                    "rentalPeriod",
+                    request.getRentalPeriod()
+            );
+
+            intent.putExtra(
+                    "rent",
+                    request.getRent()
+            );
+
+            intent.putExtra(
+                    "quantity",
+                    request.getQuantity()
+            );
+
+            intent.putExtra(
+                    "status",
+                    request.getStatus()
+            );
+
+            intent.putExtra(
+                    "itemStatus",
+                    request.getItemStatus()
+            );
+
+            ArrayList<String> imageUrls =
+                    new ArrayList<>();
+
+            if (request.getImageUrls() != null) {
+
+                imageUrls.addAll(
+                        request.getImageUrls()
+                );
+            }
+
+            intent.putStringArrayListExtra(
+                    "imageUrls",
+                    imageUrls
+            );
 
 
+            context.startActivity(intent);
         });
-
-
-
-        holder.btnReject.setOnClickListener(v -> {
-
-
-            holder.txtStatus.setText("Status: Rejected");
-
-
-            Toast.makeText(
-                    context,
-                    "Request Rejected",
-                    Toast.LENGTH_SHORT
-            ).show();
-
-
-        });
-
-
     }
-
 
     @Override
     public int getItemCount() {
-
         return requestList.size();
-
     }
 
+    public static class ViewHolder
+            extends RecyclerView.ViewHolder {
 
+        ImageView imgRequestItem;
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvItemName;
+        TextView tvCustomerName;
+        TextView tvDates;
+        TextView tvQuantity;
+        TextView tvStatus;
 
-
-        ImageView imgItem;
-
-
-        TextView txtItemName,
-                txtCustomerName,
-                txtCustomerMobile,
-                txtRentalPeriod,
-                txtRent,
-                txtStatus;
-
-
-        Button btnAccept,
-                btnReject;
-
-
+        Button btnViewDetails;
 
         public ViewHolder(@NonNull View itemView) {
-
             super(itemView);
 
+            imgRequestItem =
+                    itemView.findViewById(
+                            R.id.imgRequestItem
+                    );
 
-            imgItem = itemView.findViewById(R.id.imgRequestItem);
+            tvItemName =
+                    itemView.findViewById(
+                            R.id.tvItemName
+                    );
 
+            tvCustomerName =
+                    itemView.findViewById(
+                            R.id.tvCustomerName
+                    );
 
-            txtItemName = itemView.findViewById(R.id.txtRequestItemName);
+            tvDates =
+                    itemView.findViewById(
+                            R.id.tvDates
+                    );
 
-            txtCustomerName = itemView.findViewById(R.id.txtCustomerName);
+            tvQuantity =
+                    itemView.findViewById(
+                            R.id.tvQuantity
+                    );
 
-            txtCustomerMobile = itemView.findViewById(R.id.txtCustomerMobile);
+            tvStatus =
+                    itemView.findViewById(
+                            R.id.tvStatus
+                    );
 
-            txtRentalPeriod = itemView.findViewById(R.id.txtRentalPeriod);
-
-            txtRent = itemView.findViewById(R.id.txtRequestRent);
-
-            txtStatus = itemView.findViewById(R.id.txtRequestStatus);
-
-
-
-            btnAccept = itemView.findViewById(R.id.btnAccept);
-
-            btnReject = itemView.findViewById(R.id.btnReject);
-
-
+            btnViewDetails =
+                    itemView.findViewById(
+                            R.id.btnViewDetails
+                    );
         }
     }
 }

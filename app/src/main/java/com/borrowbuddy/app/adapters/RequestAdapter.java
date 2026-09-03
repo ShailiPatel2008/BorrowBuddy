@@ -37,6 +37,9 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
         holder.txtItemName.setText(request.getItemName());
         holder.txtCategory.setText("Category: " + request.getCategory());
         holder.txtPrice.setText("Price: ₹" + request.getPrice() + "/day");
+        holder.txtQuantity.setText(
+                "Quantity: " + request.getQuantity()
+        );
 
         String status = request.getStatus();
 
@@ -67,7 +70,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtItemName, txtCategory, txtPrice, txtStatus, txtReason;
+        TextView txtItemName, txtCategory, txtPrice, txtQuantity, txtStatus, txtReason;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -75,6 +78,7 @@ public class RequestAdapter extends RecyclerView.Adapter<RequestAdapter.ViewHold
             txtItemName = itemView.findViewById(R.id.txtItemName);
             txtCategory = itemView.findViewById(R.id.txtCategory);
             txtPrice = itemView.findViewById(R.id.txtPrice);
+            txtQuantity = itemView.findViewById(R.id.txtQuantity);
             txtStatus = itemView.findViewById(R.id.txtStatus);
             txtReason = itemView.findViewById(R.id.txtReason);
         }

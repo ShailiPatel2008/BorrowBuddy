@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".activities.AddItemActivity">
 
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:background="#6C4AB6"
+        android:background="@color/primary_color"
         android:title="Add Item"
         android:titleTextColor="@android:color/white"
+        app:navigationIcon="@drawable/ic_arrow_back"
+        app:navigationIconTint="@android:color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:fillViewport="true"
+        android:background="@color/background_color"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,32 +39,97 @@
             android:orientation="vertical"
             android:padding="16dp">
 
+            <!-- ========================= -->
+            <!-- PHOTO SECTION -->
+            <!-- ========================= -->
 
-            <ImageView
-                android:id="@+id/imgItem"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_gravity="center"
-                android:src="@android:drawable/ic_menu_gallery"
-                android:scaleType="centerCrop"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnUploadImage"
+            <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="16dp"
-                android:text="📷 Upload Image"
-                android:textAllCaps="false"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:cornerRadius="16dp"
-                app:iconPadding="8dp"/>
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/surface_color"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="📸  Item Photos"
+                            android:textColor="@color/text_primary"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/txtPhotoCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="0 photos"
+                            android:textColor="@color/primary_color"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Add clear photos from different angles to help borrowers see your item."
+                        android:textColor="@color/text_secondary"
+                        android:textSize="14sp" />
+
+                    <!-- Photo previews -->
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:scrollbars="none">
+
+                        <LinearLayout
+                            android:id="@+id/photoContainer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" />
+
+                    </HorizontalScrollView>
+
+                    <!-- Add photos button -->
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnUploadImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="54dp"
+                        android:layout_marginTop="14dp"
+                        android:text="📷  Add Photos"
+                        android:textAllCaps="false"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="15dp" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
 
             <!-- Item Name -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusTopStart="16dp"
                 app:boxCornerRadiusTopEnd="16dp"
@@ -70,22 +142,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Item Name"
-                    android:inputType="textCapWords"/>
+                    android:inputType="textCapWords" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <!-- Category -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:text="Category"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:hint="Category"
                 app:boxBackgroundMode="outline"
                 app:boxCornerRadiusTopStart="16dp"
@@ -97,8 +172,8 @@
                 <Spinner
                     android:id="@+id/spCategory"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"/>
+                    android:layout_height="52dp"
+                    android:background="@android:color/transparent" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -122,9 +197,10 @@
                     android:gravity="top|start"
                     android:hint="Description"
                     android:inputType="textMultiLine"
-                    android:minLines="5"/>
+                    android:minLines="5" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <!-- Rental Price -->
             <com.google.android.material.textfield.TextInputLayout
@@ -143,9 +219,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Price Per Day"
-                    android:inputType="numberDecimal"/>
+                    android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Quantity -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilQuantity"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:hint="Quantity">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:textSize="16sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <!-- Security Deposit -->
             <com.google.android.material.textfield.TextInputLayout
@@ -164,18 +260,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Security Deposit"
-                    android:inputType="numberDecimal"/>
+                    android:inputType="numberDecimal" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <!-- Pickup Location -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="18dp"
                 android:text="Pickup Location"
-                android:textStyle="bold"
-                android:textSize="16sp"/>
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -192,19 +290,22 @@
                     android:id="@+id/etPickupLocation"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Enter pickup address"
-                    android:minLines="2"
                     android:gravity="top|start"
-                    android:inputType="textMultiLine"/>
+                    android:hint="Enter pickup address"
+                    android:inputType="textMultiLine"
+                    android:minLines="2" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCurrentLocation"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="📍 Use Current Location"/>
+                android:text="📍  Use Current Location"
+                android:textAllCaps="false"
+                app:cornerRadius="14dp" />
+
 
             <!-- Availability -->
             <com.google.android.material.textfield.TextInputLayout
@@ -222,14 +323,15 @@
                     android:id="@+id/etAvailability"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Available From"
-                    android:focusable="false"
                     android:clickable="true"
-                    android:cursorVisible="false"/>
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:hint="Available From" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Contact Number -->
+
+            <!-- Contact -->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -247,17 +349,21 @@
                     android:layout_height="wrap_content"
                     android:hint="Contact Number"
                     android:inputType="phone"
-                    android:maxLength="10"/>
+                    android:maxLength="10" />
 
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <!-- Item Condition -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="6dp">
+                app:cardBackgroundColor="@color/surface_color"
+                app:cardCornerRadius="18dp"
+                app:cardElevation="3dp"
+                app:strokeColor="@color/card_stroke"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -268,9 +374,10 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="📦 Item Condition"
+                        android:text="📦  Item Condition"
+                        android:textColor="@color/text_primary"
                         android:textSize="18sp"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <RadioGroup
                         android:id="@+id/rgCondition"
@@ -282,19 +389,19 @@
                             android:id="@+id/rbNew"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="New"/>
+                            android:text="New" />
 
                         <RadioButton
                             android:id="@+id/rbGood"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Good"/>
+                            android:text="Good" />
 
                         <RadioButton
                             android:id="@+id/rbFair"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Fair"/>
+                            android:text="Fair" />
 
                     </RadioGroup>
 
@@ -302,22 +409,23 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- List Item Button -->
+
+            <!-- Submit -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnListItem"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="58dp"
                 android:layout_marginTop="24dp"
-                android:layout_marginBottom="24dp"
-                android:text="Submit Request"
+                android:layout_marginBottom="28dp"
+                android:text="Submit Item Request"
                 android:textAllCaps="false"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:cornerRadius="16dp"
-                app:iconPadding="8dp"/>
+                app:cornerRadius="17dp" />
 
         </LinearLayout>
 
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

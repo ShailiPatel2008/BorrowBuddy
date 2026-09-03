@@ -13,15 +13,16 @@
         android:id="@+id/toolbarTerms"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        app:backgroundTint="#6C4AB6"
+        android:background="#6C4AB6"
         app:navigationIcon="@drawable/ic_arrow_back"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:gravity="center"
             android:text="Terms &amp; Conditions"
             android:textColor="@android:color/white"

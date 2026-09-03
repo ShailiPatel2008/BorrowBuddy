@@ -1,5 +1,7 @@
 package com.borrowbuddy.app.models;
 
+import java.util.List;
+
 public class RequestModel {
 
     private String itemName;
@@ -8,7 +10,10 @@ public class RequestModel {
     private String rentalPeriod;
     private String rent;
     private String status;
-    private String imageUrl;
+    private String itemStatus;
+    private List<String> imageUrls;
+
+    private int quantity;
 
 
     public RequestModel() {
@@ -21,16 +26,20 @@ public class RequestModel {
                         String customerMobile,
                         String rentalPeriod,
                         String rent,
+                        int quantity,
                         String status,
-                        String imageUrl) {
+                        String itemStatus,
+                        List<String> imageUrls) {
 
         this.itemName = itemName;
         this.customerName = customerName;
         this.customerMobile = customerMobile;
         this.rentalPeriod = rentalPeriod;
         this.rent = rent;
+        this.quantity = quantity;
         this.status = status;
-        this.imageUrl = imageUrl;
+        this.itemStatus = itemStatus;
+        this.imageUrls = imageUrls;
 
     }
 
@@ -89,11 +98,27 @@ public class RequestModel {
     }
 
 
-    public String getImageUrl() {
-        return imageUrl;
+    public List<String> getImageUrls() {
+        return imageUrls;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrls(List<String> imageUrls) {
+        this.imageUrls = imageUrls;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getItemStatus() {
+        return itemStatus;
+    }
+
+    public void setItemStatus(String itemStatus) {
+        this.itemStatus = itemStatus;
     }
 }

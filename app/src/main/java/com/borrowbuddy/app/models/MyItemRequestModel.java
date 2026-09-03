@@ -7,19 +7,23 @@ public class MyItemRequestModel {
     private String price;
     private String status;
     private String reason;
+    private int quantity;
 
     public MyItemRequestModel() {
     }
 
-    public MyItemRequestModel(String itemName,
-                              String category,
-                              String price,
-                              String status,
-                              String reason) {
-
+    public MyItemRequestModel(
+            String itemName,
+            String category,
+            String price,
+            int quantity,
+            String status,
+            String reason
+    ) {
         this.itemName = itemName;
         this.category = category;
         this.price = price;
+        this.quantity = quantity;
         this.status = status;
         this.reason = reason;
     }
@@ -62,5 +66,13 @@ public class MyItemRequestModel {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 }

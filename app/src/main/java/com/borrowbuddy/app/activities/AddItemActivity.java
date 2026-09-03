@@ -1,75 +1,112 @@
 package com.borrowbuddy.app.activities;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RadioGroup;
-import android.widget.Spinner;
-import android.widget.Toast;
-import android.app.DatePickerDialog;
-import java.util.Calendar;
-
-import androidx.appcompat.app.AppCompatActivity;
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.ClipData;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.Gravity;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.borrowbuddy.app.R;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.button.MaterialButton;
+
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-import android.widget.ImageView;
-import android.app.AlertDialog;
-import android.content.Intent;
-import android.provider.MediaStore;
-import android.net.Uri;
-import android.graphics.Bitmap;
+import android.app.Dialog;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
-import com.borrowbuddy.app.R;
-
-import android.graphics.Color;
-import com.google.android.material.appbar.MaterialToolbar;
-
-
+import com.google.android.material.textfield.TextInputEditText;
 public class AddItemActivity extends AppCompatActivity {
 
-    EditText etItemName, etDescription, etRentalPrice,
-            etSecurityDeposit,
-            etAvailability, etContact;
+    // =========================
+    // FORM FIELDS
+    // =========================
+
+    EditText etItemName;
+    EditText etDescription;
+    EditText etRentalPrice;
+    EditText etSecurityDeposit;
+    EditText etPickupLocation;
+    EditText etAvailability;
+    EditText etContact;
 
     Spinner spCategory;
-
     RadioGroup rgCondition;
 
-    Button btnUploadImage, btnListItem, btnCurrentLocation;
+    MaterialButton btnUploadImage;
+    MaterialButton btnListItem;
+    MaterialButton btnCurrentLocation;
 
-    EditText etPickupLocation;;
+    LinearLayout photoContainer;
+    TextView txtPhotoCount;
 
     LocationManager locationManager;
 
+    private TextInputEditText etQuantity;
+
+    // =========================
+    // PERMISSION CONSTANTS
+    // =========================
+
     private static final int LOCATION_PERMISSION_REQUEST = 101;
-
-    ImageView imgItem;
-
-    Uri selectedImageUri = null;
-
     private static final int IMAGE_PICK_REQUEST = 200;
     private static final int CAMERA_REQUEST = 201;
-
     private static final int CAMERA_PERMISSION_REQUEST = 300;
+    private static final int MAX_PHOTOS = 5;
+
+    // =========================
+    // IMAGE LIST
+    // =========================
+
+    /*
+     * No maximum limit.
+     *
+     * Each item can be:
+     * Uri    -> Gallery photo
+     * Bitmap -> Camera photo
+     */
+    private ArrayList<Object> selectedImages = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_add_item);
+
+        // =========================
+        // TOOLBAR
+        // =========================
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
 
@@ -77,25 +114,23 @@ public class AddItemActivity extends AppCompatActivity {
 
         toolbar.setTitleTextColor(Color.WHITE);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Add Item");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         if (toolbar.getNavigationIcon() != null) {
             toolbar.getNavigationIcon().setTint(Color.WHITE);
         }
 
-        setSupportActionBar(toolbar);
+        // =========================
+        // INITIALIZE FORM
+        // =========================
 
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle("Submit Item Request");
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        // Initialize Views
         etItemName = findViewById(R.id.etItemName);
         etDescription = findViewById(R.id.etDescription);
         etRentalPrice = findViewById(R.id.etRentalPrice);
         etSecurityDeposit = findViewById(R.id.etSecurityDeposit);
-        btnCurrentLocation = findViewById(R.id.btnCurrentLocation);
         etPickupLocation = findViewById(R.id.etPickupLocation);
         etAvailability = findViewById(R.id.etAvailability);
         etContact = findViewById(R.id.etContact);
@@ -105,20 +140,23 @@ public class AddItemActivity extends AppCompatActivity {
 
         btnUploadImage = findViewById(R.id.btnUploadImage);
         btnListItem = findViewById(R.id.btnListItem);
+        btnCurrentLocation = findViewById(R.id.btnCurrentLocation);
 
-        imgItem = findViewById(R.id.imgItem);
+        photoContainer = findViewById(R.id.photoContainer);
+        txtPhotoCount = findViewById(R.id.txtPhotoCount);
+        etQuantity = findViewById(R.id.etQuantity);
 
+        // =========================
+        // CURRENT LOCATION
+        // =========================
 
-
-        btnCurrentLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-
-                checkLocationPermission();
-
-            }
+        btnCurrentLocation.setOnClickListener(v -> {
+            checkLocationPermission();
         });
+
+        // =========================
+        // DATE PICKER
+        // =========================
 
         etAvailability.setOnClickListener(view -> {
 
@@ -128,27 +166,31 @@ public class AddItemActivity extends AppCompatActivity {
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            DatePickerDialog datePickerDialog = new DatePickerDialog(
-                    AddItemActivity.this,
-                    (datePicker, selectedYear, selectedMonth, selectedDay) -> {
+            DatePickerDialog datePickerDialog =
+                    new DatePickerDialog(
+                            AddItemActivity.this,
+                            (datePicker, selectedYear,
+                             selectedMonth, selectedDay) -> {
 
-                        String selectedDate = selectedDay + "/" +
-                                (selectedMonth + 1) + "/" +
-                                selectedYear;
+                                String selectedDate =
+                                        selectedDay + "/" +
+                                                (selectedMonth + 1) + "/" +
+                                                selectedYear;
 
-                        etAvailability.setText(selectedDate);
-
-                    },
-                    year,
-                    month,
-                    day
-            );
+                                etAvailability.setText(selectedDate);
+                            },
+                            year,
+                            month,
+                            day
+                    );
 
             datePickerDialog.show();
-
         });
 
-        // Spinner Data
+        // =========================
+        // CATEGORY
+        // =========================
+
         String[] categories = {
                 "Electronics",
                 "Tools",
@@ -159,151 +201,159 @@ public class AddItemActivity extends AppCompatActivity {
                 "Others"
         };
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_spinner_dropdown_item,
-                categories
-        );
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_dropdown_item,
+                        categories
+                );
 
         spCategory.setAdapter(adapter);
 
-        // Upload Image Button
-        btnUploadImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        // =========================
+        // ADD PHOTOS
+        // =========================
 
-                String[] options = {
-                        "📷 Camera",
-                        "🖼️ Photos"
-                };
+        btnUploadImage.setOnClickListener(v -> showImageOptions());
 
-                AlertDialog.Builder builder =
-                        new AlertDialog.Builder(AddItemActivity.this);
+        // =========================
+        // SUBMIT
+        // =========================
 
-                builder.setTitle("Upload Item Image");
+        btnListItem.setOnClickListener(v -> validateFields());
 
-                builder.setItems(options, (dialog, which) -> {
+        // Initial photo UI
+        refreshImageViews();
+    }
 
-                    if (which == 0) {
+    // =========================================================
+    // SHOW CAMERA / GALLERY
+    // =========================================================
 
-                        if (ActivityCompat.checkSelfPermission(
-                                AddItemActivity.this,
-                                Manifest.permission.CAMERA)
-                                != PackageManager.PERMISSION_GRANTED) {
+    private void showImageOptions() {
 
-                            ActivityCompat.requestPermissions(
-                                    AddItemActivity.this,
-                                    new String[]{
-                                            Manifest.permission.CAMERA
-                                    },
-                                    CAMERA_PERMISSION_REQUEST
-                            );
+        String[] options = {
+                "📷  Camera",
+                "🖼️  Photos"
+        };
 
-                        } else {
+        AlertDialog.Builder builder =
+                new AlertDialog.Builder(this);
 
-                            openCamera();
+        builder.setTitle("Add Item Photos");
 
-                        }
+        builder.setItems(options, (dialog, which) -> {
 
-                    } else {
+            if (which == 0) {
 
-                        Intent galleryIntent =
-                                new Intent(Intent.ACTION_PICK);
+                // CAMERA
 
-                        galleryIntent.setType("image/*");
+                if (ActivityCompat.checkSelfPermission(
+                        AddItemActivity.this,
+                        Manifest.permission.CAMERA
+                ) != PackageManager.PERMISSION_GRANTED) {
 
-                        startActivityForResult(
-                                galleryIntent,
-                                IMAGE_PICK_REQUEST
-                        );
-                    }
-                });
+                    ActivityCompat.requestPermissions(
+                            AddItemActivity.this,
+                            new String[]{
+                                    Manifest.permission.CAMERA
+                            },
+                            CAMERA_PERMISSION_REQUEST
+                    );
 
-                builder.show();
+                } else {
+
+                    openCamera();
+                }
+
+            } else {
+
+                // GALLERY
+
+                openGallery();
             }
         });
 
-        // List Item Button
-        btnListItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                validateFields();
-            }
-        });
-
+        builder.show();
     }
 
-    private void validateFields() {
+    // =========================
+    // Show full screen
+    // =========================
+    private void showFullImage(Object image) {
+        final Dialog dialog = new Dialog(this);
 
-        if (etItemName.getText().toString().trim().isEmpty()) {
-            etItemName.setError("Enter Item Name");
-            etItemName.requestFocus();
-            return;
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        ImageView imageView = new ImageView(this);
+
+        imageView.setLayoutParams(
+                new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                )
+        );
+
+        imageView.setScaleType(
+                ImageView.ScaleType.FIT_CENTER
+        );
+
+        imageView.setBackgroundColor(Color.BLACK);
+
+        if (image instanceof Uri) {
+            imageView.setImageURI((Uri) image);
+        } else if (image instanceof Bitmap) {
+            imageView.setImageBitmap((Bitmap) image);
         }
 
-        if (etDescription.getText().toString().trim().isEmpty()) {
-            etDescription.setError("Enter Description");
-            etDescription.requestFocus();
-            return;
+        dialog.setContentView(imageView);
+
+        imageView.setOnClickListener(
+                v -> dialog.dismiss()
+        );
+
+        dialog.show();
+
+        Window window = dialog.getWindow();
+
+        if (window != null) {
+
+            window.setBackgroundDrawableResource(
+                    android.R.color.black
+            );
+
+            window.setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT
+            );
         }
-
-        if (etRentalPrice.getText().toString().trim().isEmpty()) {
-            etRentalPrice.setError("Enter Rental Price");
-            etRentalPrice.requestFocus();
-            return;
-        }
-
-        if (etSecurityDeposit.getText().toString().trim().isEmpty()) {
-            etSecurityDeposit.setError("Enter Security Deposit");
-            etSecurityDeposit.requestFocus();
-            return;
-        }
-
-
-        if (etPickupLocation.getText().toString().trim().isEmpty()) {
-
-            etPickupLocation.setError("Enter Pickup Location");
-            etPickupLocation.requestFocus();
-
-            return;
-        }
-
-        if (etAvailability.getText().toString().trim().isEmpty()) {
-            etAvailability.setError("Select Available From Date");
-            etAvailability.requestFocus();
-            return;
-        }
-
-        if (etContact.getText().toString().trim().isEmpty()) {
-            etContact.setError("Enter Contact Number");
-            etContact.requestFocus();
-            return;
-        }
-
-        if (rgCondition.getCheckedRadioButtonId() == -1) {
-
-            Toast.makeText(this,
-                    "Please select item condition",
-                    Toast.LENGTH_SHORT).show();
-
-            return;
-        }
-
-        if (selectedImageUri == null) {
-
-            Toast.makeText(this,
-                    "Please upload item image",
-                    Toast.LENGTH_SHORT).show();
-
-            return;
-        }
-
-        Toast.makeText(this,
-                "Item request submitted successfully. Waiting for admin approval.",
-                Toast.LENGTH_LONG).show();
-
-
     }
+
+    // =========================================================
+    // OPEN GALLERY
+    // =========================================================
+
+    private void openGallery() {
+
+        Intent galleryIntent =
+                new Intent(Intent.ACTION_PICK);
+
+        galleryIntent.setType("image/*");
+
+        galleryIntent.putExtra(
+                Intent.EXTRA_ALLOW_MULTIPLE,
+                true
+        );
+
+        startActivityForResult(
+                galleryIntent,
+                IMAGE_PICK_REQUEST
+        );
+    }
+
+    // =========================================================
+    // OPEN CAMERA
+    // =========================================================
 
     private void openCamera() {
 
@@ -314,16 +364,471 @@ public class AddItemActivity extends AppCompatActivity {
                 cameraIntent,
                 CAMERA_REQUEST
         );
-
     }
+
+    // =========================================================
+    // ACTIVITY RESULT
+    // =========================================================
+
+    @Override
+    protected void onActivityResult(
+            int requestCode,
+            int resultCode,
+            Intent data
+    ) {
+
+        super.onActivityResult(
+                requestCode,
+                resultCode,
+                data
+        );
+
+        if (resultCode != RESULT_OK || data == null) {
+            return;
+        }
+
+        // =========================
+        // GALLERY
+        // =========================
+
+        if (requestCode == IMAGE_PICK_REQUEST) {
+
+            ClipData clipData = data.getClipData();
+
+            if (clipData != null) {
+
+                int remainingSlots =
+                        MAX_PHOTOS - selectedImages.size();
+
+                int photosToAdd =
+                        Math.min(
+                                clipData.getItemCount(),
+                                remainingSlots
+                        );
+
+                for (int i = 0; i < photosToAdd; i++) {
+
+                    Uri imageUri =
+                            clipData
+                                    .getItemAt(i)
+                                    .getUri();
+
+                    selectedImages.add(imageUri);
+                }
+
+                Toast.makeText(
+                        this,
+                        photosToAdd + " photos added",
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                if (clipData.getItemCount() > remainingSlots) {
+
+                    Toast.makeText(
+                            this,
+                            "Maximum 5 photos allowed",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+
+            } else {
+
+                Uri imageUri = data.getData();
+
+                if (imageUri != null) {
+
+                    if (selectedImages.size() >= MAX_PHOTOS) {
+
+                        Toast.makeText(
+                                this,
+                                "Maximum 5 photos allowed",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                        return;
+                    }
+
+                    selectedImages.add(imageUri);
+
+                    Toast.makeText(
+                            this,
+                            "Photo added",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+
+            refreshImageViews();
+        }
+
+        // =========================
+        // CAMERA
+        // =========================
+
+        else if (requestCode == CAMERA_REQUEST) {
+
+            if (selectedImages.size() >= MAX_PHOTOS) {
+
+                Toast.makeText(
+                        this,
+                        "Maximum 5 photos allowed",
+                        Toast.LENGTH_SHORT
+                ).show();
+
+                return;
+            }
+
+            Bundle extras = data.getExtras();
+
+            if (extras != null) {
+
+                Bitmap imageBitmap =
+                        (Bitmap) extras.get("data");
+
+                if (imageBitmap != null) {
+
+                    selectedImages.add(imageBitmap);
+
+                    refreshImageViews();
+
+                    Toast.makeText(
+                            this,
+                            "Photo added",
+                            Toast.LENGTH_SHORT
+                    ).show();
+                }
+            }
+        }
+    }
+
+    // =========================================================
+    // DISPLAY ALL PHOTOS
+    // =========================================================
+
+    private void refreshImageViews() {
+
+        photoContainer.removeAllViews();
+
+        txtPhotoCount.setText(
+                selectedImages.size() + " "
+                        + (selectedImages.size() == 1
+                        ? "photo"
+                        : "photos")
+        );
+
+        for (int i = 0; i < selectedImages.size(); i++) {
+
+            final int index = i;
+
+            // Outer photo card
+            LinearLayout photoLayout =
+                    new LinearLayout(this);
+
+            photoLayout.setOrientation(
+                    LinearLayout.VERTICAL
+            );
+
+            photoLayout.setGravity(
+                    Gravity.CENTER
+            );
+
+            LinearLayout.LayoutParams
+                    photoLayoutParams =
+                    new LinearLayout.LayoutParams(
+                            dpToPx(105),
+                            dpToPx(125)
+                    );
+
+            photoLayoutParams.setMargins(
+                    dpToPx(5),
+                    0,
+                    dpToPx(5),
+                    0
+            );
+
+            photoLayout.setLayoutParams(
+                    photoLayoutParams
+            );
+
+            // Image
+            ImageView imageView =
+                    new ImageView(this);
+
+            LinearLayout.LayoutParams
+                    imageParams =
+                    new LinearLayout.LayoutParams(
+                            dpToPx(95),
+                            dpToPx(95)
+                    );
+
+            imageView.setLayoutParams(
+                    imageParams
+            );
+
+            imageView.setScaleType(
+                    ImageView.ScaleType.CENTER_CROP
+            );
+
+            GradientDrawable imageBackground =
+                    new GradientDrawable();
+
+            imageBackground.setColor(
+                    Color.WHITE
+            );
+
+            imageBackground.setCornerRadius(
+                    dpToPx(14)
+            );
+
+            imageView.setBackground(
+                    imageBackground
+            );
+
+            imageView.setPadding(
+                    dpToPx(2),
+                    dpToPx(2),
+                    dpToPx(2),
+                    dpToPx(2)
+            );
+
+            Object image =
+                    selectedImages.get(i);
+
+            if (image instanceof Uri) {
+
+                imageView.setImageURI(
+                        (Uri) image
+                );
+
+            } else if (image instanceof Bitmap) {
+
+                imageView.setImageBitmap(
+                        (Bitmap) image
+                );
+            }
+
+            // Open image in full screen when clicked
+            imageView.setOnClickListener(
+                    v -> showFullImage(image)
+            );
+
+            photoLayout.addView(
+                    imageView
+            );
+
+            // Remove button
+            TextView removeButton =
+                    new TextView(this);
+
+            removeButton.setText("Remove");
+            removeButton.setTextSize(12);
+            removeButton.setTextColor(
+                    Color.RED
+            );
+            removeButton.setGravity(
+                    Gravity.CENTER
+            );
+            removeButton.setPadding(
+                    0,
+                    dpToPx(3),
+                    0,
+                    0
+            );
+
+            removeButton.setOnClickListener(v -> {
+
+                selectedImages.remove(index);
+
+                refreshImageViews();
+
+                Toast.makeText(
+                        AddItemActivity.this,
+                        "Photo removed",
+                        Toast.LENGTH_SHORT
+                ).show();
+            });
+
+            photoLayout.addView(
+                    removeButton
+            );
+
+            photoContainer.addView(
+                    photoLayout
+            );
+        }
+    }
+
+    // =========================================================
+    // VALIDATE FORM
+    // =========================================================
+
+    private void validateFields() {
+
+        if (etItemName.getText()
+                .toString()
+                .trim()
+                .isEmpty()) {
+
+            etItemName.setError(
+                    "Enter Item Name"
+            );
+
+            etItemName.requestFocus();
+            return;
+        }
+
+        if (etDescription.getText()
+                .toString()
+                .trim()
+                .isEmpty()) {
+
+            etDescription.setError(
+                    "Enter Description"
+            );
+
+            etDescription.requestFocus();
+            return;
+        }
+
+        if (etRentalPrice.getText()
+                .toString()
+                .trim()
+                .isEmpty()) {
+
+            etRentalPrice.setError(
+                    "Enter Rental Price"
+            );
+
+            etRentalPrice.requestFocus();
+            return;
+        }
+
+        if (etQuantity.getText()
+                .toString()
+                .trim()
+                .isEmpty()) {
+
+            etQuantity.setError(
+                    "Enter Quantity"
+            );
+
+            etQuantity.requestFocus();
+            return;
+        }
+
+        int quantity = Integer.parseInt(
+                etQuantity.getText()
+                        .toString()
+                        .trim()
+        );
+
+        if (quantity < 1) {
+
+            etQuantity.setError(
+                    "Quantity must be at least 1"
+            );
+
+            etQuantity.requestFocus();
+            return;
+        }
+
+        if (etSecurityDeposit.getText()
+                .toString()
+                .trim()
+                .isEmpty()) {
+
+            etSecurityDeposit.setError(
+                    "Enter Security Deposit"
+            );
+
+            etSecurityDeposit.requestFocus();
+            return;
+        }
+
+        if (etPickupLocation.getText()
+                .toString()
+                .trim()
+                .isEmpty()) {
+
+            etPickupLocation.setError(
+                    "Enter Pickup Location"
+            );
+
+            etPickupLocation.requestFocus();
+            return;
+        }
+
+        if (etAvailability.getText()
+                .toString()
+                .trim()
+                .isEmpty()) {
+
+            etAvailability.setError(
+                    "Select Available From Date"
+            );
+
+            etAvailability.requestFocus();
+            return;
+        }
+
+        if (etContact.getText()
+                .toString()
+                .trim()
+                .isEmpty()) {
+
+            etContact.setError(
+                    "Enter Contact Number"
+            );
+
+            etContact.requestFocus();
+            return;
+        }
+
+        if (rgCondition.getCheckedRadioButtonId()
+                == -1) {
+
+            Toast.makeText(
+                    this,
+                    "Please select item condition",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        if (selectedImages.isEmpty()) {
+
+            Toast.makeText(
+                    this,
+                    "Please upload at least one item photo",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            return;
+        }
+
+        Toast.makeText(
+                this,
+                "Item request submitted successfully. Waiting for admin approval.",
+                Toast.LENGTH_LONG
+        ).show();
+    }
+
+    // =========================================================
+    // LOCATION PERMISSION
+    // =========================================================
 
     private void checkLocationPermission() {
 
         if (ActivityCompat.checkSelfPermission(
                 this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-
+                Manifest.permission.ACCESS_FINE_LOCATION
+        ) != PackageManager.PERMISSION_GRANTED
+                &&
+                ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED) {
 
             ActivityCompat.requestPermissions(
                     this,
@@ -337,27 +842,42 @@ public class AddItemActivity extends AppCompatActivity {
         } else {
 
             getCurrentLocation();
-
         }
     }
 
+    // =========================================================
+    // PERMISSION RESULT
+    // =========================================================
 
     @Override
     public void onRequestPermissionsResult(
             int requestCode,
             @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
+            @NonNull int[] grantResults
+    ) {
 
         super.onRequestPermissionsResult(
                 requestCode,
                 permissions,
-                grantResults);
+                grantResults
+        );
 
-
-        if (requestCode == LOCATION_PERMISSION_REQUEST) {
+        // Location
+        if (requestCode ==
+                LOCATION_PERMISSION_REQUEST) {
 
             if (grantResults.length > 0 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    (
+                            grantResults[0]
+                                    == PackageManager.PERMISSION_GRANTED
+                                    ||
+                                    (
+                                            grantResults.length > 1
+                                                    &&
+                                                    grantResults[1]
+                                                            == PackageManager.PERMISSION_GRANTED
+                                    )
+                    )) {
 
                 getCurrentLocation();
 
@@ -368,28 +888,33 @@ public class AddItemActivity extends AppCompatActivity {
                         "Location Permission Denied",
                         Toast.LENGTH_SHORT
                 ).show();
-
             }
         }
 
-        if (requestCode == CAMERA_PERMISSION_REQUEST) {
+        // Camera
+        if (requestCode ==
+                CAMERA_PERMISSION_REQUEST) {
 
             if (grantResults.length > 0 &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    grantResults[0]
+                            == PackageManager.PERMISSION_GRANTED) {
 
                 openCamera();
 
             } else {
 
-                Toast.makeText(this,
+                Toast.makeText(
+                        this,
                         "Camera Permission Denied",
-                        Toast.LENGTH_SHORT).show();
-
+                        Toast.LENGTH_SHORT
+                ).show();
             }
-
         }
     }
 
+    // =========================================================
+    // GET CURRENT LOCATION
+    // =========================================================
 
     private void getCurrentLocation() {
 
@@ -400,17 +925,20 @@ public class AddItemActivity extends AppCompatActivity {
         ).show();
 
         locationManager =
-                (LocationManager) getSystemService(LOCATION_SERVICE);
+                (LocationManager)
+                        getSystemService(
+                                LOCATION_SERVICE
+                        );
 
-        // Check location permission
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
         ) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-        ) != PackageManager.PERMISSION_GRANTED) {
+                &&
+                ActivityCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED) {
 
             return;
         }
@@ -422,34 +950,43 @@ public class AddItemActivity extends AppCompatActivity {
                 new LocationListener() {
 
                     @Override
-                    public void onLocationChanged(Location location) {
+                    public void onLocationChanged(
+                            Location location
+                    ) {
 
-                        double latitude = location.getLatitude();
-                        double longitude = location.getLongitude();
+                        double latitude =
+                                location.getLatitude();
+
+                        double longitude =
+                                location.getLongitude();
 
                         convertLocationToAddress(
                                 latitude,
                                 longitude
                         );
 
-                        locationManager.removeUpdates(this);
+                        locationManager.removeUpdates(
+                                this
+                        );
                     }
                 }
         );
     }
 
+    // =========================================================
+    // CONVERT LOCATION TO ADDRESS
+    // =========================================================
 
     private void convertLocationToAddress(
             double latitude,
-            double longitude) {
-
+            double longitude
+    ) {
 
         Geocoder geocoder =
                 new Geocoder(
                         this,
                         Locale.getDefault()
                 );
-
 
         try {
 
@@ -460,27 +997,24 @@ public class AddItemActivity extends AppCompatActivity {
                             1
                     );
 
-
             if (addresses != null &&
-                    addresses.size() > 0) {
-
+                    !addresses.isEmpty()) {
 
                 String address =
-                        addresses.get(0)
+                        addresses
+                                .get(0)
                                 .getAddressLine(0);
 
-
-                etPickupLocation.setText(address);
-
+                etPickupLocation.setText(
+                        address
+                );
 
                 Toast.makeText(
                         this,
                         "Location Added",
                         Toast.LENGTH_SHORT
                 ).show();
-
             }
-
 
         } catch (Exception e) {
 
@@ -489,57 +1023,34 @@ public class AddItemActivity extends AppCompatActivity {
                     "Unable to get address",
                     Toast.LENGTH_SHORT
             ).show();
-
-        }
-
-    }
-
-    @Override
-    protected void onActivityResult(
-            int requestCode,
-            int resultCode,
-            Intent data) {
-
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode != RESULT_OK || data == null) {
-            return;
-        }
-
-        if (requestCode == IMAGE_PICK_REQUEST) {
-
-            selectedImageUri = data.getData();
-
-            if (selectedImageUri != null) {
-                imgItem.setImageURI(selectedImageUri);
-            }
-
-        } else if (requestCode == CAMERA_REQUEST) {
-
-            Bundle extras = data.getExtras();
-
-            if (extras != null) {
-
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-
-                if (imageBitmap != null) {
-
-                    Toast.makeText(this,
-                            "Camera image received",
-                            Toast.LENGTH_SHORT).show();
-
-                    imgItem.setImageBitmap(imageBitmap);
-
-                    // Only for validation
-                    selectedImageUri = Uri.parse("camera_image");
-                }
-            }
         }
     }
+
+    // =========================================================
+    // DP TO PIXELS
+    // =========================================================
+
+    private int dpToPx(int dp) {
+
+        float density =
+                getResources()
+                        .getDisplayMetrics()
+                        .density;
+
+        return Math.round(
+                dp * density
+        );
+    }
+
+    // =========================================================
+    // BACK BUTTON
+    // =========================================================
 
     @Override
     public boolean onSupportNavigateUp() {
+
         finish();
+
         return true;
     }
 }

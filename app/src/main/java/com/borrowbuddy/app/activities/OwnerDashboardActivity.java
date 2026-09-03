@@ -20,6 +20,7 @@ public class OwnerDashboardActivity extends AppCompatActivity {
 
     private MaterialCardView cardMyListings;
     private MaterialCardView cardRentalRequests;
+    private MaterialCardView cardRentalHistory;
     private MaterialCardView cardEarnings;
     private MaterialCardView cardReviews;
 
@@ -61,6 +62,7 @@ public class OwnerDashboardActivity extends AppCompatActivity {
         cardAddItem = findViewById(R.id.cardAddItem);
         cardMyListings = findViewById(R.id.cardMyListings);
         cardRentalRequests = findViewById(R.id.cardRentalRequests);
+        cardRentalHistory = findViewById(R.id.cardRentalHistory);
         cardEarnings = findViewById(R.id.cardEarnings);
         cardReviews = findViewById(R.id.cardReviews);
         cardMyItemRequests = findViewById(R.id.cardMyItemRequests);
@@ -98,14 +100,23 @@ public class OwnerDashboardActivity extends AppCompatActivity {
         });
 
         cardRentalRequests.setOnClickListener(v -> {
+
+            Intent intent = new Intent(
+                    OwnerDashboardActivity.this,
+                    RentalRequestsActivity.class
+            );
+
+            startActivity(intent);
+        });
+
+        cardRentalHistory.setOnClickListener(v -> {
+
             Intent intent = new Intent(
                     OwnerDashboardActivity.this,
                     RentalHistoryActivity.class
             );
 
             startActivity(intent);
-
-
         });
 
         cardEarnings.setOnClickListener(v -> {

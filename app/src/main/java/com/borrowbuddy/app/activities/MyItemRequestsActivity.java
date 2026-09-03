@@ -70,6 +70,7 @@ public class MyItemRequestsActivity extends AppCompatActivity {
                 "📷 DSLR Camera",
                 "Electronics",
                 "500",
+                3,
                 "Pending",
                 ""
         ));
@@ -78,6 +79,7 @@ public class MyItemRequestsActivity extends AppCompatActivity {
                 "📚 Engineering Books",
                 "Books",
                 "50",
+                10,
                 "Approved",
                 ""
         ));
@@ -86,6 +88,7 @@ public class MyItemRequestsActivity extends AppCompatActivity {
                 "🎮 Gaming Console",
                 "Gaming",
                 "300",
+                2,
                 "Rejected",
                 "Image quality not clear"
         ));

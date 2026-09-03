@@ -32,22 +32,32 @@ public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
 
         SharedPreferences preferences = getSharedPreferences(
                 "BorrowBuddySettings",
                 MODE_PRIVATE
         );
 
+        boolean isDarkMode = preferences.getBoolean("dark_mode", false);
+
+        if (isDarkMode) {
+            AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES
+            );
+        } else {
+            AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO
+            );
+        }
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_settings);
+
         // =========================
         // DARK MODE
         // =========================
 
         switchDarkMode = findViewById(R.id.switchDarkMode);
-
-        // Get saved preference
-        boolean isDarkMode = preferences.getBoolean("dark_mode", false);
 
         // Set switch according to saved preference
         switchDarkMode.setChecked(isDarkMode);
