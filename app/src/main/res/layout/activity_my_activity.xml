@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- ================= HEADER ================= -->
+
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:background="#6A1B9A">
+
+        <TextView
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="←"
+            android:textSize="25sp"
+            android:textColor="#FFFFFF"/>
+
+        <TextView
+            android:id="@+id/headerTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="My Activity"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <ScrollView
+        android:id="@+id/activityScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/activityMainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#FFFFFF">
+
+            <!-- TITLE -->
+
+            <TextView
+                android:id="@+id/activityTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Your Activity"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:textColor="#222222"
+                android:layout_marginBottom="15dp"/>
+
+
+            <!-- ================= TOTAL RENTALS ================= -->
+
+            <LinearLayout
+                android:id="@+id/totalRentalsCard"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#F5F0FF"
+                android:layout_marginBottom="12dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total Rentals"
+                    android:textSize="16sp"
+                    android:textColor="#555555"/>
+
+                <TextView
+                    android:id="@+id/totalRentalsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="#6A1B9A"/>
+
+            </LinearLayout>
+
+
+            <!-- ================= MY BOOKINGS ================= -->
+
+            <LinearLayout
+                android:id="@+id/myBookingsCard"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#F5F0FF"
+                android:layout_marginBottom="12dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="My Bookings"
+                    android:textSize="16sp"
+                    android:textColor="#555555"/>
+
+                <TextView
+                    android:id="@+id/myBookingsText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="#6A1B9A"/>
+
+            </LinearLayout>
+
+
+            <!-- ================= ITEMS LISTED ================= -->
+
+            <LinearLayout
+                android:id="@+id/itemsListedCard"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#F5F0FF"
+                android:layout_marginBottom="12dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Items Listed"
+                    android:textSize="16sp"
+                    android:textColor="#555555"/>
+
+                <TextView
+                    android:id="@+id/itemsListedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="7"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="#6A1B9A"/>
+
+            </LinearLayout>
+
+
+            <!-- ================= COMPLETED RENTALS ================= -->
+
+            <LinearLayout
+                android:id="@+id/completedCard"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#F5F0FF"
+                android:layout_marginBottom="12dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Completed Rentals"
+                    android:textSize="16sp"
+                    android:textColor="#555555"/>
+
+                <TextView
+                    android:id="@+id/completedText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="8"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="#6A1B9A"/>
+
+            </LinearLayout>
+
+
+            <!-- ================= CANCELLED BOOKINGS ================= -->
+
+            <LinearLayout
+                android:id="@+id/cancelledCard"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#F5F0FF"
+                android:layout_marginBottom="12dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cancelled Bookings"
+                    android:textSize="16sp"
+                    android:textColor="#555555"/>
+
+                <TextView
+                    android:id="@+id/cancelledText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="#6A1B9A"/>
+
+            </LinearLayout>
+
+
+            <!-- ================= TRUST SCORE ================= -->
+
+            <LinearLayout
+                android:id="@+id/trustScoreCard"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:background="#F5F0FF"
+                android:layout_marginBottom="12dp"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Trust Score"
+                    android:textSize="16sp"
+                    android:textColor="#555555"/>
+
+                <TextView
+                    android:id="@+id/trustScoreText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⭐ 4.8"
+                    android:textSize="28sp"
+                    android:textStyle="bold"
+                    android:textColor="#6A1B9A"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

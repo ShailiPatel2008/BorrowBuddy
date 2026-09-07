@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F8F9FA">
+
+    <!-- ================= HEADER ================= -->
+
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:background="#6A1B9A">
+
+        <TextView
+            android:id="@+id/backButton"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="←"
+            android:textSize="26sp"
+            android:textColor="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/headerTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="Booking Successful"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF" />
+
+    </LinearLayout>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <ScrollView
+        android:id="@+id/successScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:background="#F8F9FA">
+
+        <LinearLayout
+            android:id="@+id/successMainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="25dp">
+
+            <!-- SUCCESS ICON -->
+
+            <TextView
+                android:id="@+id/successIcon"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="30dp"
+                android:background="#4CAF50"
+                android:gravity="center"
+                android:text="✓"
+                android:textColor="#FFFFFF"
+                android:textSize="55sp"
+                android:textStyle="bold" />
+
+
+            <!-- SUCCESS TEXT -->
+
+            <TextView
+                android:id="@+id/successText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="Booking Successful!"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+
+            <!-- MESSAGE -->
+
+            <TextView
+                android:id="@+id/bookingMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:text="Your booking has been confirmed successfully."
+                android:textColor="#555555"
+                android:textSize="17sp" />
+
+
+            <!-- CONFIRMED -->
+
+            <TextView
+                android:id="@+id/bookingConfirmedText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:text="✓ Booking Confirmed"
+                android:textColor="#4CAF50"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
+            <!-- VIEW MY BOOKINGS -->
+
+            <Button
+                android:id="@+id/viewBookingsButton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="#673AB7"
+                android:text="View My Bookings"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+
+            <!-- BACK TO HOME -->
+
+            <Button
+                android:id="@+id/homeButton"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="#673AB7"
+                android:text="Back to Home"
+                android:textColor="#FFFFFF"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

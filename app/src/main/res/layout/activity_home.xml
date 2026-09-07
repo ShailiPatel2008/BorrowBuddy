@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- ================================================= -->
+    <!-- HEADER - PURPLE -->
+    <!-- ================================================= -->
+
+    <LinearLayout
+        android:id="@+id/headerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:background="#6A1B9A">
+
+        <!-- BACK -->
+        <TextView
+            android:id="@+id/backButton"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="←"
+            android:textSize="25sp"
+            android:textColor="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <!-- TITLE -->
+        <TextView
+            android:id="@+id/headerTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="BorrowBuddy"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"/>
+
+        <!-- SETTINGS -->
+        <TextView
+            android:id="@+id/settingsIcon"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="⚙"
+            android:textSize="27sp"
+            android:textColor="#FFFFFF"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </LinearLayout>
+
+
+    <!-- ================================================= -->
+    <!-- HOME SCROLL CONTENT -->
+    <!-- ================================================= -->
+
+    <ScrollView
+        android:id="@+id/homeScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:id="@+id/homeMainLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp"
+            android:background="#FFFFFF">
+
+
+            <!-- ================================================= -->
+            <!-- GREETING -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:id="@+id/helloText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="👋 Hello Shweta"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="#222222"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="15dp"/>
+
+
+            <!-- ================================================= -->
+            <!-- SEARCH BAR -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:id="@+id/searchBar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:background="#F2F2F2"
+                android:layout_marginBottom="25dp"
+                android:clickable="true"
+                android:focusable="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="⌕"
+                    android:textSize="27sp"
+                    android:textColor="#777777"
+                    android:layout_marginEnd="10dp"/>
+
+                <TextView
+                    android:id="@+id/searchText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Search items..."
+                    android:textSize="16sp"
+                    android:textColor="#777777"/>
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- BROWSE CATEGORIES TITLE -->
+            <!-- ================================================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Browse Categories"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="#222222"
+                android:layout_marginBottom="18dp"/>
+
+
+            <!-- ================================================= -->
+            <!-- CATEGORY ROW 1 -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="12dp">
+
+
+                <!-- ELECTRONICS -->
+
+                <LinearLayout
+                    android:id="@+id/electronicsCard"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="#F5F0FF"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📱"
+                        android:textSize="29sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Electronics"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:layout_marginTop="6dp"/>
+
+                </LinearLayout>
+
+
+                <!-- TOOLS -->
+
+                <LinearLayout
+                    android:id="@+id/toolsCard"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="#F5F0FF"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔧"
+                        android:textSize="29sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Tools"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:layout_marginTop="6dp"/>
+
+                </LinearLayout>
+
+
+                <!-- BOOKS -->
+
+                <LinearLayout
+                    android:id="@+id/booksCard"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="#F5F0FF"
+                    android:layout_marginStart="6dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📚"
+                        android:textSize="29sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Books"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:layout_marginTop="6dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- CATEGORY ROW 2 -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="25dp">
+
+
+                <!-- SPORTS -->
+
+                <LinearLayout
+                    android:id="@+id/sportsCard"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="#F5F0FF"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⚽"
+                        android:textSize="30sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sports"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:layout_marginTop="6dp"/>
+
+                </LinearLayout>
+
+
+                <!-- FURNITURE -->
+
+                <LinearLayout
+                    android:id="@+id/furnitureCard"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="#F5F0FF"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🪑"
+                        android:textSize="30sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Furniture"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:layout_marginTop="6dp"/>
+
+                </LinearLayout>
+
+
+                <!-- KITCHEN -->
+
+                <LinearLayout
+                    android:id="@+id/kitchenCard"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:background="#F5F0FF"
+                    android:layout_marginStart="6dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🍳"
+                        android:textSize="30sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Kitchen"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="#333333"
+                        android:layout_marginTop="6dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- POPULAR ITEMS TITLE -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="14dp">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="🔥 Popular Items"
+                    android:textSize="21sp"
+                    android:textStyle="bold"
+                    android:textColor="#222222"/>
+
+                <TextView
+                    android:id="@+id/viewAllButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="View All →"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="#6A1B9A"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+            </LinearLayout>
+
+
+            <!-- ================================================= -->
+            <!-- POPULAR ITEMS -->
+            <!-- ================================================= -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginBottom="15dp">
+
+
+                <!-- BICYCLE -->
+
+                <LinearLayout
+                    android:id="@+id/bicycleCard"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:background="#F7F7F7"
+                    android:layout_marginEnd="6dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:gravity="center"
+                        android:text="🚲"
+                        android:textSize="70sp"
+                        android:background="#EEEEEE"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bicycle"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#222222"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⭐ 4.6"
+                        android:textSize="16sp"
+                        android:textColor="#222222"
+                        android:layout_marginTop="5dp"/>
+
+                </LinearLayout>
+
+
+                <!-- GAMING CONSOLE -->
+
+                <LinearLayout
+                    android:id="@+id/gamingCard"
+                    android:layout_width="0dp"
+                    android:layout_height="250dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:background="#F7F7F7"
+                    android:layout_marginStart="6dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:gravity="center"
+                        android:text="🎮"
+                        android:textSize="70sp"
+                        android:background="#EEEEEE"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gaming Console"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="#222222"
+                        android:layout_marginTop="10dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="⭐ 4.7"
+                        android:textSize="16sp"
+                        android:textColor="#222222"
+                        android:layout_marginTop="5dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- ================================================= -->
+    <!-- BOTTOM NAVIGATION - WHITE ROUNDED CARD -->
+    <!-- ================================================= -->
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/bottomNavigationCard"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="#FFFFFF">
+
+        <LinearLayout
+            android:id="@+id/bottomNavigation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:background="#FFFFFF">
+
+
+            <!-- HOME -->
+
+            <TextView
+                android:id="@+id/homeNav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="🏠"
+                android:textSize="27sp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+
+            <!-- MY ACTIVITY -->
+
+            <TextView
+                android:id="@+id/activityNav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="📋"
+                android:textSize="27sp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+
+            <!-- MY BOOKINGS -->
+
+            <TextView
+                android:id="@+id/bookingsNav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="📦"
+                android:textSize="27sp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+
+            <!-- MY PROFILE -->
+
+            <TextView
+                android:id="@+id/profileNav"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="👤"
+                android:textSize="27sp"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>
