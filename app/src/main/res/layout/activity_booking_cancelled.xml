@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F7">
+
+    <!-- ================= HEADER ================= -->
+
+    <LinearLayout
+        android:id="@+id/cancelledHeader"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#6A1B9A"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/backButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="32sp" />
+
+        <TextView
+            android:id="@+id/cancelledTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Booking Cancelled"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="#6A1B9A" />
+
+    </LinearLayout>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <LinearLayout
+        android:id="@+id/cancelledMainContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="25dp">
+
+        <!-- CANCEL ICON -->
+
+        <TextView
+            android:id="@+id/cancelIcon"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:background="#E8F5E9"
+            android:gravity="center"
+            android:text="✓"
+            android:textColor="#2E7D32"
+            android:textSize="50sp"
+            android:textStyle="bold" />
+
+
+        <!-- TITLE -->
+
+        <TextView
+            android:id="@+id/cancelledText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Booking Cancelled"
+            android:textColor="#000000"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+
+        <!-- MESSAGE -->
+
+        <TextView
+            android:id="@+id/cancelledMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:text="Your booking has been cancelled successfully."
+            android:textColor="#666666"
+            android:textSize="16sp" />
+
+
+        <!-- ================= CANCELLED ITEM ================= -->
+
+        <TextView
+            android:id="@+id/itemNameText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Item"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+
+        <!-- BOOKING ID -->
+
+        <TextView
+            android:id="@+id/bookingIdText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Booking ID: BB1025"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <!-- BACK TO MY BOOKINGS -->
+
+        <Button
+            android:id="@+id/backToMyBookingsButton"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#6A1B9A"
+            android:text="Back to My Bookings"
+            android:textColor="#FFFFFF"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>
