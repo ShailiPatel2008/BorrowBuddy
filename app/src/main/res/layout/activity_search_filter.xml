@@ -12,7 +12,9 @@
     tools:context=".SearchFilterActivity">
 
 
-    <!-- ================= HEADER ================= -->
+    <!-- ===================================================== -->
+    <!-- PURPLE HEADER -->
+    <!-- ===================================================== -->
 
     <LinearLayout
         android:id="@+id/headerLayout"
@@ -21,7 +23,6 @@
         android:background="#6A1B9A"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -40,7 +41,7 @@
         <TextView
             android:id="@+id/pageTitle"
             android:layout_width="0dp"
-            android:layout_height="60dp"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
             android:text="Search &amp; Filter"
@@ -55,219 +56,255 @@
     </LinearLayout>
 
 
-    <!-- ================= SEARCH ================= -->
+    <!-- ===================================================== -->
+    <!-- SCROLL AREA -->
+    <!-- ===================================================== -->
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/searchCard"
+    <ScrollView
+        android:id="@+id/mainScrollView"
         android:layout_width="0dp"
-        android:layout_height="55dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="30dp"
-
-        app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="30dp"
-        app:cardElevation="4dp"
-
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
-            android:id="@+id/searchEditText"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:drawableTint="#777777"
-            android:hint="Search books, laptop, camera..."
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:singleLine="true"
-            android:textColor="#000000"
-            android:textColorHint="#777777"
-            android:textSize="16sp" />
-
-    </com.google.android.material.card.MaterialCardView>
-
-
-    <!-- ================= FILTER CARD ================= -->
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/filterCard"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="30dp"
-
-        app:cardBackgroundColor="#FFFFFF"
-        app:cardCornerRadius="25dp"
-        app:cardElevation="5dp"
-
-        app:layout_constraintTop_toBottomOf="@id/searchCard"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
+            android:id="@+id/mainContentLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:paddingBottom="20dp">
 
 
-            <!-- ================= FILTER HEADER ================= -->
+            <!-- ================================================= -->
+            <!-- SEARCH BAR -->
+            <!-- ================================================= -->
 
-            <LinearLayout
-                android:id="@+id/filterHeader"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/searchCard"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="30dp"
 
-                <TextView
-                    android:id="@+id/filterTitle"
-                    android:layout_width="0dp"
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="30dp"
+                app:cardElevation="4dp">
+
+                <EditText
+                    android:id="@+id/searchEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"
-                    android:text="Filters"
+                    android:background="@null"
+                    android:drawableStart="@android:drawable/ic_menu_search"
+                    android:drawableTint="#777777"
+                    android:hint="Search books, laptop, camera..."
+                    android:inputType="text"
+                    android:paddingStart="20dp"
+                    android:paddingEnd="20dp"
+                    android:singleLine="true"
                     android:textColor="#000000"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textColorHint="#777777"
+                    android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/filterArrow"
-                    android:layout_width="40dp"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="▼"
-                    android:textColor="#000000"
-                    android:textSize="18sp" />
-
-            </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
 
-            <!-- ================= FILTER OPTIONS ================= -->
+            <!-- ================================================= -->
+            <!-- FILTER CARD -->
+            <!-- ================================================= -->
 
-            <LinearLayout
-                android:id="@+id/filterOptions"
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/filterCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="30dp"
+
+                app:cardBackgroundColor="#FFFFFF"
+                app:cardCornerRadius="25dp"
+                app:cardElevation="5dp">
 
 
-                <!-- PRICE -->
-
-                <TextView
-                    android:id="@+id/priceFilter"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:gravity="center_vertical"
-                    android:text="Price"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/priceSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:spinnerMode="dropdown" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
 
-                <!-- LOCATION -->
+                    <!-- ========================================= -->
+                    <!-- FILTER HEADER -->
+                    <!-- ========================================= -->
 
-                <TextView
-                    android:id="@+id/locationFilter"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center_vertical"
-                    android:text="Location"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/locationSpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:spinnerMode="dropdown" />
+                    <LinearLayout
+                        android:id="@+id/filterHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="55dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
 
 
-                <!-- CATEGORY -->
-
-                <TextView
-                    android:id="@+id/categoryFilter"
-                    android:layout_width="match_parent"
-                    android:layout_height="45dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center_vertical"
-                    android:text="Category"
-                    android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <Spinner
-                    android:id="@+id/categorySpinner"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:spinnerMode="dropdown" />
+                        <TextView
+                            android:id="@+id/filterTitle"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:text="Filters"
+                            android:textColor="#000000"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
 
-                <!-- AVAILABLE -->
+                        <TextView
+                            android:id="@+id/filterArrow"
+                            android:layout_width="40dp"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:text="▼"
+                            android:textColor="#000000"
+                            android:textSize="18sp" />
 
-                <Switch
-                    android:id="@+id/availableSwitch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="Available Only"
-                    android:textColor="#000000"
-                    android:textSize="15sp" />
+                    </LinearLayout>
 
 
-                <!-- ================= APPLY BUTTON ================= -->
+                    <!-- ========================================= -->
+                    <!-- FILTER OPTIONS -->
+                    <!-- ========================================= -->
 
-                <Button
-                    android:id="@+id/applyFilterButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginBottom="5dp"
-                    android:backgroundTint="#6A1B9A"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:text="Apply Filters"
-                    android:textColor="#FFFFFF"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    <LinearLayout
+                        android:id="@+id/filterOptions"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-            </LinearLayout>
+
+                        <!-- PRICE -->
+
+                        <TextView
+                            android:id="@+id/priceFilter"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:gravity="center_vertical"
+                            android:text="Price"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+
+                        <Spinner
+                            android:id="@+id/priceSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@android:drawable/btn_dropdown"
+                            android:spinnerMode="dropdown" />
+
+
+                        <!-- LOCATION -->
+
+                        <TextView
+                            android:id="@+id/locationFilter"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:text="Location"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+
+                        <Spinner
+                            android:id="@+id/locationSpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@android:drawable/btn_dropdown"
+                            android:spinnerMode="dropdown" />
+
+
+                        <!-- CATEGORY -->
+
+                        <TextView
+                            android:id="@+id/categoryFilter"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center_vertical"
+                            android:text="Category"
+                            android:textColor="#000000"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+
+                        <Spinner
+                            android:id="@+id/categorySpinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="@android:drawable/btn_dropdown"
+                            android:spinnerMode="dropdown" />
+
+
+                        <!-- AVAILABLE -->
+
+                        <Switch
+                            android:id="@+id/availableSwitch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:layout_marginTop="8dp"
+                            android:text="Available Only"
+                            android:textColor="#000000"
+                            android:textSize="15sp" />
+
+
+                        <!-- APPLY BUTTON -->
+
+                        <Button
+                            android:id="@+id/applyFilterButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="52dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:backgroundTint="#6A1B9A"
+                            android:text="Apply Filters"
+                            android:textColor="#FFFFFF"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+
+            <!-- ================================================= -->
+            <!-- RESULTS -->
+            <!-- ================================================= -->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/resultRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:nestedScrollingEnabled="false"
+                android:clipToPadding="false"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="10dp" />
 
         </LinearLayout>
 
-    </com.google.android.material.card.MaterialCardView>
-
-
-    <!-- ================= RESULTS ================= -->
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/resultRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:clipToPadding="false"
-        android:padding="8dp"
-
-        app:layout_constraintTop_toBottomOf="@id/filterCard"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

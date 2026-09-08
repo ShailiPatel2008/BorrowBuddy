@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     android:background="@color/background_color">
 
-    <!-- Toolbar -->
+    <!-- =========================
+         TOOLBAR
+         ========================= -->
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbarTerms"
@@ -31,9 +33,13 @@
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-    <!-- Content -->
+
+    <!-- =========================
+         CONTENT
+         ========================= -->
 
     <ScrollView
+        android:id="@+id/termsScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:fillViewport="true"
@@ -49,7 +55,10 @@
             android:orientation="vertical"
             android:padding="4dp">
 
-            <!-- Introduction Card -->
+
+            <!-- =========================
+                 INTRODUCTION CARD
+                 ========================= -->
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
@@ -86,7 +95,10 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Section 1 -->
+
+            <!-- =========================
+                 SECTION 1
+                 ========================= -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -106,7 +118,10 @@
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Section 2 -->
+
+            <!-- =========================
+                 SECTION 2
+                 ========================= -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -126,7 +141,10 @@
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Section 3 -->
+
+            <!-- =========================
+                 SECTION 3
+                 ========================= -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,7 +164,10 @@
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Section 4 -->
+
+            <!-- =========================
+                 SECTION 4
+                 ========================= -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -166,7 +187,10 @@
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Section 5 -->
+
+            <!-- =========================
+                 SECTION 5
+                 ========================= -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -186,7 +210,10 @@
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Section 6 -->
+
+            <!-- =========================
+                 SECTION 6
+                 ========================= -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -206,7 +233,10 @@
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Section 7 -->
+
+            <!-- =========================
+                 SECTION 7
+                 ========================= -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -226,7 +256,10 @@
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Section 8 -->
+
+            <!-- =========================
+                 SECTION 8
+                 ========================= -->
 
             <TextView
                 android:layout_width="wrap_content"
@@ -246,7 +279,10 @@
                 android:textSize="15sp"
                 android:lineSpacingExtra="4dp" />
 
-            <!-- Final Note -->
+
+            <!-- =========================
+                 FINAL NOTE CARD
+                 ========================= -->
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"

@@ -26,24 +26,36 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 
+
 public class SearchFilterActivity extends AppCompatActivity {
 
-    // ================= MAIN =================
+    // ==================================================
+    // MAIN
+    // ==================================================
 
     ConstraintLayout searchFilterLayout;
 
-    // ================= HEADER =================
+
+    // ==================================================
+    // HEADER
+    // ==================================================
 
     LinearLayout headerLayout;
     TextView backButton;
     TextView pageTitle;
 
-    // ================= SEARCH =================
+
+    // ==================================================
+    // SEARCH
+    // ==================================================
 
     MaterialCardView searchCard;
     EditText searchEditText;
 
-    // ================= FILTER =================
+
+    // ==================================================
+    // FILTER
+    // ==================================================
 
     MaterialCardView filterCard;
 
@@ -65,13 +77,19 @@ public class SearchFilterActivity extends AppCompatActivity {
 
     Button applyFilterButton;
 
-    // ================= RESULT =================
+
+    // ==================================================
+    // RESULTS
+    // ==================================================
 
     RecyclerView resultRecyclerView;
 
     SearchAdapter searchAdapter;
 
-    // ================= DATA =================
+
+    // ==================================================
+    // DATA
+    // ==================================================
 
     ArrayList<SearchItem> allItems =
             new ArrayList<>();
@@ -79,7 +97,10 @@ public class SearchFilterActivity extends AppCompatActivity {
     ArrayList<SearchItem> filteredItems =
             new ArrayList<>();
 
-    // ================= DARK MODE =================
+
+    // ==================================================
+    // DARK MODE
+    // ==================================================
 
     private static final String PREF_NAME =
             "BorrowBuddy";
@@ -91,6 +112,10 @@ public class SearchFilterActivity extends AppCompatActivity {
             Color.rgb(106, 27, 154);
 
 
+    // ==================================================
+    // ON CREATE
+    // ==================================================
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -99,25 +124,30 @@ public class SearchFilterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_filter);
 
 
-        // ================= ACTION BAR =================
+        // ==================================================
+        // ACTION BAR
+        // ==================================================
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
 
 
-        // ================= STATUS BAR =================
+        // ==================================================
+        // STATUS BAR
+        // ==================================================
 
         Window window = getWindow();
 
         window.setStatusBarColor(PURPLE);
-
         window.setNavigationBarColor(PURPLE);
 
         window.getDecorView().setSystemUiVisibility(0);
 
 
-        // ================= FIND VIEWS =================
+        // ==================================================
+        // FIND VIEWS
+        // ==================================================
 
         searchFilterLayout =
                 findViewById(R.id.searchFilterLayout);
@@ -132,7 +162,9 @@ public class SearchFilterActivity extends AppCompatActivity {
                 findViewById(R.id.pageTitle);
 
 
-        // ================= SEARCH =================
+        // ==================================================
+        // SEARCH
+        // ==================================================
 
         searchCard =
                 findViewById(R.id.searchCard);
@@ -141,7 +173,9 @@ public class SearchFilterActivity extends AppCompatActivity {
                 findViewById(R.id.searchEditText);
 
 
-        // ================= FILTER =================
+        // ==================================================
+        // FILTER
+        // ==================================================
 
         filterCard =
                 findViewById(R.id.filterCard);
@@ -183,7 +217,9 @@ public class SearchFilterActivity extends AppCompatActivity {
                 findViewById(R.id.applyFilterButton);
 
 
-        // ================= RECYCLER VIEW =================
+        // ==================================================
+        // RECYCLER VIEW
+        // ==================================================
 
         resultRecyclerView =
                 findViewById(R.id.resultRecyclerView);
@@ -193,17 +229,23 @@ public class SearchFilterActivity extends AppCompatActivity {
         );
 
 
-        // ================= LOAD ITEMS =================
+        // ==================================================
+        // LOAD ITEMS
+        // ==================================================
 
         loadItems();
 
 
-        // ================= SETUP SPINNERS =================
+        // ==================================================
+        // SETUP SPINNERS
+        // ==================================================
 
         setupSpinners();
 
 
-        // ================= ADAPTER =================
+        // ==================================================
+        // ADAPTER
+        // ==================================================
 
         searchAdapter =
                 new SearchAdapter(filteredItems);
@@ -213,22 +255,29 @@ public class SearchFilterActivity extends AppCompatActivity {
         );
 
 
-        // ================= DARK MODE =================
+        // ==================================================
+        // DARK MODE
+        // ==================================================
 
         applyDarkMode();
 
 
-        // ================= BACK BUTTON =================
+        // ==================================================
+        // BACK BUTTON
+        // ==================================================
 
         backButton.setOnClickListener(v -> finish());
 
 
-        // ================= OPEN / CLOSE FILTER =================
+        // ==================================================
+        // OPEN / CLOSE FILTER
+        // ==================================================
 
         filterHeader.setOnClickListener(v -> {
 
-            if (filterOptions.getVisibility()
-                    == View.GONE) {
+            if (filterOptions.getVisibility() == View.GONE) {
+
+                // OPEN FILTERS
 
                 filterOptions.setVisibility(
                         View.VISIBLE
@@ -237,6 +286,8 @@ public class SearchFilterActivity extends AppCompatActivity {
                 filterArrow.setText("▲");
 
             } else {
+
+                // CLOSE FILTERS
 
                 filterOptions.setVisibility(
                         View.GONE
@@ -256,8 +307,7 @@ public class SearchFilterActivity extends AppCompatActivity {
 
             applyFilters();
 
-            // Filter apply hone ke baad
-            // filter section close
+            // Close filter section
 
             filterOptions.setVisibility(
                     View.GONE
@@ -274,7 +324,9 @@ public class SearchFilterActivity extends AppCompatActivity {
         });
 
 
-        // ================= SEARCH =================
+        // ==================================================
+        // SEARCH
+        // ==================================================
 
         searchEditText.addTextChangedListener(
                 new TextWatcher() {
@@ -312,13 +364,15 @@ public class SearchFilterActivity extends AppCompatActivity {
 
 
     // ==================================================
-    // LOAD ITEMS
+    // LOAD SAMPLE ITEMS
     // ==================================================
 
     private void loadItems() {
 
         allItems.clear();
 
+
+        // CAMERA
 
         allItems.add(
                 new SearchItem(
@@ -331,6 +385,8 @@ public class SearchFilterActivity extends AppCompatActivity {
         );
 
 
+        // LAPTOP
+
         allItems.add(
                 new SearchItem(
                         "Laptop",
@@ -341,6 +397,8 @@ public class SearchFilterActivity extends AppCompatActivity {
                 )
         );
 
+
+        // FOOTBALL
 
         allItems.add(
                 new SearchItem(
@@ -361,10 +419,15 @@ public class SearchFilterActivity extends AppCompatActivity {
 
 
     // ==================================================
-    // SPINNERS
+    // SETUP SPINNERS
     // ==================================================
 
     private void setupSpinners() {
+
+
+        // ==================================================
+        // PRICE
+        // ==================================================
 
         String[] prices = {
 
@@ -372,26 +435,6 @@ public class SearchFilterActivity extends AppCompatActivity {
                 "Below ₹200",
                 "₹200 - ₹400",
                 "Above ₹400"
-
-        };
-
-
-        String[] locations = {
-
-                "Any Location",
-                "Ahmedabad",
-                "Gandhinagar",
-                "Vadodara"
-
-        };
-
-
-        String[] categories = {
-
-                "Any Category",
-                "Camera",
-                "Laptop",
-                "Football"
 
         };
 
@@ -412,6 +455,20 @@ public class SearchFilterActivity extends AppCompatActivity {
         );
 
 
+        // ==================================================
+        // LOCATION
+        // ==================================================
+
+        String[] locations = {
+
+                "Any Location",
+                "Ahmedabad",
+                "Gandhinagar",
+                "Vadodara"
+
+        };
+
+
         ArrayAdapter<String> locationAdapter =
                 new ArrayAdapter<>(
                         this,
@@ -426,6 +483,20 @@ public class SearchFilterActivity extends AppCompatActivity {
         locationSpinner.setAdapter(
                 locationAdapter
         );
+
+
+        // ==================================================
+        // CATEGORY
+        // ==================================================
+
+        String[] categories = {
+
+                "Any Category",
+                "Camera",
+                "Laptop",
+                "Football"
+
+        };
 
 
         ArrayAdapter<String> categoryAdapter =
@@ -451,6 +522,7 @@ public class SearchFilterActivity extends AppCompatActivity {
     // ==================================================
 
     private void applyFilters() {
+
 
         String search =
                 searchEditText
@@ -481,9 +553,16 @@ public class SearchFilterActivity extends AppCompatActivity {
         filteredItems.clear();
 
 
+        // ==================================================
+        // CHECK EVERY ITEM
+        // ==================================================
+
         for (SearchItem item : allItems) {
 
-            // ================= SEARCH =================
+
+            // ==================================================
+            // SEARCH
+            // ==================================================
 
             if (!search.isEmpty()
                     &&
@@ -495,7 +574,9 @@ public class SearchFilterActivity extends AppCompatActivity {
             }
 
 
-            // ================= LOCATION =================
+            // ==================================================
+            // LOCATION
+            // ==================================================
 
             if (!selectedLocation.equals(
                     "Any Location")) {
@@ -508,7 +589,9 @@ public class SearchFilterActivity extends AppCompatActivity {
             }
 
 
-            // ================= CATEGORY =================
+            // ==================================================
+            // CATEGORY
+            // ==================================================
 
             if (!selectedCategory.equals(
                     "Any Category")) {
@@ -521,7 +604,9 @@ public class SearchFilterActivity extends AppCompatActivity {
             }
 
 
-            // ================= PRICE =================
+            // ==================================================
+            // PRICE
+            // ==================================================
 
             int price =
                     getPrice(item.price);
@@ -556,18 +641,26 @@ public class SearchFilterActivity extends AppCompatActivity {
             }
 
 
-            // ================= AVAILABLE =================
+            // ==================================================
+            // AVAILABLE
+            // ==================================================
 
-            // Abhi sample data ke liye
-            // sab items available hain.
+            // Currently all sample items
+            // are considered available.
 
+
+            // ==================================================
+            // ADD ITEM
+            // ==================================================
 
             filteredItems.add(item);
 
         }
 
 
-        // ================= UPDATE RESULT =================
+        // ==================================================
+        // UPDATE RECYCLER VIEW
+        // ==================================================
 
         searchAdapter.notifyDataSetChanged();
 
@@ -605,6 +698,7 @@ public class SearchFilterActivity extends AppCompatActivity {
 
     private void applyDarkMode() {
 
+
         SharedPreferences preferences =
                 getSharedPreferences(
                         PREF_NAME,
@@ -619,7 +713,9 @@ public class SearchFilterActivity extends AppCompatActivity {
                 );
 
 
-        // ================= HEADER =================
+        // ==================================================
+        // HEADER
+        // ==================================================
 
         headerLayout.setBackgroundColor(
                 PURPLE
@@ -634,7 +730,9 @@ public class SearchFilterActivity extends AppCompatActivity {
         );
 
 
-        // ================= STATUS BAR =================
+        // ==================================================
+        // STATUS BAR
+        // ==================================================
 
         getWindow().setStatusBarColor(
                 PURPLE
@@ -649,7 +747,9 @@ public class SearchFilterActivity extends AppCompatActivity {
                 .setSystemUiVisibility(0);
 
 
-        // ================= APPLY BUTTON =================
+        // ==================================================
+        // APPLY BUTTON
+        // ==================================================
 
         applyFilterButton.setBackgroundTintList(
                 ColorStateList.valueOf(PURPLE)
@@ -660,7 +760,12 @@ public class SearchFilterActivity extends AppCompatActivity {
         );
 
 
+        // ==================================================
+        // DARK MODE
+        // ==================================================
+
         if (darkMode) {
+
 
             // MAIN
 
@@ -714,7 +819,9 @@ public class SearchFilterActivity extends AppCompatActivity {
                     Color.WHITE
             );
 
+
         } else {
+
 
             // MAIN
 
@@ -781,6 +888,7 @@ public class SearchFilterActivity extends AppCompatActivity {
     protected void onResume() {
 
         super.onResume();
+
 
         if (searchFilterLayout != null) {
 

@@ -5,24 +5,30 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 
 public class TermsActivity extends AppCompatActivity {
 
-    TextView backButton;
+    private MaterialToolbar toolbarTerms;
+    private ScrollView termsScrollView;
 
-    ScrollView termsScrollView;
-    LinearLayout termsMainLayout;
-    MaterialCardView termsCard;
+    private static final String PREF_NAME = "BorrowBuddy";
+    private static final String DARK_MODE = "darkMode";
 
     private static final int PURPLE =
             Color.rgb(106, 27, 154);
+
+    private static final int LIGHT_BACKGROUND =
+            Color.rgb(248, 249, 250);
+
+    private static final int LIGHT_STROKE =
+            Color.rgb(221, 221, 221);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,37 +45,33 @@ public class TermsActivity extends AppCompatActivity {
         }
 
         // =========================
+        // FIND VIEWS
+        // =========================
+
+        toolbarTerms =
+                findViewById(R.id.toolbarTerms);
+
+        termsScrollView =
+                findViewById(R.id.termsScrollView);
+
+        // =========================
+        // TOOLBAR BACK BUTTON
+        // =========================
+
+        toolbarTerms.setNavigationOnClickListener(
+                v -> finish()
+        );
+
+        // =========================
         // STATUS BAR
         // =========================
 
         getWindow().setStatusBarColor(PURPLE);
 
         // White status bar icons
-        getWindow().getDecorView().setSystemUiVisibility(0);
-
-        // =========================
-        // FIND VIEWS
-        // =========================
-
-        backButton =
-                findViewById(R.id.backButton);
-
-        termsScrollView =
-                findViewById(R.id.termsScrollView);
-
-        termsMainLayout =
-                findViewById(R.id.termsMainLayout);
-
-        termsCard =
-                findViewById(R.id.termsCard);
-
-        // =========================
-        // BACK BUTTON
-        // =========================
-
-        backButton.setOnClickListener(v -> {
-            finish();
-        });
+        getWindow()
+                .getDecorView()
+                .setSystemUiVisibility(0);
 
         // =========================
         // LOAD DARK MODE
@@ -77,13 +79,13 @@ public class TermsActivity extends AppCompatActivity {
 
         SharedPreferences preferences =
                 getSharedPreferences(
-                        "BorrowBuddy",
+                        PREF_NAME,
                         MODE_PRIVATE
                 );
 
         boolean isDarkMode =
                 preferences.getBoolean(
-                        "darkMode",
+                        DARK_MODE,
                         false
                 );
 
@@ -100,61 +102,44 @@ public class TermsActivity extends AppCompatActivity {
 
     private void darkMode() {
 
-        // =========================
-        // BACKGROUND
-        // =========================
-
+        // Background
         termsScrollView.setBackgroundColor(
                 Color.BLACK
         );
 
-        termsMainLayout.setBackgroundColor(
-                Color.BLACK
-        );
+        View content =
+                termsScrollView.getChildAt(0);
 
-        // =========================
-        // CARD
-        // =========================
+        if (content != null) {
 
-        termsCard.setCardBackgroundColor(
-                Color.BLACK
-        );
-
-        termsCard.setStrokeColor(
-                Color.WHITE
-        );
-
-        termsCard.setStrokeWidth(2);
-
-        // =========================
-        // ALL TEXT WHITE
-        // =========================
-
-        changeAllTextColor(
-                termsMainLayout,
-                Color.WHITE
-        );
-
-        // =========================
-        // HEADER
-        // =========================
-
-        View header =
-                findViewById(R.id.termsHeader);
-
-        if (header != null) {
-
-            header.setBackgroundColor(
-                    PURPLE
+            content.setBackgroundColor(
+                    Color.BLACK
             );
 
-            setHeaderTextWhite(header);
+            changeAllTextColor(
+                    content,
+                    Color.WHITE
+            );
+
+            changeCardsColor(
+                    content,
+                    Color.BLACK
+            );
         }
 
-        // =========================
-        // STATUS BAR
-        // =========================
+        // Toolbar
+        toolbarTerms.setBackgroundColor(
+                PURPLE
+        );
 
+        toolbarTerms.setNavigationIcon(
+                R.drawable.ic_arrow_back
+        );
+
+        // Toolbar title white
+        setToolbarTextWhite();
+
+        // Status bar
         getWindow().setStatusBarColor(
                 PURPLE
         );
@@ -170,96 +155,76 @@ public class TermsActivity extends AppCompatActivity {
 
     private void lightMode() {
 
-        // =========================
-        // BACKGROUND
-        // =========================
-
+        // Background
         termsScrollView.setBackgroundColor(
-                Color.rgb(248, 249, 250)
+                LIGHT_BACKGROUND
         );
 
-        termsMainLayout.setBackgroundColor(
-                Color.rgb(248, 249, 250)
-        );
+        View content =
+                termsScrollView.getChildAt(0);
 
-        // =========================
-        // CARD
-        // =========================
+        if (content != null) {
 
-        termsCard.setCardBackgroundColor(
-                Color.WHITE
-        );
-
-        termsCard.setStrokeColor(
-                Color.rgb(221, 221, 221)
-        );
-
-        termsCard.setStrokeWidth(1);
-
-        // =========================
-        // ALL TEXT BLACK
-        // =========================
-
-        changeAllTextColor(
-                termsMainLayout,
-                Color.BLACK
-        );
-
-        // =========================
-        // HEADER
-        // =========================
-
-        View header =
-                findViewById(R.id.termsHeader);
-
-        if (header != null) {
-
-            header.setBackgroundColor(
-                    PURPLE
+            content.setBackgroundColor(
+                    LIGHT_BACKGROUND
             );
 
-            setHeaderTextWhite(header);
+            changeAllTextColor(
+                    content,
+                    Color.BLACK
+            );
+
+            changeCardsColor(
+                    content,
+                    Color.WHITE
+            );
         }
 
-        // =========================
-        // STATUS BAR
-        // =========================
+        // Toolbar
+        toolbarTerms.setBackgroundColor(
+                PURPLE
+        );
 
+        toolbarTerms.setNavigationIcon(
+                R.drawable.ic_arrow_back
+        );
+
+        // Toolbar title white
+        setToolbarTextWhite();
+
+        // Status bar
         getWindow().setStatusBarColor(
                 PURPLE
         );
 
-        // White status bar icons
         getWindow()
                 .getDecorView()
                 .setSystemUiVisibility(0);
     }
 
     // ==================================================
-    // HEADER TEXT WHITE
+    // TOOLBAR TEXT WHITE
     // ==================================================
 
-    private void setHeaderTextWhite(View view) {
+    private void setToolbarTextWhite() {
 
-        if (view instanceof TextView) {
-
-            ((TextView) view).setTextColor(
-                    Color.WHITE
-            );
+        if (toolbarTerms == null) {
+            return;
         }
 
-        if (view instanceof ViewGroup) {
+        for (int i = 0;
+             i < toolbarTerms.getChildCount();
+             i++) {
 
-            ViewGroup group =
-                    (ViewGroup) view;
+            View child =
+                    toolbarTerms.getChildAt(i);
 
-            for (int i = 0;
-                 i < group.getChildCount();
-                 i++) {
+            if (child instanceof TextView) {
 
-                setHeaderTextWhite(
-                        group.getChildAt(i)
-                );
+                ((TextView) child)
+                        .setTextColor(
+                                Color.WHITE
+                        );
             }
         }
     }
@@ -275,17 +240,8 @@ public class TermsActivity extends AppCompatActivity {
 
         if (view instanceof TextView) {
 
-            TextView textView =
-                    (TextView) view;
-
-            // Header ko baad mein white rakhenge
-            if (textView.getId()
-                    != R.id.backButton &&
-                    textView.getId()
-                            != R.id.headerTitle) {
-
-                textView.setTextColor(color);
-            }
+            ((TextView) view)
+                    .setTextColor(color);
         }
 
         if (view instanceof ViewGroup) {
@@ -298,6 +254,59 @@ public class TermsActivity extends AppCompatActivity {
                  i++) {
 
                 changeAllTextColor(
+                        group.getChildAt(i),
+                        color
+                );
+            }
+        }
+    }
+
+    // ==================================================
+    // CHANGE ALL CARDS
+    // ==================================================
+
+    private void changeCardsColor(
+            View view,
+            int color
+    ) {
+
+        if (view instanceof MaterialCardView) {
+
+            MaterialCardView card =
+                    (MaterialCardView) view;
+
+            card.setCardBackgroundColor(
+                    color
+            );
+
+            if (color == Color.BLACK) {
+
+                card.setStrokeColor(
+                        Color.WHITE
+                );
+
+                card.setStrokeWidth(1);
+
+            } else {
+
+                card.setStrokeColor(
+                        LIGHT_STROKE
+                );
+
+                card.setStrokeWidth(1);
+            }
+        }
+
+        if (view instanceof ViewGroup) {
+
+            ViewGroup group =
+                    (ViewGroup) view;
+
+            for (int i = 0;
+                 i < group.getChildCount();
+                 i++) {
+
+                changeCardsColor(
                         group.getChildAt(i),
                         color
                 );

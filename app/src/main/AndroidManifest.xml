@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
     <!-- Location permissions -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- Camera permission -->
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- Camera is optional because user can choose Photos -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
+    <!-- Camera permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Camera is optional because user can choose Photos -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" />
@@ -16,104 +21,196 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BorrowBuddy">
-        <activity
-            android:name=".activities.EditItemActivity"
-            android:exported="false" />
+
         <!-- ================= SPLASH ================= -->
         <activity
             android:name=".SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- ================= CHOOSE ROLE ================= -->
+        </activity>
+
+        <!-- ================= CHOOSE ROLE ================= -->
         <activity
             android:name=".ChooseRoleActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" /> <!-- ================= USER ================= -->
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- ================= USER AUTHENTICATION ================= -->
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
-        <activity
-            android:name=".UserHomeActivity"
-            android:exported="false" /> <!-- ================= OWNER ================= -->
-        <activity
-            android:name=".OwnerLoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OwnerHomeActivity"
-            android:exported="false" /> <!-- ================= ADMIN ================= -->
-        <activity
-            android:name=".AdminLoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AdminHomeActivity"
-            android:exported="false" /> <!-- ================= AUTHENTICATION ================= -->
+
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
+
         <activity
             android:name=".ForgotPasswordActivity"
             android:exported="false" />
+
         <activity
             android:name=".CreateNewPasswordActivity"
             android:exported="false" />
+
         <activity
             android:name=".OTPActivity"
-            android:exported="false" /> <!-- ================= PROFILE ================= -->
+            android:exported="false" />
+
+        <!-- ================= USER HOME ================= -->
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SearchFilterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ItemDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+
         <activity
             android:name=".MyProfileActivity"
-            android:exported="false" /> <!-- ================= OWNER MODULE ================= -->
+            android:exported="false" />
+
+        <activity
+            android:name=".MyActivityActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MyBookingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".NotificationActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".HelpsSupportActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingSuccessActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingDetailActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingCancelledActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".RentalReviewActivity"
+            android:exported="false" />
+
+        <!-- ================= OWNER ================= -->
+        <activity
+            android:name=".OwnerLoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".OwnerHomeActivity"
+            android:exported="false" />
+
+        <!-- ================= ADMIN ================= -->
+        <activity
+            android:name=".AdminLoginActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminHomeActivity"
+            android:exported="false" />
+
+        <!-- ================= OWNER MODULE ================= -->
         <activity
             android:name=".activities.OwnerDashboardActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.AddItemActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".activities.EditItemActivity"
+            android:exported="false" />
+
         <activity
             android:name=".activities.MyListingsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.RentalHistoryActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.EarningsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.BorrowerRatingActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.SettingsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.OwnerProfileActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.EditOwnerProfileActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.ChangePasswordActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.MyItemRequestsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.RatingsReviewsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.HelpSupportActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.TermsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.RentalRequestsActivity"
             android:exported="false" />
+
         <activity
             android:name=".activities.RequestDetailsActivity"
             android:exported="false" />
+
     </application>
 
 </manifest>

@@ -22,10 +22,16 @@ public class LoginActivity extends AppCompatActivity {
     private CardView loginCard;
     private TextView txtBackLogin;
 
+    private String role;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login);
+
+        // Get selected role
+        role = getIntent().getStringExtra("role");
 
         // Initialize Views
         imgLogo = findViewById(R.id.imgLogo);
@@ -41,19 +47,48 @@ public class LoginActivity extends AppCompatActivity {
         txtBackLogin = findViewById(R.id.txtBackLogin);
 
         // Animation
-        Animation logoAnim = AnimationUtils.loadAnimation(this, R.anim.logo_zoom);
-        Animation cardAnim = AnimationUtils.loadAnimation(this, R.anim.card_slide_up);
+        Animation logoAnim =
+                AnimationUtils.loadAnimation(
+                        this,
+                        R.anim.logo_zoom
+                );
+
+        Animation cardAnim =
+                AnimationUtils.loadAnimation(
+                        this,
+                        R.anim.card_slide_up
+                );
 
         imgLogo.startAnimation(logoAnim);
         loginCard.startAnimation(cardAnim);
 
-        // Login
+        // =========================
+        // LOGIN
+        // =========================
+
         btnLogin.setOnClickListener(v -> {
 
-            String email = etEmail.getText().toString().trim();
-            String password = etPassword.getText().toString().trim();
+            String email =
+                    etEmail.getText().toString().trim();
 
-            if (email.equals("admin@gmail.com") && password.equals("123456")) {
+            String password =
+                    etPassword.getText().toString().trim();
+
+            if (email.isEmpty()) {
+                etEmail.setError("Enter email");
+                etEmail.requestFocus();
+                return;
+            }
+
+            if (password.isEmpty()) {
+                etPassword.setError("Enter password");
+                etPassword.requestFocus();
+                return;
+            }
+
+            // TEST LOGIN
+            if (email.equals("admin@gmail.com")
+                    && password.equals("123456")) {
 
                 Toast.makeText(
                         LoginActivity.this,
@@ -61,13 +96,18 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT
                 ).show();
 
-                Intent intent = new Intent(LoginActivity.this, OTPActivity.class);
+                // Go to OTP
+                Intent intent = new Intent(
+                        LoginActivity.this,
+                        OTPActivity.class
+                );
 
-                String role = getIntent().getStringExtra("role");
+                // Pass selected role
                 intent.putExtra("role", role);
 
                 startActivity(intent);
                 finish();
+
             } else {
 
                 Toast.makeText(
@@ -75,12 +115,13 @@ public class LoginActivity extends AppCompatActivity {
                         "Invalid Email or Password",
                         Toast.LENGTH_SHORT
                 ).show();
-
             }
-
         });
 
-        // Create Account
+        // =========================
+        // CREATE ACCOUNT
+        // =========================
+
         btnCreate.setOnClickListener(v -> {
 
             Intent intent = new Intent(
@@ -88,11 +129,16 @@ public class LoginActivity extends AppCompatActivity {
                     RegisterActivity.class
             );
 
-            startActivity(intent);
+            // Keep role
+            intent.putExtra("role", role);
 
+            startActivity(intent);
         });
 
-        // Forgot Password
+        // =========================
+        // FORGOT PASSWORD
+        // =========================
+
         txtForgot.setOnClickListener(v -> {
 
             Intent intent = new Intent(
@@ -101,9 +147,12 @@ public class LoginActivity extends AppCompatActivity {
             );
 
             startActivity(intent);
-
-
         });
+
+        // =========================
+        // BACK
+        // =========================
+
         txtBackLogin.setOnClickListener(v -> {
             finish();
         });
