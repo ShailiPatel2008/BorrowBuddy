@@ -34,7 +34,7 @@ public class PaymentActivity extends AppCompatActivity
     // private static final String RAZORPAY_KEY_ID = "rzp_test_xxxxxxxxxx";
 
     private static final String RAZORPAY_KEY_ID =
-            "YOUR_RAZORPAY_TEST_KEY_ID";
+            "rzp_test_TW1nbXrfkT1wt9,iGp24SKYGHBZtPj7VJ9ppXm7\n";
 
 
     // ==================================================

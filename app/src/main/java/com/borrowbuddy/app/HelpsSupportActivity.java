@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.card.MaterialCardView;
 
-public class HelpSupportActivity extends AppCompatActivity {
+public class HelpsSupportActivity extends AppCompatActivity {
 
     // =========================
     // VIEWS
@@ -136,7 +136,7 @@ public class HelpSupportActivity extends AppCompatActivity {
             } catch (Exception e) {
 
                 Toast.makeText(
-                        HelpSupportActivity.this,
+                        HelpsSupportActivity.this,
                         "No email application found",
                         Toast.LENGTH_SHORT
                 ).show();

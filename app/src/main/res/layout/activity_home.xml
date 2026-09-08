@@ -8,9 +8,7 @@
     android:orientation="vertical"
     android:background="#FFFFFF">
 
-    <!-- ================================================= -->
-    <!-- HEADER - PURPLE -->
-    <!-- ================================================= -->
+    <!-- HEADER -->
 
     <LinearLayout
         android:id="@+id/headerLayout"
@@ -22,7 +20,6 @@
         android:paddingEnd="12dp"
         android:background="#6A1B9A">
 
-        <!-- BACK -->
         <TextView
             android:id="@+id/backButton"
             android:layout_width="40dp"
@@ -34,7 +31,6 @@
             android:clickable="true"
             android:focusable="true"/>
 
-        <!-- TITLE -->
         <TextView
             android:id="@+id/headerTitle"
             android:layout_width="0dp"
@@ -46,7 +42,6 @@
             android:textStyle="bold"
             android:textColor="#FFFFFF"/>
 
-        <!-- SETTINGS -->
         <TextView
             android:id="@+id/settingsIcon"
             android:layout_width="50dp"
@@ -61,9 +56,7 @@
     </LinearLayout>
 
 
-    <!-- ================================================= -->
-    <!-- HOME SCROLL CONTENT -->
-    <!-- ================================================= -->
+    <!-- HOME CONTENT -->
 
     <ScrollView
         android:id="@+id/homeScrollView"
@@ -82,9 +75,7 @@
             android:background="#FFFFFF">
 
 
-            <!-- ================================================= -->
             <!-- GREETING -->
-            <!-- ================================================= -->
 
             <TextView
                 android:id="@+id/helloText"
@@ -98,9 +89,7 @@
                 android:layout_marginBottom="15dp"/>
 
 
-            <!-- ================================================= -->
-            <!-- SEARCH BAR -->
-            <!-- ================================================= -->
+            <!-- SEARCH -->
 
             <LinearLayout
                 android:id="@+id/searchBar"
@@ -134,9 +123,7 @@
             </LinearLayout>
 
 
-            <!-- ================================================= -->
-            <!-- BROWSE CATEGORIES TITLE -->
-            <!-- ================================================= -->
+            <!-- BROWSE CATEGORIES -->
 
             <TextView
                 android:layout_width="match_parent"
@@ -149,9 +136,7 @@
                 android:layout_marginBottom="18dp"/>
 
 
-            <!-- ================================================= -->
             <!-- CATEGORY ROW 1 -->
-            <!-- ================================================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -159,9 +144,6 @@
                 android:orientation="horizontal"
                 android:weightSum="3"
                 android:layout_marginBottom="12dp">
-
-
-                <!-- ELECTRONICS -->
 
                 <LinearLayout
                     android:id="@+id/electronicsCard"
@@ -193,8 +175,6 @@
                 </LinearLayout>
 
 
-                <!-- TOOLS -->
-
                 <LinearLayout
                     android:id="@+id/toolsCard"
                     android:layout_width="0dp"
@@ -225,8 +205,6 @@
 
                 </LinearLayout>
 
-
-                <!-- BOOKS -->
 
                 <LinearLayout
                     android:id="@+id/booksCard"
@@ -260,9 +238,7 @@
             </LinearLayout>
 
 
-            <!-- ================================================= -->
             <!-- CATEGORY ROW 2 -->
-            <!-- ================================================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -270,9 +246,6 @@
                 android:orientation="horizontal"
                 android:weightSum="3"
                 android:layout_marginBottom="25dp">
-
-
-                <!-- SPORTS -->
 
                 <LinearLayout
                     android:id="@+id/sportsCard"
@@ -304,8 +277,6 @@
                 </LinearLayout>
 
 
-                <!-- FURNITURE -->
-
                 <LinearLayout
                     android:id="@+id/furnitureCard"
                     android:layout_width="0dp"
@@ -336,8 +307,6 @@
 
                 </LinearLayout>
 
-
-                <!-- KITCHEN -->
 
                 <LinearLayout
                     android:id="@+id/kitchenCard"
@@ -371,9 +340,7 @@
             </LinearLayout>
 
 
-            <!-- ================================================= -->
             <!-- POPULAR ITEMS TITLE -->
-            <!-- ================================================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -405,9 +372,7 @@
             </LinearLayout>
 
 
-            <!-- ================================================= -->
             <!-- POPULAR ITEMS -->
-            <!-- ================================================= -->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -415,9 +380,6 @@
                 android:orientation="horizontal"
                 android:weightSum="2"
                 android:layout_marginBottom="15dp">
-
-
-                <!-- BICYCLE -->
 
                 <LinearLayout
                     android:id="@+id/bicycleCard"
@@ -458,8 +420,6 @@
 
                 </LinearLayout>
 
-
-                <!-- GAMING CONSOLE -->
 
                 <LinearLayout
                     android:id="@+id/gamingCard"
@@ -507,9 +467,7 @@
     </ScrollView>
 
 
-    <!-- ================================================= -->
-    <!-- BOTTOM NAVIGATION - WHITE ROUNDED CARD -->
-    <!-- ================================================= -->
+    <!-- BOTTOM NAVIGATION -->
 
     <androidx.cardview.widget.CardView
         android:id="@+id/bottomNavigationCard"
@@ -517,9 +475,12 @@
         android:layout_height="65dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginBottom="10dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
+        app:cardUseCompatPadding="false"
+        app:cardPreventCornerOverlap="false"
         app:cardBackgroundColor="#FFFFFF">
 
         <LinearLayout
@@ -528,10 +489,9 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:gravity="center"
-            android:background="#FFFFFF">
-
-
-            <!-- HOME -->
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:background="@android:color/transparent">
 
             <TextView
                 android:id="@+id/homeNav"
@@ -539,27 +499,23 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="🏠"
-                android:textSize="27sp"
+                android:text="⌂"
+                android:textSize="30sp"
+                android:textColor="#6A1B9A"
                 android:clickable="true"
                 android:focusable="true"/>
 
-
-            <!-- MY ACTIVITY -->
-
             <TextView
-                android:id="@+id/activityNav"
+                android:id="@+id/searchNav"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="📋"
-                android:textSize="27sp"
+                android:text="⌕"
+                android:textSize="30sp"
+                android:textColor="#6A1B9A"
                 android:clickable="true"
                 android:focusable="true"/>
-
-
-            <!-- MY BOOKINGS -->
 
             <TextView
                 android:id="@+id/bookingsNav"
@@ -567,13 +523,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="📦"
+                android:text="▣"
                 android:textSize="27sp"
+                android:textColor="#6A1B9A"
                 android:clickable="true"
                 android:focusable="true"/>
-
-
-            <!-- MY PROFILE -->
 
             <TextView
                 android:id="@+id/profileNav"
@@ -581,8 +535,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="👤"
-                android:textSize="27sp"
+                android:text="♙"
+                android:textSize="29sp"
+                android:textColor="#6A1B9A"
                 android:clickable="true"
                 android:focusable="true"/>
 

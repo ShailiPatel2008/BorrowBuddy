@@ -33,14 +33,94 @@
             android:windowSoftInputMode="adjustResize" />
 
 
-        <!-- ================= USER ================= -->
+        <!-- ================= USER AUTHENTICATION ================= -->
 
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
 
         <activity
-            android:name=".UserHomeActivity"
+            android:name=".RegisterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ForgotPasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".CreateNewPasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".OTPActivity"
+            android:exported="false" />
+
+
+        <!-- ================= USER HOME ================= -->
+
+        <activity
+            android:name=".HomeActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SearchFilterActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ItemDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MyProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MyActivityActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MyBookingsActivity"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".NotificationActivity"
+            android:exported="false" />
+
+
+
+        <activity
+            android:name=".BookingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HelpsSupportActivity"
+            android:exported="false" />
+
+
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingSuccessActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BookingCancelledActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RentalReviewActivity"
             android:exported="false" />
 
 
@@ -66,31 +146,7 @@
             android:exported="false" />
 
 
-        <!-- ================= AUTHENTICATION ================= -->
-
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".ForgotPasswordActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".CreateNewPasswordActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".OTPActivity"
-            android:exported="false" />
-
-
         <!-- ================= PROFILE ================= -->
-
-        <activity
-            android:name=".MyProfileActivity"
-            android:exported="false" />
-
 
         <!-- ================= OWNER MODULE ================= -->
 

@@ -23,7 +23,6 @@ public class ChooseRoleActivity extends AppCompatActivity {
         // =========================
         // USER
         // =========================
-
         cardUser.setOnClickListener(v -> {
 
             Intent intent = new Intent(
@@ -32,15 +31,12 @@ public class ChooseRoleActivity extends AppCompatActivity {
             );
 
             intent.putExtra("role", "user");
-
             startActivity(intent);
         });
-
 
         // =========================
         // OWNER
         // =========================
-
         cardOwner.setOnClickListener(v -> {
 
             Intent intent = new Intent(
@@ -49,15 +45,12 @@ public class ChooseRoleActivity extends AppCompatActivity {
             );
 
             intent.putExtra("role", "owner");
-
             startActivity(intent);
         });
-
 
         // =========================
         // ADMIN
         // =========================
-
         cardAdmin.setOnClickListener(v -> {
 
             Intent intent = new Intent(
@@ -66,7 +59,6 @@ public class ChooseRoleActivity extends AppCompatActivity {
             );
 
             intent.putExtra("role", "admin");
-
             startActivity(intent);
         });
     }

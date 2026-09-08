@@ -25,7 +25,6 @@ public class OTPActivity extends AppCompatActivity {
     private ImageView imgLogo;
     private CardView otpCard;
 
-    // Role
     private String role;
 
     @Override
@@ -34,10 +33,16 @@ public class OTPActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_otp);
 
-        // Get role from Login page
+        // =========================
+        // GET ROLE
+        // =========================
+
         role = getIntent().getStringExtra("role");
 
-        // Initialize Views
+        // =========================
+        // INITIALIZE VIEWS
+        // =========================
+
         etOtp = findViewById(R.id.etOtp);
         btnVerify = findViewById(R.id.btnVerify);
         txtBackLogin = findViewById(R.id.txtBackLogin);
@@ -45,25 +50,42 @@ public class OTPActivity extends AppCompatActivity {
         imgLogo = findViewById(R.id.imgLogo);
         otpCard = findViewById(R.id.otpCard);
 
-        // Logo Animation
-        Animation logoAnim =
-                AnimationUtils.loadAnimation(
-                        this,
-                        R.anim.logo_zoom
-                );
+        // =========================
+        // LOGO ANIMATION
+        // =========================
 
-        imgLogo.startAnimation(logoAnim);
+        try {
+            Animation logoAnim =
+                    AnimationUtils.loadAnimation(
+                            this,
+                            R.anim.logo_zoom
+                    );
 
-        // Card Animation
-        Animation cardAnim =
-                AnimationUtils.loadAnimation(
-                        this,
-                        R.anim.card_slide_up
-                );
+            imgLogo.startAnimation(logoAnim);
+        } catch (Exception e) {
+            // Animation error ignore
+        }
 
-        otpCard.startAnimation(cardAnim);
+        // =========================
+        // CARD ANIMATION
+        // =========================
 
-        // Back To Login
+        try {
+            Animation cardAnim =
+                    AnimationUtils.loadAnimation(
+                            this,
+                            R.anim.card_slide_up
+                    );
+
+            otpCard.startAnimation(cardAnim);
+        } catch (Exception e) {
+            // Animation error ignore
+        }
+
+        // =========================
+        // BACK TO LOGIN
+        // =========================
+
         txtBackLogin.setOnClickListener(v -> {
 
             if ("owner".equals(role)) {
@@ -73,7 +95,10 @@ public class OTPActivity extends AppCompatActivity {
                         OwnerLoginActivity.class
                 );
 
+                intent.putExtra("role", "owner");
+
                 startActivity(intent);
+                finish();
 
             } else if ("admin".equals(role)) {
 
@@ -82,7 +107,10 @@ public class OTPActivity extends AppCompatActivity {
                         AdminLoginActivity.class
                 );
 
+                intent.putExtra("role", "admin");
+
                 startActivity(intent);
+                finish();
 
             } else {
 
@@ -91,19 +119,28 @@ public class OTPActivity extends AppCompatActivity {
                         LoginActivity.class
                 );
 
-                startActivity(intent);
-            }
+                intent.putExtra("role", "user");
 
-            finish();
+                startActivity(intent);
+                finish();
+            }
         });
 
-        // Verify OTP
+        // =========================
+        // VERIFY OTP
+        // =========================
+
         btnVerify.setOnClickListener(v -> {
 
             String otp =
-                    etOtp.getText().toString().trim();
+                    etOtp.getText()
+                            .toString()
+                            .trim();
 
-            // Empty OTP
+            // =========================
+            // EMPTY OTP
+            // =========================
+
             if (TextUtils.isEmpty(otp)) {
 
                 etOtp.setError("Enter OTP");
@@ -112,20 +149,41 @@ public class OTPActivity extends AppCompatActivity {
                 return;
             }
 
-            // Correct OTP
-            if (otp.equals("1234")) {
+            // =========================
+            // OTP CHECK
+            // =========================
+
+            if (!otp.equals("1234")) {
+
+                etOtp.setError("Invalid OTP");
+                etOtp.requestFocus();
 
                 Toast.makeText(
                         OTPActivity.this,
-                        "OTP Verified Successfully",
+                        "Invalid OTP",
                         Toast.LENGTH_SHORT
                 ).show();
 
-                // =========================
-                // OWNER
-                // =========================
+                return;
+            }
 
-                if ("owner".equals(role)) {
+            // =========================
+            // OTP SUCCESS
+            // =========================
+
+            Toast.makeText(
+                    OTPActivity.this,
+                    "OTP Verified Successfully",
+                    Toast.LENGTH_SHORT
+            ).show();
+
+            // =========================
+            // OWNER
+            // =========================
+
+            if ("owner".equals(role)) {
+
+                try {
 
                     Intent intent = new Intent(
                             OTPActivity.this,
@@ -135,13 +193,24 @@ public class OTPActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
 
+                } catch (Exception e) {
+
+                    Toast.makeText(
+                            OTPActivity.this,
+                            "Owner Error: " + e.getMessage(),
+                            Toast.LENGTH_LONG
+                    ).show();
                 }
 
-                // =========================
-                // ADMIN
-                // =========================
+            }
 
-                else if ("admin".equals(role)) {
+            // =========================
+            // ADMIN
+            // =========================
+
+            else if ("admin".equals(role)) {
+
+                try {
 
                     Intent intent = new Intent(
                             OTPActivity.this,
@@ -151,34 +220,41 @@ public class OTPActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
 
+                } catch (Exception e) {
+
+                    Toast.makeText(
+                            OTPActivity.this,
+                            "Admin Error: " + e.getMessage(),
+                            Toast.LENGTH_LONG
+                    ).show();
                 }
 
-                // =========================
-                // USER
-                // =========================
+            }
 
-                else {
+            // =========================
+            // USER
+            // =========================
+
+            else {
+
+                try {
 
                     Intent intent = new Intent(
                             OTPActivity.this,
-                            UserHomeActivity.class
+                            HomeActivity.class
                     );
 
                     startActivity(intent);
                     finish();
+
+                } catch (Exception e) {
+
+                    Toast.makeText(
+                            OTPActivity.this,
+                            "Home Error: " + e.getMessage(),
+                            Toast.LENGTH_LONG
+                    ).show();
                 }
-
-            } else {
-
-                // Wrong OTP
-                etOtp.setError("Invalid OTP");
-                etOtp.requestFocus();
-
-                Toast.makeText(
-                        OTPActivity.this,
-                        "Invalid OTP",
-                        Toast.LENGTH_SHORT
-                ).show();
             }
         });
     }

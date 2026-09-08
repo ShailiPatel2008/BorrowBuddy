@@ -151,9 +151,10 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
 
         // ================= GET DATA =================
+        // HomeActivity sends "itemName"
 
         String name =
-                getIntent().getStringExtra("name");
+                getIntent().getStringExtra("itemName");
 
         String price =
                 getIntent().getStringExtra("price");
@@ -176,7 +177,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         } else {
 
-            itemName.setText("Canon Camera");
+            itemName.setText("Item");
         }
 
 
@@ -199,6 +200,12 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
             itemOwner.setText(
                     "Owner: Karan Patel"
+            );
+
+        } else if ("Gaming Console".equalsIgnoreCase(name)) {
+
+            itemOwner.setText(
+                    "Owner: Neha Patel"
             );
 
         } else if (name != null && !name.isEmpty()) {
@@ -224,10 +231,35 @@ public class ItemDetailsActivity extends AppCompatActivity {
                     "Category: " + category
             );
 
-        } else {
+        } else if ("Bicycle".equalsIgnoreCase(name)) {
+
+            itemCategory.setText(
+                    "Category: Sports"
+            );
+
+        } else if ("Gaming Console".equalsIgnoreCase(name)) {
 
             itemCategory.setText(
                     "Category: Electronics"
+            );
+
+        } else if ("Laptop".equalsIgnoreCase(name)) {
+
+            itemCategory.setText(
+                    "Category: Electronics"
+            );
+
+        } else if ("Camera".equalsIgnoreCase(name) ||
+                "Canon Camera".equalsIgnoreCase(name)) {
+
+            itemCategory.setText(
+                    "Category: Electronics"
+            );
+
+        } else {
+
+            itemCategory.setText(
+                    "Category: General"
             );
         }
 
@@ -239,6 +271,31 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
             itemPrice.setText(
                     "Price: " + price
+            );
+
+        } else if ("Bicycle".equalsIgnoreCase(name)) {
+
+            itemPrice.setText(
+                    "Price: ₹100/day"
+            );
+
+        } else if ("Gaming Console".equalsIgnoreCase(name)) {
+
+            itemPrice.setText(
+                    "Price: ₹500/day"
+            );
+
+        } else if ("Laptop".equalsIgnoreCase(name)) {
+
+            itemPrice.setText(
+                    "Price: ₹300/day"
+            );
+
+        } else if ("Camera".equalsIgnoreCase(name) ||
+                "Canon Camera".equalsIgnoreCase(name)) {
+
+            itemPrice.setText(
+                    "Price: ₹300/day"
             );
 
         } else {
@@ -260,6 +317,30 @@ public class ItemDetailsActivity extends AppCompatActivity {
                     location + ", Gujarat"
             );
 
+        } else if ("Bicycle".equalsIgnoreCase(name)) {
+
+            itemCity.setText("Ahmedabad");
+
+            itemLocation.setText(
+                    "Ahmedabad, Gujarat"
+            );
+
+        } else if ("Gaming Console".equalsIgnoreCase(name)) {
+
+            itemCity.setText("Surat");
+
+            itemLocation.setText(
+                    "Surat, Gujarat"
+            );
+
+        } else if ("Laptop".equalsIgnoreCase(name)) {
+
+            itemCity.setText("Vadodara");
+
+            itemLocation.setText(
+                    "Vadodara, Gujarat"
+            );
+
         } else {
 
             itemCity.setText("Ahmedabad");
@@ -277,6 +358,18 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
             itemRating.setText(rating);
 
+        } else if ("Bicycle".equalsIgnoreCase(name)) {
+
+            itemRating.setText("★★★★★");
+
+        } else if ("Gaming Console".equalsIgnoreCase(name)) {
+
+            itemRating.setText("★★★★☆");
+
+        } else if ("Laptop".equalsIgnoreCase(name)) {
+
+            itemRating.setText("★★★★☆");
+
         } else {
 
             itemRating.setText("★★★★☆");
@@ -289,8 +382,10 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
             itemDescription.setText(
                     "Good quality bicycle available " +
-                            "for borrowing. Please handle it " +
-                            "carefully and return it on time."
+                            "for borrowing. It is suitable " +
+                            "for daily rides and outdoor use. " +
+                            "Please handle it carefully and " +
+                            "return it on time."
             );
 
         } else if ("Gaming Console".equalsIgnoreCase(name)) {
@@ -305,8 +400,17 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
             itemDescription.setText(
                     "Good quality laptop available for " +
-                            "borrowing. Please handle it carefully " +
-                            "and return it on time."
+                            "borrowing. Please handle it " +
+                            "carefully and return it on time."
+            );
+
+        } else if ("Camera".equalsIgnoreCase(name) ||
+                "Canon Camera".equalsIgnoreCase(name)) {
+
+            itemDescription.setText(
+                    "Good quality camera available for " +
+                            "borrowing. Please handle it " +
+                            "carefully and return it on time."
             );
 
         } else {
@@ -324,9 +428,10 @@ public class ItemDetailsActivity extends AppCompatActivity {
         List<Integer> images =
                 new ArrayList<>();
 
-        // Temporary placeholder images.
-        // Backend/Firebase images baad mein yahan
-        // replace ho sakti hain.
+        /*
+         * Existing image system is kept unchanged.
+         * Firebase images can be connected here later.
+         */
 
         images.add(
                 R.drawable.ic_launcher_foreground
