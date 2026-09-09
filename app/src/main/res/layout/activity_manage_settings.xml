@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F6F3F8">
+
+    <!-- ================= TOOLBAR ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#AB47BC"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Settings"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="45dp"
+            android:layout_height="1dp"/>
+
+    </LinearLayout>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+
+            <!-- ================= NOTIFICATION BOX ================= -->
+
+            <LinearLayout
+                android:id="@+id/notificationBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF"
+                android:elevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtNotificationTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Notifications"
+                            android:textColor="#000000"
+                            android:textSize="17sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/txtNotificationSubtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Receive booking and update notifications"
+                            android:textColor="#777777"
+                            android:textSize="13sp"/>
+
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/switchNotification"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- ================= DARK MODE BOX ================= -->
+
+            <LinearLayout
+                android:id="@+id/darkModeBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="#FFFFFF"
+                android:elevation="3dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/txtDarkModeTitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Dark Mode"
+                            android:textColor="#000000"
+                            android:textSize="17sp"
+                            android:textStyle="bold"/>
+
+                        <TextView
+                            android:id="@+id/txtDarkModeSubtitle"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="Use dark appearance for this screen"
+                            android:textColor="#777777"
+                            android:textSize="13sp"/>
+
+                    </LinearLayout>
+
+                    <Switch
+                        android:id="@+id/switchDarkMode"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="false"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <!-- ================= ACCOUNT ================= -->
+
+            <TextView
+                android:id="@+id/txtAccountTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="10dp"
+                android:text="Account"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+
+            <!-- ================= CHANGE PASSWORD ================= -->
+
+            <TextView
+                android:id="@+id/btnChangePassword"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="Change Password"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:background="@drawable/grey_button"
+                android:clickable="true"
+                android:focusable="true"/>
+
+
+            <!-- ================= ADMIN PROFILE ================= -->
+
+            <TextView
+                android:id="@+id/btnAdminProfile"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Admin Profile"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:background="@drawable/grey_button"
+                android:clickable="true"
+                android:focusable="true"/>
+
+
+            <!-- ================= LOGOUT ================= -->
+
+            <TextView
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="Logout"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:background="@drawable/grey_button"
+                android:clickable="true"
+                android:focusable="true"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

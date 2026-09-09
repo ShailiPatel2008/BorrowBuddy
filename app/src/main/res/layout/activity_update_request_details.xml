@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F6F3F8">
+
+
+    <!-- ================= TOOLBAR ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#AB47BC">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:gravity="center"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"/>
+
+
+        <TextView
+            android:id="@+id/txtToolbarTitle"
+            android:layout_width="0dp"
+            android:layout_height="55dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Update Request"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold"/>
+
+
+        <View
+            android:layout_width="55dp"
+            android:layout_height="55dp"/>
+
+    </LinearLayout>
+
+
+    <!-- ================= DETAILS ================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <!-- ================= IMAGE ================= -->
+
+            <ImageView
+                android:id="@+id/imgItem"
+                android:layout_width="match_parent"
+                android:layout_height="210dp"
+                android:layout_marginBottom="18dp"
+                android:background="#D0D0D0"
+                android:padding="10dp"
+                android:scaleType="centerInside"
+                android:src="@android:drawable/ic_menu_gallery"/>
+
+
+            <!-- ================= ITEM NAME ================= -->
+
+            <TextView
+                android:id="@+id/txtItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Item Name"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp"/>
+
+
+            <!-- ================= OWNER ================= -->
+
+            <TextView
+                android:id="@+id/txtOwner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Owner"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp"/>
+
+
+            <!-- ================= CATEGORY ================= -->
+
+            <TextView
+                android:id="@+id/txtCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp"/>
+
+
+            <!-- ================= DESCRIPTION ================= -->
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp"/>
+
+
+            <!-- ================= PRICE ================= -->
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp"/>
+
+
+            <!-- ================= QUANTITY ================= -->
+
+            <TextView
+                android:id="@+id/txtQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Quantity"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp"/>
+
+
+            <!-- ================= CONDITION ================= -->
+
+            <TextView
+                android:id="@+id/txtCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Condition"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp"/>
+
+
+            <!-- ================= DEPOSIT ================= -->
+
+            <TextView
+                android:id="@+id/txtDeposit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Security Deposit"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_marginBottom="12dp"/>
+
+
+            <!-- ================= PICKUP ================= -->
+
+            <TextView
+                android:id="@+id/txtPickup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pickup Location"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:layout_marginBottom="30dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- ================= BOTTOM BUTTON BAR ================= -->
+
+    <LinearLayout
+        android:id="@+id/bottomActionBar"
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:padding="10dp"
+        android:background="#FFFFFF">
+
+
+        <!-- REJECT -->
+
+        <TextView
+            android:id="@+id/btnReject"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="7dp"
+            android:gravity="center"
+            android:text="REJECT"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:background="@drawable/grey_button"
+            android:clickable="true"
+            android:focusable="true"/>
+
+
+        <!-- APPROVE -->
+
+        <TextView
+            android:id="@+id/btnApprove"
+            android:layout_width="0dp"
+            android:layout_height="58dp"
+            android:layout_weight="1"
+            android:layout_marginStart="7dp"
+            android:gravity="center"
+            android:text="APPROVE"
+            android:textColor="#FFFFFF"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:background="@drawable/grey_button"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </LinearLayout>
+
+</LinearLayout>

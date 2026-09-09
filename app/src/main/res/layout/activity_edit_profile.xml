@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F6F3F8">
+
+    <!-- ================= TOOLBAR ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#AB47BC"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Edit Profile"
+            android:textColor="#FFFFFF"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+
+        <View
+            android:layout_width="45dp"
+            android:layout_height="1dp"/>
+
+    </LinearLayout>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp"
+            android:gravity="center_horizontal">
+
+            <!-- PROFILE PHOTO -->
+
+            <ImageView
+                android:id="@+id/imgProfile"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                android:src="@android:drawable/ic_menu_myplaces"
+                android:scaleType="centerInside"
+                android:contentDescription="Profile Photo"/>
+
+
+            <!-- CHANGE PHOTO -->
+
+            <TextView
+                android:id="@+id/btnChangePhoto"
+                android:layout_width="150dp"
+                android:layout_height="44dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Change Photo"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:background="@drawable/grey_button"
+                android:clickable="true"
+                android:focusable="true"/>
+
+
+            <!-- ================= FULL NAME ================= -->
+
+            <TextView
+                android:id="@+id/lblFullName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Full Name"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="#FFFFFF"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:hint="Enter full name"
+                android:textColor="#000000"
+                android:textColorHint="#777777"
+                android:textSize="15sp"
+                android:inputType="textPersonName"/>
+
+
+            <!-- ================= EMAIL ================= -->
+
+            <TextView
+                android:id="@+id/lblEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Email Address"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="#FFFFFF"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:hint="Enter email address"
+                android:textColor="#000000"
+                android:textColorHint="#777777"
+                android:textSize="15sp"
+                android:inputType="textEmailAddress"/>
+
+
+            <!-- ================= PHONE ================= -->
+
+            <TextView
+                android:id="@+id/lblPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Mobile Number"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/edtPhone"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="#FFFFFF"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:hint="Enter mobile number"
+                android:textColor="#000000"
+                android:textColorHint="#777777"
+                android:textSize="15sp"
+                android:inputType="phone"
+                android:maxLength="10"/>
+
+
+            <!-- ================= LOCATION ================= -->
+
+            <TextView
+                android:id="@+id/lblLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="Location"
+                android:textColor="#000000"
+                android:textSize="15sp"
+                android:textStyle="bold"/>
+
+            <EditText
+                android:id="@+id/edtLocation"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="6dp"
+                android:background="#FFFFFF"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:hint="Enter location"
+                android:textColor="#000000"
+                android:textColorHint="#777777"
+                android:textSize="15sp"
+                android:inputType="text"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <!-- ================= SAVE BUTTON ================= -->
+
+    <TextView
+        android:id="@+id/btnSaveChanges"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
+        android:layout_marginBottom="14dp"
+        android:gravity="center"
+        android:text="Save Changes"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:background="@drawable/grey_button"
+        android:clickable="true"
+        android:focusable="true"/>
+
+</LinearLayout>

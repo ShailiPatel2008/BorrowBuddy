@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F6F3F8">
+
+    <!-- ================= TOOLBAR ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#AB47BC">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Item Details"
+            android:textColor="#FFFFFF"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="55dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <!-- ================= PHOTOS ================= -->
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="230dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:id="@+id/photoContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"/>
+
+            </HorizontalScrollView>
+
+
+            <!-- ================= ITEM NAME ================= -->
+
+            <TextView
+                android:id="@+id/txtItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Canon Camera"
+                android:textColor="#000000"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="15dp"/>
+
+
+            <!-- ================= OWNER ================= -->
+
+            <TextView
+                android:id="@+id/txtOwner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Owner: Rahul"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginTop="5dp"/>
+
+
+            <!-- ================= CATEGORY ================= -->
+
+            <TextView
+                android:id="@+id/lblCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Category"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="18dp"/>
+
+            <TextView
+                android:id="@+id/txtCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Electronics"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"/>
+
+
+            <!-- ================= PICKUP ================= -->
+
+            <TextView
+                android:id="@+id/lblPickup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pickup Location"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/txtPickup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hazira, Surat"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"/>
+
+
+            <!-- ================= PRICE ================= -->
+
+            <TextView
+                android:id="@+id/lblPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Price"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="₹300/day"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"/>
+
+
+            <!-- ================= SECURITY DEPOSIT ================= -->
+
+            <TextView
+                android:id="@+id/lblDeposit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Security Deposit"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/txtDeposit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="₹1,000"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"/>
+
+
+            <!-- ================= CONDITION ================= -->
+
+            <TextView
+                android:id="@+id/lblCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Condition"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/txtCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Good"
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"/>
+
+
+            <!-- ================= DESCRIPTION ================= -->
+
+            <TextView
+                android:id="@+id/lblDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Description"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"/>
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Good quality item available for borrowing/renting."
+                android:textColor="#000000"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="20dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

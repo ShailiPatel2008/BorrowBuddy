@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F6F3F8">
+
+    <!-- ========================= -->
+    <!-- TOOLBAR -->
+    <!-- ========================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#AB47BC">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Listing Request Details"
+            android:textColor="#FFFFFF"
+            android:textSize="21sp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="55dp"
+            android:layout_height="1dp"/>
+
+    </LinearLayout>
+
+
+    <!-- ========================= -->
+    <!-- CONTENT -->
+    <!-- ========================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+
+            <!-- ========================= -->
+            <!-- PHOTOS -->
+            <!-- ========================= -->
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scrollbars="none"
+                android:overScrollMode="never">
+
+                <LinearLayout
+                    android:id="@+id/photoContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"/>
+
+            </HorizontalScrollView>
+
+
+            <!-- ========================= -->
+            <!-- ITEM NAME -->
+            <!-- ========================= -->
+
+            <TextView
+                android:id="@+id/txtItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Canon Camera"
+                android:textColor="#000000"
+                android:textSize="27sp"
+                android:textStyle="bold"/>
+
+
+            <!-- ========================= -->
+            <!-- OWNER -->
+            <!-- ========================= -->
+
+            <TextView
+                android:id="@+id/txtOwner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Owner: Rahul Patel"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+
+            <!-- ========================= -->
+            <!-- CATEGORY -->
+            <!-- ========================= -->
+
+            <TextView
+                android:id="@+id/txtCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="Category: Camera"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+
+            <!-- ========================= -->
+            <!-- DESCRIPTION -->
+            <!-- ========================= -->
+
+            <TextView
+                android:id="@+id/lblDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="Description"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:text="High quality Canon camera available for rental."
+                android:textColor="#000000"
+                android:textSize="17sp"/>
+
+
+            <!-- ========================= -->
+            <!-- PRICE -->
+            <!-- ========================= -->
+
+            <TextView
+                android:id="@+id/lblPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Price per day"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="₹300 / day"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+
+            <!-- ========================= -->
+            <!-- SECURITY DEPOSIT -->
+            <!-- ========================= -->
+
+            <TextView
+                android:id="@+id/lblDeposit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Security Deposit"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtDeposit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="₹1,000"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+
+            <!-- ========================= -->
+            <!-- PICKUP LOCATION -->
+            <!-- ========================= -->
+
+            <TextView
+                android:id="@+id/lblPickup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Pickup Location"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtPickup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Hazira, Surat"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+
+            <!-- ========================= -->
+            <!-- AVAILABLE FROM -->
+            <!-- ========================= -->
+
+            <TextView
+                android:id="@+id/lblAvailableFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Available From"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtAvailableFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="05 Sep 2026"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+
+            <!-- ========================= -->
+            <!-- CONTACT -->
+            <!-- ========================= -->
+
+            <TextView
+                android:id="@+id/lblContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Contact Number"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="9876543210"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+
+            <!-- ========================= -->
+            <!-- ITEM CONDITION -->
+            <!-- ========================= -->
+
+            <TextView
+                android:id="@+id/lblCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Item Condition"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtCondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="25dp"
+                android:text="Good"
+                android:textColor="#000000"
+                android:textSize="18sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

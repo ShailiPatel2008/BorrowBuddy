@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="purple">#AB47BC</color>
+    <color name="purple_dark">#4A148C</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <!-- Light Mode -->
+    <color name="screen_bg">#FFFFFF</color>
+    <color name="card_bg">#F5F5F5</color>
+
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#666666</color>
+
+    <!-- Soft Green -->
+    <color name="green">#388E5C</color>
+
+    <!-- Soft Red -->
+    <color name="red">#D85C5C</color>
+
+    <!-- Soft Orange -->
+    <color name="orange">#D98A32</color>
+
+    <color name="divider">#D0D0D0</color>
+    <color name="photo_bg">#EEEEEE</color>
+
+    <color name="button_bg">#FFFFFF</color>
+    <color name="button_text">#000000</color>
+    <color name="button_grey">#808080</color>
+    <color name="grey_button">#777777</color>
+
+    <color name="background">#FFFFFF</color>
+    <color name="card_background">#F5F5F5</color>
+    <color name="image_background">#F5F5F5</color>
+
+    <color name="hint_color">#555555</color>
+    <color name="input_background">#FFFFFF</color>
+    <color name="input_border">#888888</color>
+    <color name="medium_grey_button">#666666</color>
+
+
+
+</resources>

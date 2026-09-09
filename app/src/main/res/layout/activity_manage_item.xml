@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F6F3F8">
+
+    <!-- ================= TOOLBAR ================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#AB47BC"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <TextView
+            android:id="@+id/btnBack"
+            android:layout_width="45dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="←"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Manage Items"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <View
+            android:layout_width="45dp"
+            android:layout_height="1dp"/>
+
+    </LinearLayout>
+
+
+    <!-- ================= CONTENT ================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+
+            <!-- ================= ITEM 1 ================= -->
+
+            <LinearLayout
+                android:id="@+id/itemCard1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/dashboard_card"
+                android:elevation="3dp">
+
+                <TextView
+                    android:id="@+id/txtItem1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Canon Camera"
+                    android:textColor="#222222"
+                    android:textSize="19sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txtOwner1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Owner: Rahul"
+                    android:textColor="#666666"
+                    android:textSize="14sp"/>
+
+
+                <!-- VIEW DETAILS -->
+
+                <TextView
+                    android:id="@+id/btnViewDetails1"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="14dp"
+                    android:gravity="center"
+                    android:text="View Details"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/grey_button"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+
+                <!-- REMOVE ITEM -->
+
+                <TextView
+                    android:id="@+id/btnRemoveItem1"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center"
+                    android:text="Remove Item"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/grey_button"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+            </LinearLayout>
+
+
+            <!-- ================= ITEM 2 ================= -->
+
+            <LinearLayout
+                android:id="@+id/itemCard2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/dashboard_card"
+                android:elevation="3dp">
+
+                <TextView
+                    android:id="@+id/txtItem2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Drill Machine"
+                    android:textColor="#222222"
+                    android:textSize="19sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txtOwner2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Owner: Priya"
+                    android:textColor="#666666"
+                    android:textSize="14sp"/>
+
+
+                <!-- VIEW DETAILS -->
+
+                <TextView
+                    android:id="@+id/btnViewDetails2"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="14dp"
+                    android:gravity="center"
+                    android:text="View Details"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/grey_button"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+
+                <!-- REMOVE ITEM -->
+
+                <TextView
+                    android:id="@+id/btnRemoveItem2"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center"
+                    android:text="Remove Item"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/grey_button"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+            </LinearLayout>
+
+
+            <!-- ================= ITEM 3 ================= -->
+
+            <LinearLayout
+                android:id="@+id/itemCard3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:background="@drawable/dashboard_card"
+                android:elevation="3dp">
+
+                <TextView
+                    android:id="@+id/txtItem3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Projector"
+                    android:textColor="#222222"
+                    android:textSize="19sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/txtOwner3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="Owner: Amit"
+                    android:textColor="#666666"
+                    android:textSize="14sp"/>
+
+
+                <!-- VIEW DETAILS -->
+
+                <TextView
+                    android:id="@+id/btnViewDetails3"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="14dp"
+                    android:gravity="center"
+                    android:text="View Details"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/grey_button"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+
+                <!-- REMOVE ITEM -->
+
+                <TextView
+                    android:id="@+id/btnRemoveItem3"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginTop="9dp"
+                    android:gravity="center"
+                    android:text="Remove Item"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:background="@drawable/grey_button"
+                    android:clickable="true"
+                    android:focusable="true"/>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
