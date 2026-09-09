@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout
+    android:id="@+id/homeRootLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -20,27 +21,28 @@
         android:paddingEnd="12dp"
         android:background="#6A1B9A">
 
-        <TextView
-            android:id="@+id/backButton"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="←"
-            android:textSize="25sp"
-            android:textColor="#FFFFFF"
-            android:clickable="true"
-            android:focusable="true"/>
+        <!-- LEFT SPACE -->
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="match_parent" />
+
+
+        <!-- BORROWBUDDY TITLE -->
 
         <TextView
             android:id="@+id/headerTitle"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="BorrowBuddy"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
+            android:textColor="#FFFFFF" />
+
+
+        <!-- SETTINGS -->
 
         <TextView
             android:id="@+id/settingsIcon"
@@ -51,10 +53,9 @@
             android:textSize="27sp"
             android:textColor="#FFFFFF"
             android:clickable="true"
-            android:focusable="true"/>
+            android:focusable="true" />
 
     </LinearLayout>
-
 
     <!-- HOME CONTENT -->
 
@@ -126,6 +127,7 @@
             <!-- BROWSE CATEGORIES -->
 
             <TextView
+                android:id="@+id/browseCategoriesTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Browse Categories"
@@ -350,6 +352,7 @@
                 android:layout_marginBottom="14dp">
 
                 <TextView
+                    android:id="@+id/popularItemsTitle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -511,7 +514,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="⌕"
+                android:text="▤"
                 android:textSize="30sp"
                 android:textColor="#6A1B9A"
                 android:clickable="true"

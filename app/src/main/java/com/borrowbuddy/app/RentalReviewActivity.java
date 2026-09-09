@@ -17,15 +17,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 
 public class RentalReviewActivity extends AppCompatActivity {
 
     // ================= HEADER =================
 
-    TextView backButton;
-    TextView headerTitle;
-    LinearLayout headerLayout;
+    MaterialToolbar toolbar;
+
 
     // ================= MAIN =================
 
@@ -88,13 +88,29 @@ public class RentalReviewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rental_review);
 
         // =========================
-        // HIDE ACTION BAR
-        // =========================
+// MATERIAL TOOLBAR
+// =========================
+
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+
+            getSupportActionBar().setTitle("Rental Review");
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            getSupportActionBar().setHomeButtonEnabled(true);
         }
 
+// Toolbar title and back arrow
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIconTint(Color.WHITE);
+
+        toolbar.setNavigationOnClickListener(v -> {
+            finish();
+        });
         // =========================
         // STATUS BAR
         // =========================
@@ -111,14 +127,6 @@ public class RentalReviewActivity extends AppCompatActivity {
         // FIND VIEWS
         // =========================
 
-        headerLayout =
-                findViewById(R.id.headerLayout);
-
-        backButton =
-                findViewById(R.id.backButton);
-
-        headerTitle =
-                findViewById(R.id.headerTitle);
 
         reviewScroll =
                 findViewById(R.id.reviewScroll);
@@ -233,17 +241,6 @@ public class RentalReviewActivity extends AppCompatActivity {
                     "✓ Booking Completed"
             );
         }
-
-
-        // ==================================================
-        // BACK BUTTON
-        // ==================================================
-
-        backButton.setOnClickListener(v -> {
-
-            finish();
-
-        });
 
 
         // ==================================================
@@ -445,15 +442,11 @@ public class RentalReviewActivity extends AppCompatActivity {
 
 
         // Header
-        headerLayout.setBackgroundColor(
+        toolbar.setBackgroundColor(
                 PURPLE
         );
 
-        headerTitle.setTextColor(
-                Color.WHITE
-        );
-
-        backButton.setTextColor(
+        toolbar.setTitleTextColor(
                 Color.WHITE
         );
 
@@ -573,20 +566,18 @@ public class RentalReviewActivity extends AppCompatActivity {
                 Color.WHITE
         );
 
-
         // Header
-        headerLayout.setBackgroundColor(
+        toolbar.setBackgroundColor(
                 PURPLE
         );
 
-        headerTitle.setTextColor(
+        toolbar.setTitleTextColor(
                 Color.WHITE
         );
 
-        backButton.setTextColor(
+        toolbar.setNavigationIconTint(
                 Color.WHITE
         );
-
 
         // Main text
         reviewTitleColor(
@@ -677,6 +668,11 @@ public class RentalReviewActivity extends AppCompatActivity {
             int color
     ) {
 
+        // Do not change toolbar title color
+        if (view == toolbar) {
+            return;
+        }
+
         if (view instanceof TextView) {
 
             TextView textView =
@@ -686,13 +682,15 @@ public class RentalReviewActivity extends AppCompatActivity {
                     textView.getId();
 
 
-            // These are handled separately
-            if (id != R.id.backButton &&
-                    id != R.id.headerTitle &&
-                    id != R.id.itemName &&
+            // These text views have their own colors
+            // and should not be changed here.
+
+            if (id != R.id.itemName &&
                     id != R.id.ownerName &&
                     id != R.id.bookingStatus &&
+                    id != R.id.ratingTitle &&
                     id != R.id.ratingHint &&
+                    id != R.id.writeReviewTitle &&
                     id != R.id.reviewText &&
                     id != R.id.submitReviewButton) {
 

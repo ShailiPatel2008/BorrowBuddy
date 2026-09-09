@@ -199,12 +199,10 @@ public class SettingsActivity extends AppCompatActivity {
         // =========================
 
         cardChangePassword.setOnClickListener(v -> {
-
             Intent intent = new Intent(
                     SettingsActivity.this,
-                    ChangePasswordActivity.class
+                    OwnerChangePasswordActivity.class
             );
-
             startActivity(intent);
         });
     }

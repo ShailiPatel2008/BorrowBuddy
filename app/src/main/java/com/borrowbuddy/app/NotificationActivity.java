@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 
 public class NotificationActivity extends AppCompatActivity {
@@ -19,10 +20,7 @@ public class NotificationActivity extends AppCompatActivity {
 
     private ScrollView notificationScrollView;
     private ViewGroup notificationMainLayout;
-    private View notificationHeader;
-
-    private TextView backButton;
-    private TextView headerTitle;
+    private MaterialToolbar toolbar;
 
     private MaterialCardView notificationSettingCard;
     private MaterialCardView bookingUpdatesCard;
@@ -44,9 +42,34 @@ public class NotificationActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_notification);
 
+
+        // ==============================
+        // TOOLBAR
+        // ==============================
+
+        toolbar =
+                findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIconTint(Color.WHITE);
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+
+            getSupportActionBar().setTitle(
+                    "Notifications"
+            );
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(
+                    true
+            );
         }
+
+        toolbar.setNavigationOnClickListener(
+                v -> finish()
+        );
+
 
         // ==============================
         // STATUS BAR PURPLE
@@ -67,15 +90,6 @@ public class NotificationActivity extends AppCompatActivity {
 
         notificationMainLayout =
                 findViewById(R.id.notificationMainLayout);
-
-        notificationHeader =
-                findViewById(R.id.notificationHeader);
-
-        backButton =
-                findViewById(R.id.backButton);
-
-        headerTitle =
-                findViewById(R.id.headerTitle);
 
         notificationSettingCard =
                 findViewById(R.id.notificationSettingCard);
@@ -100,13 +114,6 @@ public class NotificationActivity extends AppCompatActivity {
 
         generalNotificationSwitch =
                 findViewById(R.id.generalNotificationSwitch);
-
-
-        // ==============================
-        // BACK BUTTON
-        // ==============================
-
-        backButton.setOnClickListener(v -> finish());
 
 
         // ==============================
@@ -168,12 +175,17 @@ public class NotificationActivity extends AppCompatActivity {
         // HEADER DARK PURPLE
         // ==============================
 
-        notificationHeader.setBackgroundColor(
+        toolbar.setBackgroundColor(
                 PURPLE
         );
 
-        backButton.setTextColor(Color.WHITE);
-        headerTitle.setTextColor(Color.WHITE);
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
+
+        toolbar.setNavigationIconTint(
+                Color.WHITE
+        );
 
 
         // ==============================
@@ -196,9 +208,14 @@ public class NotificationActivity extends AppCompatActivity {
         );
 
 
-        // Header again white
-        backButton.setTextColor(Color.WHITE);
-        headerTitle.setTextColor(Color.WHITE);
+        // Toolbar again white
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
+
+        toolbar.setNavigationIconTint(
+                Color.WHITE
+        );
 
 
         // ==============================
@@ -230,12 +247,17 @@ public class NotificationActivity extends AppCompatActivity {
         // HEADER DARK PURPLE
         // ==============================
 
-        notificationHeader.setBackgroundColor(
+        toolbar.setBackgroundColor(
                 PURPLE
         );
 
-        backButton.setTextColor(Color.WHITE);
-        headerTitle.setTextColor(Color.WHITE);
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
+
+        toolbar.setNavigationIconTint(
+                Color.WHITE
+        );
 
 
         // ==============================
@@ -258,9 +280,14 @@ public class NotificationActivity extends AppCompatActivity {
         );
 
 
-        // Header must remain white
-        backButton.setTextColor(Color.WHITE);
-        headerTitle.setTextColor(Color.WHITE);
+        // Toolbar must remain white
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
+
+        toolbar.setNavigationIconTint(
+                Color.WHITE
+        );
 
 
         // ==============================
@@ -321,18 +348,18 @@ public class NotificationActivity extends AppCompatActivity {
             int color
     ) {
 
+        // Do not change toolbar title
+        if (view == toolbar) {
+            return;
+        }
+
+
         if (view instanceof TextView) {
 
             TextView textView =
                     (TextView) view;
 
-            // Header ko skip karo
-            if (textView.getId() != R.id.backButton
-                    &&
-                    textView.getId() != R.id.headerTitle) {
-
-                textView.setTextColor(color);
-            }
+            textView.setTextColor(color);
         }
 
 

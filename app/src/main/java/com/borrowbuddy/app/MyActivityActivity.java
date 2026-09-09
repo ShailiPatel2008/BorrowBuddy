@@ -10,14 +10,13 @@ import android.view.Window;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MyActivityActivity extends AppCompatActivity {
 
-    TextView backButton;
-    TextView headerTitle;
-
+    com.google.android.material.appbar.MaterialToolbar toolbar;
     ScrollView activityScrollView;
     LinearLayout activityMainLayout;
 
@@ -41,20 +40,23 @@ public class MyActivityActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_my_activity);
 
-        // Hide ActionBar
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+            getSupportActionBar().setTitle("My Activity");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        toolbar.setNavigationOnClickListener(v -> finish());
+
 
         // =========================
         // FIND VIEWS
         // =========================
 
-        backButton =
-                findViewById(R.id.backButton);
 
-        headerTitle =
-                findViewById(R.id.headerTitle);
 
         activityScrollView =
                 findViewById(R.id.activityScrollView);
@@ -79,13 +81,6 @@ public class MyActivityActivity extends AppCompatActivity {
 
         trustScoreCard =
                 findViewById(R.id.trustScoreCard);
-
-
-        // =========================
-        // BACK BUTTON
-        // =========================
-
-        backButton.setOnClickListener(v -> finish());
 
 
         // =========================
@@ -162,21 +157,8 @@ public class MyActivityActivity extends AppCompatActivity {
         // HEADER
         // =========================
 
-        ViewGroup header =
-                (ViewGroup) headerTitle.getParent();
-
-        if (header != null) {
-
-            header.setBackgroundColor(PURPLE);
-        }
-
-        headerTitle.setTextColor(
-                Color.WHITE
-        );
-
-        backButton.setTextColor(
-                Color.WHITE
-        );
+        toolbar.setBackgroundColor(PURPLE);
+        toolbar.setTitleTextColor(Color.WHITE);
 
 
         // =========================
@@ -200,15 +182,6 @@ public class MyActivityActivity extends AppCompatActivity {
                 Color.WHITE
         );
 
-
-        // Header again white
-        headerTitle.setTextColor(
-                Color.WHITE
-        );
-
-        backButton.setTextColor(
-                Color.WHITE
-        );
     }
 
 
@@ -248,21 +221,9 @@ public class MyActivityActivity extends AppCompatActivity {
         // HEADER
         // =========================
 
-        ViewGroup header =
-                (ViewGroup) headerTitle.getParent();
+        toolbar.setBackgroundColor(PURPLE);
 
-        if (header != null) {
-
-            header.setBackgroundColor(PURPLE);
-        }
-
-        headerTitle.setTextColor(
-                Color.WHITE
-        );
-
-        backButton.setTextColor(
-                Color.WHITE
-        );
+        toolbar.setTitleTextColor(Color.WHITE);
 
 
         // =========================
@@ -284,16 +245,6 @@ public class MyActivityActivity extends AppCompatActivity {
         changeAllTextColor(
                 activityMainLayout,
                 Color.rgb(34, 34, 34)
-        );
-
-
-        // Header again white
-        headerTitle.setTextColor(
-                Color.WHITE
-        );
-
-        backButton.setTextColor(
-                Color.WHITE
         );
 
 

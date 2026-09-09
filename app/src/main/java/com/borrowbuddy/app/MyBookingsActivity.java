@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.appbar.MaterialToolbar;
 
 public class MyBookingsActivity extends AppCompatActivity {
 
@@ -23,7 +24,7 @@ public class MyBookingsActivity extends AppCompatActivity {
     // VIEWS
     // =========================
 
-    TextView backButton;
+    MaterialToolbar toolbar;
 
     ImageView bookingItemImage;
 
@@ -93,10 +94,16 @@ public class MyBookingsActivity extends AppCompatActivity {
         // HIDE ACTION BAR
         // =========================
 
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+            getSupportActionBar().setTitle("My Bookings");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
 
+        toolbar.setNavigationOnClickListener(v -> finish());
         // =========================
         // STATUS BAR
         // =========================
@@ -111,8 +118,7 @@ public class MyBookingsActivity extends AppCompatActivity {
         // FIND VIEWS
         // =========================
 
-        backButton =
-                findViewById(R.id.backButton);
+
 
         bookingItemImage =
                 findViewById(R.id.bookingItemImage);
@@ -231,13 +237,6 @@ public class MyBookingsActivity extends AppCompatActivity {
                 R.drawable.ic_launcher_foreground
         );
 
-        // ==================================================
-        // BACK BUTTON
-        // ==================================================
-
-        backButton.setOnClickListener(v -> {
-            finish();
-        });
 
         // ==================================================
         // VIEW DETAILS
@@ -305,6 +304,15 @@ public class MyBookingsActivity extends AppCompatActivity {
             intent.putExtra(
                     "ownerContact",
                     ownerContact
+            );
+
+            // =========================
+            // ITEM IMAGE
+            // =========================
+
+            intent.putExtra(
+                    "imageResId",
+                    R.drawable.ic_launcher_foreground
             );
 
             startActivity(intent);
@@ -453,17 +461,8 @@ public class MyBookingsActivity extends AppCompatActivity {
                 Color.WHITE
         );
 
-        View header =
-                myBookingsMainLayout.getChildAt(0);
-
-        if (header != null) {
-
-            header.setBackgroundColor(
-                    HOME_PURPLE
-            );
-
-            setHeaderTextWhite(header);
-        }
+        toolbar.setBackgroundColor(HOME_PURPLE);
+        toolbar.setTitleTextColor(Color.WHITE);
 
         getWindow().setStatusBarColor(
                 HOME_PURPLE
@@ -534,17 +533,8 @@ public class MyBookingsActivity extends AppCompatActivity {
                 Color.BLACK
         );
 
-        View header =
-                myBookingsMainLayout.getChildAt(0);
-
-        if (header != null) {
-
-            header.setBackgroundColor(
-                    HOME_PURPLE
-            );
-
-            setHeaderTextWhite(header);
-        }
+        toolbar.setBackgroundColor(HOME_PURPLE);
+        toolbar.setTitleTextColor(Color.WHITE);
 
         getWindow().setStatusBarColor(
                 HOME_PURPLE
@@ -630,8 +620,7 @@ public class MyBookingsActivity extends AppCompatActivity {
             TextView textView =
                     (TextView) view;
 
-            if (textView.getId() != R.id.backButton &&
-                    textView.getId() != R.id.viewDetailsButton &&
+            if (textView.getId() != R.id.viewDetailsButton &&
                     textView.getId() != R.id.giveReviewButton) {
 
                 textView.setTextColor(color);

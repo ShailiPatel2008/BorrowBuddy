@@ -22,6 +22,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -40,9 +41,7 @@ public class SearchFilterActivity extends AppCompatActivity {
     // HEADER
     // ==================================================
 
-    LinearLayout headerLayout;
-    TextView backButton;
-    TextView pageTitle;
+    MaterialToolbar toolbar;
 
 
     // ==================================================
@@ -125,12 +124,26 @@ public class SearchFilterActivity extends AppCompatActivity {
 
 
         // ==================================================
-        // ACTION BAR
+        // MATERIAL TOOLBAR
         // ==================================================
 
+        toolbar =
+                findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+
+            getSupportActionBar().setTitle(
+                    "Search & Filter"
+            );
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(
+                    true
+            );
         }
+
+        toolbar.setNavigationOnClickListener(v -> finish());
 
 
         // ==================================================
@@ -151,15 +164,6 @@ public class SearchFilterActivity extends AppCompatActivity {
 
         searchFilterLayout =
                 findViewById(R.id.searchFilterLayout);
-
-        headerLayout =
-                findViewById(R.id.headerLayout);
-
-        backButton =
-                findViewById(R.id.backButton);
-
-        pageTitle =
-                findViewById(R.id.pageTitle);
 
 
         // ==================================================
@@ -260,13 +264,6 @@ public class SearchFilterActivity extends AppCompatActivity {
         // ==================================================
 
         applyDarkMode();
-
-
-        // ==================================================
-        // BACK BUTTON
-        // ==================================================
-
-        backButton.setOnClickListener(v -> finish());
 
 
         // ==================================================
@@ -717,15 +714,11 @@ public class SearchFilterActivity extends AppCompatActivity {
         // HEADER
         // ==================================================
 
-        headerLayout.setBackgroundColor(
+        toolbar.setBackgroundColor(
                 PURPLE
         );
 
-        pageTitle.setTextColor(
-                Color.WHITE
-        );
-
-        backButton.setTextColor(
+        toolbar.setTitleTextColor(
                 Color.WHITE
         );
 

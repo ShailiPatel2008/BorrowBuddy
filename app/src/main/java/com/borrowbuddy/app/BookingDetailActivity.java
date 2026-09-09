@@ -1,12 +1,13 @@
 package com.borrowbuddy.app;
 
+import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,49 +16,82 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.WindowCompat;
+import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BookingDetailActivity extends AppCompatActivity {
 
-    // ================= HEADER =================
+    // =========================================================
+    // TOOLBAR
+    // =========================================================
 
-    LinearLayout headerLayout;
-    TextView backButton;
-    TextView headerTitle;
+    private MaterialToolbar toolbar;
 
-    // ================= MAIN =================
+    // =========================================================
+    // MAIN LAYOUT
+    // =========================================================
 
-    ScrollView bookingDetailScrollView;
-    LinearLayout bookingDetailMainLayout;
+    private ScrollView bookingDetailScrollView;
+    private LinearLayout bookingDetailMainLayout;
 
-    // ================= IMAGE =================
+    // =========================================================
+    // IMAGE SECTION
+    // =========================================================
 
-    ImageView itemImage;
+    private MaterialCardView itemImageCard;
+    private ViewPager2 imageViewPager;
 
-    // ================= TEXT =================
+    private TextView dot1;
+    private TextView dot2;
+    private TextView dot3;
+    private TextView dot4;
+    private TextView dot5;
 
-    TextView itemName;
-    TextView priceText;
-    TextView durationText;
-    TextView startDateText;
-    TextView endDateText;
-    TextView statusText;
-    TextView bookingIdText;
-    TextView ownerNameText;
-    TextView ownerContactText;
+    private ItemImageAdapter imageAdapter;
 
-    // ================= CARDS =================
+    private ArrayList<Integer> images =
+            new ArrayList<>();
 
-    MaterialCardView bookingInfoCard;
-    MaterialCardView ownerDetailsCard;
+    // =========================================================
+    // BOOKING DETAILS
+    // =========================================================
 
-    // ================= BUTTON =================
+    private TextView itemNameText;
+    private TextView priceText;
+    private TextView durationText;
+    private TextView startDateText;
+    private TextView endDateText;
+    private TextView statusText;
+    private TextView bookingIdText;
 
-    Button cancelBookingButton;
+    // =========================================================
+    // OWNER DETAILS
+    // =========================================================
 
-    // ================= COLORS =================
+    private TextView ownerNameText;
+    private TextView ownerContactText;
+
+    // =========================================================
+    // CARDS
+    // =========================================================
+
+    private MaterialCardView bookingInfoCard;
+    private MaterialCardView ownerDetailsCard;
+
+    // =========================================================
+    // BUTTON
+    // =========================================================
+
+    private Button cancelBookingButton;
+
+    // =========================================================
+    // COLORS
+    // =========================================================
 
     private static final int PURPLE =
             Color.rgb(106, 27, 154);
@@ -68,7 +102,9 @@ public class BookingDetailActivity extends AppCompatActivity {
     private static final int LIGHT_BACKGROUND =
             Color.rgb(245, 247, 250);
 
-    // ================= PREFERENCES =================
+    // =========================================================
+    // PREFERENCES
+    // =========================================================
 
     private static final String PREF_NAME =
             "BorrowBuddy";
@@ -76,15 +112,40 @@ public class BookingDetailActivity extends AppCompatActivity {
     private static final String DARK_MODE =
             "darkMode";
 
-    // ================= CURRENT BOOKING DATA =================
+    // =========================================================
+    // BOOKING DATA
+    // =========================================================
 
-    private String currentItemName = "Item";
-    private String currentPrice = "₹0";
-    private String currentDuration = "0 Days";
-    private String currentStatus = "Confirmed";
-    private String currentBookingId = "BB1025";
-    private String currentOwnerName = "Unknown";
-    private String currentOwnerContact = "Not Available";
+    private String bookingItemName =
+            "Canon Camera";
+
+    private String bookingPrice =
+            "₹300 / day";
+
+    private String bookingDuration =
+            "3 Days";
+
+    private String bookingStartDate =
+            "05 Aug 2026";
+
+    private String bookingEndDate =
+            "07 Aug 2026";
+
+    private String bookingStatus =
+            "● Completed";
+
+    private String bookingId =
+            "BB1025";
+
+    private String ownerName =
+            "Rahul Patel";
+
+    private String ownerContact =
+            "9876543210";
+
+    // =========================================================
+    // ON CREATE
+    // =========================================================
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,42 +156,36 @@ public class BookingDetailActivity extends AppCompatActivity {
                 R.layout.activity_booking_detail
         );
 
-        // =========================
-        // HIDE ACTION BAR
-        // =========================
+        // =====================================================
+        // TOOLBAR
+        // =====================================================
+
+        toolbar =
+                findViewById(R.id.toolbar);
+
+        toolbar.setNavigationIconTint(
+                Color.WHITE
+        );
+
+        setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+
+            getSupportActionBar().setTitle(
+                    "Booking Detail"
+            );
+
+            getSupportActionBar()
+                    .setDisplayHomeAsUpEnabled(true);
         }
 
-        // =========================
-        // STATUS BAR
-        // =========================
+        toolbar.setNavigationOnClickListener(
+                v -> finish()
+        );
 
-        getWindow().setStatusBarColor(PURPLE);
-        getWindow().setNavigationBarColor(PURPLE);
-
-        WindowCompat.getInsetsController(
-                getWindow(),
-                getWindow().getDecorView()
-        ).setAppearanceLightStatusBars(false);
-
-        // =========================
-        // FIND HEADER
-        // =========================
-
-        headerLayout =
-                findViewById(R.id.headerLayout);
-
-        backButton =
-                findViewById(R.id.backButton);
-
-        headerTitle =
-                findViewById(R.id.headerTitle);
-
-        // =========================
-        // FIND MAIN
-        // =========================
+        // =====================================================
+        // INITIALIZE VIEWS
+        // =====================================================
 
         bookingDetailScrollView =
                 findViewById(
@@ -142,47 +197,66 @@ public class BookingDetailActivity extends AppCompatActivity {
                         R.id.bookingDetailMainLayout
                 );
 
-        // =========================
-        // FIND IMAGE
-        // =========================
+        itemImageCard =
+                findViewById(
+                        R.id.itemImageCard
+                );
 
-        itemImage =
-                findViewById(R.id.itemImage);
+        imageViewPager =
+                findViewById(
+                        R.id.imageViewPager
+                );
 
-        // =========================
-        // FIND TEXT
-        // =========================
+        dot1 = findViewById(R.id.dot1);
+        dot2 = findViewById(R.id.dot2);
+        dot3 = findViewById(R.id.dot3);
+        dot4 = findViewById(R.id.dot4);
+        dot5 = findViewById(R.id.dot5);
 
-        itemName =
-                findViewById(R.id.itemName);
+        itemNameText =
+                findViewById(
+                        R.id.itemName
+                );
 
         priceText =
-                findViewById(R.id.priceText);
+                findViewById(
+                        R.id.priceText
+                );
 
         durationText =
-                findViewById(R.id.durationText);
+                findViewById(
+                        R.id.durationText
+                );
 
         startDateText =
-                findViewById(R.id.startDateText);
+                findViewById(
+                        R.id.startDateText
+                );
 
         endDateText =
-                findViewById(R.id.endDateText);
+                findViewById(
+                        R.id.endDateText
+                );
 
         statusText =
-                findViewById(R.id.statusText);
+                findViewById(
+                        R.id.statusText
+                );
 
         bookingIdText =
-                findViewById(R.id.bookingIdText);
+                findViewById(
+                        R.id.bookingIdText
+                );
 
         ownerNameText =
-                findViewById(R.id.ownerNameText);
+                findViewById(
+                        R.id.ownerNameText
+                );
 
         ownerContactText =
-                findViewById(R.id.ownerContactText);
-
-        // =========================
-        // FIND CARDS
-        // =========================
+                findViewById(
+                        R.id.ownerContactText
+                );
 
         bookingInfoCard =
                 findViewById(
@@ -194,220 +268,329 @@ public class BookingDetailActivity extends AppCompatActivity {
                         R.id.ownerDetailsCard
                 );
 
-        // =========================
-        // FIND BUTTON
-        // =========================
-
         cancelBookingButton =
                 findViewById(
                         R.id.cancelBookingButton
                 );
 
-        // ==================================================
-        // RECEIVE BOOKING DATA FROM MY BOOKINGS
-        // ==================================================
+        // =====================================================
+        // GET DATA FROM INTENT
+        // =====================================================
 
-        String receivedItemName =
-                getIntent().getStringExtra(
-                        "itemName"
-                );
+        Intent intent =
+                getIntent();
 
-        if (receivedItemName != null &&
-                !receivedItemName.trim().isEmpty()) {
+        if (intent != null) {
 
-            currentItemName =
-                    receivedItemName;
+            String value;
+
+            value =
+                    intent.getStringExtra(
+                            "itemName"
+                    );
+
+            if (value != null &&
+                    !value.isEmpty()) {
+
+                bookingItemName = value;
+            }
+
+            value =
+                    intent.getStringExtra(
+                            "price"
+                    );
+
+            if (value != null &&
+                    !value.isEmpty()) {
+
+                bookingPrice = value;
+            }
+
+            value =
+                    intent.getStringExtra(
+                            "duration"
+                    );
+
+            if (value != null &&
+                    !value.isEmpty()) {
+
+                bookingDuration = value;
+            }
+
+            value =
+                    intent.getStringExtra(
+                            "startDate"
+                    );
+
+            if (value != null &&
+                    !value.isEmpty()) {
+
+                bookingStartDate = value;
+            }
+
+            value =
+                    intent.getStringExtra(
+                            "endDate"
+                    );
+
+            if (value != null &&
+                    !value.isEmpty()) {
+
+                bookingEndDate = value;
+            }
+
+            value =
+                    intent.getStringExtra(
+                            "status"
+                    );
+
+            if (value != null &&
+                    !value.isEmpty()) {
+
+                bookingStatus = value;
+            }
+
+            value =
+                    intent.getStringExtra(
+                            "bookingId"
+                    );
+
+            if (value != null &&
+                    !value.isEmpty()) {
+
+                bookingId = value;
+            }
+
+            value =
+                    intent.getStringExtra(
+                            "ownerName"
+                    );
+
+            if (value != null &&
+                    !value.isEmpty()) {
+
+                ownerName = value;
+            }
+
+            value =
+                    intent.getStringExtra(
+                            "ownerContact"
+                    );
+
+            if (value != null &&
+                    !value.isEmpty()) {
+
+                ownerContact = value;
+            }
         }
 
-        String receivedPrice =
-                getIntent().getStringExtra(
-                        "price"
-                );
+        // =====================================================
+        // SET BOOKING INFORMATION
+        // =====================================================
 
-        if (receivedPrice != null &&
-                !receivedPrice.trim().isEmpty()) {
-
-            currentPrice =
-                    receivedPrice;
-        }
-
-        String receivedDuration =
-                getIntent().getStringExtra(
-                        "duration"
-                );
-
-        if (receivedDuration != null &&
-                !receivedDuration.trim().isEmpty()) {
-
-            currentDuration =
-                    receivedDuration;
-        }
-
-        String receivedStatus =
-                getIntent().getStringExtra(
-                        "status"
-                );
-
-        if (receivedStatus != null &&
-                !receivedStatus.trim().isEmpty()) {
-
-            currentStatus =
-                    receivedStatus;
-        }
-
-        String receivedBookingId =
-                getIntent().getStringExtra(
-                        "bookingId"
-                );
-
-        if (receivedBookingId != null &&
-                !receivedBookingId.trim().isEmpty()) {
-
-            currentBookingId =
-                    receivedBookingId;
-        }
-
-        String receivedOwnerName =
-                getIntent().getStringExtra(
-                        "ownerName"
-                );
-
-        if (receivedOwnerName != null &&
-                !receivedOwnerName.trim().isEmpty()) {
-
-            currentOwnerName =
-                    receivedOwnerName;
-        }
-
-        String receivedOwnerContact =
-                getIntent().getStringExtra(
-                        "ownerContact"
-                );
-
-        if (receivedOwnerContact != null &&
-                !receivedOwnerContact.trim().isEmpty()) {
-
-            currentOwnerContact =
-                    receivedOwnerContact;
-        }
-
-        // ==================================================
-        // SHOW BOOKING DATA
-        // ==================================================
-
-        itemName.setText(
-                currentItemName
+        itemNameText.setText(
+                bookingItemName
         );
 
         priceText.setText(
-                "Price: " + currentPrice
+                bookingPrice
         );
 
         durationText.setText(
-                "Duration: " + currentDuration
+                bookingDuration
         );
 
         startDateText.setText(
-                "Start Date: Today"
+                bookingStartDate
         );
 
         endDateText.setText(
-                "End Date: After " +
-                        currentDuration
+                bookingEndDate
         );
 
         statusText.setText(
-                "Status: " + currentStatus
+                bookingStatus
         );
 
         bookingIdText.setText(
-                "Booking ID: " +
-                        currentBookingId
+                "Booking ID: " + bookingId
         );
 
-        // ==================================================
-        // OWNER
-        // ==================================================
-
         ownerNameText.setText(
-                "Owner: " +
-                        currentOwnerName
+                ownerName
         );
 
         ownerContactText.setText(
-                "Contact: " +
-                        currentOwnerContact
+                ownerContact
         );
 
-        // ==================================================
-        // IMAGE
-        // ==================================================
+        // =====================================================
+        // SET UP IMAGES
+        // =====================================================
 
-        int imageResId =
-                getIntent().getIntExtra(
-                        "imageResId",
-                        0
-                );
+        setupImages();
 
-        if (imageResId != 0) {
+        // =====================================================
+        // VIEWPAGER PAGE CHANGE
+        // =====================================================
 
-            itemImage.setImageResource(
-                    imageResId
-            );
-        }
+        imageViewPager.registerOnPageChangeCallback(
+                new ViewPager2.OnPageChangeCallback() {
 
-        // ==================================================
-        // BACK BUTTON
-        // ==================================================
+                    @Override
+                    public void onPageSelected(
+                            int position
+                    ) {
 
-        backButton.setOnClickListener(v -> {
-            finish();
-        });
+                        super.onPageSelected(
+                                position
+                        );
 
-        // ==================================================
+                        updateDots(position);
+                    }
+                }
+        );
+
+        // =====================================================
         // CANCEL BOOKING
-        // ==================================================
+        // =====================================================
 
-        cancelBookingButton.setOnClickListener(v -> {
+        cancelBookingButton.setOnClickListener(
+                v -> showCancelDialog()
+        );
 
-            showCancelDialog();
-
-        });
-
-        // ==================================================
-        // APPLY DARK MODE
-        // ==================================================
+        // =====================================================
+        // DARK MODE
+        // =====================================================
 
         applyDarkMode();
     }
 
-    // ==================================================
-    // CANCEL DIALOG
-    // ==================================================
+    // =========================================================
+    // SETUP IMAGES
+    // =========================================================
+
+    private void setupImages() {
+
+        /*
+         * Currently BorrowBuddy is using the demo
+         * ic_launcher_foreground image.
+         *
+         * We keep 5 positions just like Item Details.
+         * Later these can be replaced with actual
+         * uploaded item images.
+         */
+
+        images.clear();
+
+        images.add(
+                R.drawable.ic_launcher_foreground
+        );
+
+        images.add(
+                R.drawable.ic_launcher_foreground
+        );
+
+        images.add(
+                R.drawable.ic_launcher_foreground
+        );
+
+        images.add(
+                R.drawable.ic_launcher_foreground
+        );
+
+        images.add(
+                R.drawable.ic_launcher_foreground
+        );
+
+        imageAdapter =
+                new ItemImageAdapter(
+                        images
+                );
+
+        imageViewPager.setAdapter(
+                imageAdapter
+        );
+
+        imageViewPager.setCurrentItem(
+                0,
+                false
+        );
+
+        updateDots(0);
+    }
+
+    // =========================================================
+    // UPDATE DOTS
+    // =========================================================
+
+    private void updateDots(
+            int position
+    ) {
+
+        TextView[] dots = {
+                dot1,
+                dot2,
+                dot3,
+                dot4,
+                dot5
+        };
+
+        for (int i = 0;
+             i < dots.length;
+             i++) {
+
+            if (i < images.size()) {
+
+                dots[i].setVisibility(
+                        View.VISIBLE
+                );
+
+                if (i == position) {
+
+                    dots[i].setText(
+                            "●"
+                    );
+
+                } else {
+
+                    dots[i].setText(
+                            "○"
+                    );
+                }
+
+            } else {
+
+                dots[i].setVisibility(
+                        View.GONE
+                );
+            }
+        }
+    }
+
+    // =========================================================
+    // CANCEL BOOKING DIALOG
+    // =========================================================
 
     private void showCancelDialog() {
 
-        new AlertDialog.Builder(
-                BookingDetailActivity.this
-        )
+        new AlertDialog.Builder(this)
 
                 .setTitle(
                         "Cancel Booking"
                 )
 
                 .setMessage(
-                        "Are you sure you want to cancel " +
-                                currentItemName +
-                                " booking?"
+                        "Are you sure you want to cancel this booking?"
                 )
 
                 .setNegativeButton(
-                        "No",
+                        "NO",
                         null
                 )
 
                 .setPositiveButton(
-                        "Yes, Cancel",
+                        "YES",
                         (dialog, which) -> {
 
                             Intent intent =
@@ -416,22 +599,19 @@ public class BookingDetailActivity extends AppCompatActivity {
                                             BookingCancelledActivity.class
                                     );
 
-                            // SAME ITEM
                             intent.putExtra(
                                     "itemName",
-                                    currentItemName
+                                    bookingItemName
                             );
 
-                            // SAME BOOKING ID
                             intent.putExtra(
                                     "bookingId",
-                                    currentBookingId
+                                    bookingId
                             );
 
-                            // SAME OWNER
                             intent.putExtra(
                                     "ownerName",
-                                    currentOwnerName
+                                    ownerName
                             );
 
                             startActivity(intent);
@@ -443,192 +623,155 @@ public class BookingDetailActivity extends AppCompatActivity {
                 .show();
     }
 
-    // ==================================================
-    // APPLY DARK MODE
-    // ==================================================
+    // =========================================================
+    // DARK / LIGHT MODE
+    // =========================================================
 
     private void applyDarkMode() {
 
-        SharedPreferences preferences =
+        boolean darkMode =
                 getSharedPreferences(
                         PREF_NAME,
                         MODE_PRIVATE
-                );
-
-        boolean isDarkMode =
-                preferences.getBoolean(
+                ).getBoolean(
                         DARK_MODE,
                         false
                 );
 
-        if (isDarkMode) {
+        if (darkMode) {
 
-            darkMode();
+            // Main background
+            bookingDetailScrollView
+                    .setBackgroundColor(
+                            Color.BLACK
+                    );
+
+            bookingDetailMainLayout
+                    .setBackgroundColor(
+                            Color.BLACK
+                    );
+
+            // Cards
+            bookingInfoCard
+                    .setCardBackgroundColor(
+                            DARK_CARD
+                    );
+
+            ownerDetailsCard
+                    .setCardBackgroundColor(
+                            DARK_CARD
+                    );
+
+            itemImageCard
+                    .setCardBackgroundColor(
+                            Color.BLACK
+                    );
+
+            // Text
+            changeAllTextColor(
+                    bookingDetailMainLayout,
+                    Color.WHITE
+            );
+
+            // Status
+            statusText.setTextColor(
+                    Color.rgb(
+                            129,
+                            199,
+                            132
+                    )
+            );
+
+            // Booking ID
+            bookingIdText.setTextColor(
+                    Color.LTGRAY
+            );
 
         } else {
 
-            lightMode();
+            // Main background
+            bookingDetailScrollView
+                    .setBackgroundColor(
+                            LIGHT_BACKGROUND
+                    );
+
+            bookingDetailMainLayout
+                    .setBackgroundColor(
+                            LIGHT_BACKGROUND
+                    );
+
+            // Cards
+            bookingInfoCard
+                    .setCardBackgroundColor(
+                            Color.WHITE
+                    );
+
+            ownerDetailsCard
+                    .setCardBackgroundColor(
+                            Color.WHITE
+                    );
+
+            itemImageCard
+                    .setCardBackgroundColor(
+                            Color.WHITE
+                    );
+
+            // Text
+            changeAllTextColor(
+                    bookingDetailMainLayout,
+                    Color.BLACK
+            );
+
+            // Status
+            statusText.setTextColor(
+                    Color.rgb(
+                            46,
+                            125,
+                            50
+                    )
+            );
+
+            // Booking ID
+            bookingIdText.setTextColor(
+                    Color.DKGRAY
+            );
         }
-    }
 
-    // ==================================================
-    // DARK MODE
-    // ==================================================
+        // Always keep toolbar purple
+        // and toolbar title/arrow white.
 
-    private void darkMode() {
-
-        bookingDetailScrollView.setBackgroundColor(
-                Color.BLACK
-        );
-
-        bookingDetailMainLayout.setBackgroundColor(
-                Color.BLACK
-        );
-
-        bookingInfoCard.setCardBackgroundColor(
-                DARK_CARD
-        );
-
-        ownerDetailsCard.setCardBackgroundColor(
-                DARK_CARD
-        );
-
-        changeAllTextColor(
-                bookingDetailMainLayout,
-                Color.WHITE
-        );
-
-        setPurpleHeader();
-
-        cancelBookingButton.setBackgroundTintList(
-                ColorStateList.valueOf(
-                        Color.rgb(211, 47, 47)
-                )
-        );
-
-        cancelBookingButton.setTextColor(
-                Color.WHITE
-        );
-
-        statusText.setTextColor(
-                Color.rgb(129, 199, 132)
-        );
-    }
-
-    // ==================================================
-    // LIGHT MODE
-    // ==================================================
-
-    private void lightMode() {
-
-        bookingDetailScrollView.setBackgroundColor(
-                LIGHT_BACKGROUND
-        );
-
-        bookingDetailMainLayout.setBackgroundColor(
-                LIGHT_BACKGROUND
-        );
-
-        bookingInfoCard.setCardBackgroundColor(
-                Color.WHITE
-        );
-
-        ownerDetailsCard.setCardBackgroundColor(
-                Color.WHITE
-        );
-
-        changeAllTextColor(
-                bookingDetailMainLayout,
-                Color.BLACK
-        );
-
-        setPurpleHeader();
-
-        cancelBookingButton.setBackgroundTintList(
-                ColorStateList.valueOf(
-                        Color.rgb(211, 47, 47)
-                )
-        );
-
-        cancelBookingButton.setTextColor(
-                Color.WHITE
-        );
-
-        statusText.setTextColor(
-                Color.rgb(46, 125, 50)
-        );
-    }
-
-    // ==================================================
-    // PURPLE HEADER
-    // ==================================================
-
-    private void setPurpleHeader() {
-
-        headerLayout.setBackgroundColor(
+        toolbar.setBackgroundColor(
                 PURPLE
         );
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
-
-        getWindow().setNavigationBarColor(
-                PURPLE
-        );
-
-        WindowCompat.getInsetsController(
-                getWindow(),
-                getWindow().getDecorView()
-        ).setAppearanceLightStatusBars(false);
-
-        headerTitle.setTextColor(
+        toolbar.setTitleTextColor(
                 Color.WHITE
         );
 
-        backButton.setTextColor(
+        toolbar.setNavigationIconTint(
                 Color.WHITE
         );
-
-        for (int i = 0;
-             i < headerLayout.getChildCount();
-             i++) {
-
-            View child =
-                    headerLayout.getChildAt(i);
-
-            if (!(child instanceof TextView)) {
-
-                child.setBackgroundColor(
-                        PURPLE
-                );
-            }
-        }
     }
 
-    // ==================================================
+    // =========================================================
     // CHANGE TEXT COLOR
-    // ==================================================
+    // =========================================================
 
     private void changeAllTextColor(
             View view,
             int color
     ) {
 
+        if (view == toolbar) {
+            return;
+        }
+
         if (view instanceof TextView) {
 
-            TextView textView =
-                    (TextView) view;
+            ((TextView) view)
+                    .setTextColor(color);
 
-            if (textView.getId()
-                    != R.id.backButton &&
-                    textView.getId()
-                            != R.id.headerTitle) {
-
-                textView.setTextColor(
-                        color
-                );
-            }
+            return;
         }
 
         if (view instanceof ViewGroup) {
@@ -648,18 +791,95 @@ public class BookingDetailActivity extends AppCompatActivity {
         }
     }
 
-    // ==================================================
-    // ON RESUME
-    // ==================================================
+    // =========================================================
+    // RESUME
+    // =========================================================
 
     @Override
     protected void onResume() {
 
         super.onResume();
 
-        if (bookingDetailMainLayout != null) {
+        applyDarkMode();
+    }
 
-            applyDarkMode();
+    // =========================================================
+    // BACK
+    // =========================================================
+
+    @Override
+    public boolean onSupportNavigateUp() {
+
+        finish();
+
+        return true;
+    }
+
+    // =========================================================
+    // FULL SCREEN IMAGE
+    // =========================================================
+
+    public void showFullImage(
+            int imageResId
+    ) {
+
+        final Dialog dialog =
+                new Dialog(this);
+
+        dialog.requestWindowFeature(
+                Window.FEATURE_NO_TITLE
+        );
+
+        ImageView fullImageView =
+                new ImageView(this);
+
+        fullImageView.setLayoutParams(
+                new ViewGroup.LayoutParams(
+                        ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.MATCH_PARENT
+                )
+        );
+
+        fullImageView.setScaleType(
+                ImageView.ScaleType.FIT_CENTER
+        );
+
+        fullImageView.setBackgroundColor(
+                Color.BLACK
+        );
+
+        fullImageView.setImageResource(
+                imageResId
+        );
+
+        fullImageView.setOnClickListener(
+                v -> dialog.dismiss()
+        );
+
+        dialog.setContentView(
+                fullImageView
+        );
+
+        dialog.show();
+
+        Window window =
+                dialog.getWindow();
+
+        if (window != null) {
+
+            window.setBackgroundDrawableResource(
+                    android.R.color.black
+            );
+
+            window.setFlags(
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                    WindowManager.LayoutParams.FLAG_FULLSCREEN
+            );
+
+            window.setLayout(
+                    WindowManager.LayoutParams.MATCH_PARENT,
+                    WindowManager.LayoutParams.MATCH_PARENT
+            );
         }
     }
 }

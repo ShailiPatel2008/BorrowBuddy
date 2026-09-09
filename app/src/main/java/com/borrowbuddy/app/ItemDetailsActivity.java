@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
@@ -20,8 +21,10 @@ import java.util.List;
 
 public class ItemDetailsActivity extends AppCompatActivity {
 
-    TextView backButton;
-    TextView headerTitle;
+    // ================= TOOLBAR =================
+
+    MaterialToolbar toolbar;
+
 
     TextView itemName;
     TextView itemOwner;
@@ -65,11 +68,26 @@ public class ItemDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_item_details);
 
 
-        // ================= ACTION BAR =================
+        // ================= TOOLBAR =================
+
+        toolbar =
+                findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
 
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+
+            getSupportActionBar().setTitle(
+                    "Item Details"
+            );
+
+            getSupportActionBar()
+                    .setDisplayHomeAsUpEnabled(true);
         }
+
+        toolbar.setNavigationOnClickListener(
+                v -> finish()
+        );
 
 
         // ================= STATUS BAR =================
@@ -95,11 +113,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
         imageViewPager =
                 findViewById(R.id.imageViewPager);
 
-        backButton =
-                findViewById(R.id.backButton);
-
-        headerTitle =
-                findViewById(R.id.headerTitle);
 
         itemName =
                 findViewById(R.id.itemName);
@@ -480,13 +493,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
         showDot(0);
 
 
-        // ================= BACK =================
-
-        backButton.setOnClickListener(
-                v -> finish()
-        );
-
-
         // ================= DARK MODE =================
 
         applyDarkMode();
@@ -599,23 +605,9 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         // ================= HEADER =================
 
-        View header =
-                findViewById(
-                        R.id.itemDetailsHeader
-                );
+        toolbar.setBackgroundColor(PURPLE);
 
-
-        if (header != null) {
-
-            header.setBackgroundColor(PURPLE);
-        }
-
-
-        backButton.setTextColor(
-                Color.WHITE
-        );
-
-        headerTitle.setTextColor(
+        toolbar.setTitleTextColor(
                 Color.WHITE
         );
 

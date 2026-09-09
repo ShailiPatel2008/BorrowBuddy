@@ -19,41 +19,14 @@
 
         <!-- ================= HEADER ================= -->
 
-        <LinearLayout
-            android:id="@+id/headerLayout"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="#6A1B9A"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/backButton"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="←"
-                android:textColor="#FFFFFF"
-                android:textSize="32sp" />
-
-            <TextView
-                android:id="@+id/headerTitle"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="My Bookings"
-                android:textColor="#FFFFFF"
-                android:textSize="22sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="60dp"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:background="#6C4AB6"
+            android:title="My Bookings"
+            android:titleTextColor="@android:color/white"
+            app:navigationIconTint="@android:color/white" />
 
 
         <!-- ================= PAGE TITLE ================= -->

@@ -16,71 +16,33 @@
         android:orientation="vertical"
         android:paddingBottom="30dp">
 
-        <!-- Header -->
-        <LinearLayout
-            android:id="@+id/profileHeader"
+        <!-- Toolbar -->
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="?attr/actionBarSize"
             android:background="#6A1B9A"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/backButton"
-                android:layout_width="60dp"
-                android:layout_height="70dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="←"
-                android:textColor="#FFFFFF"
-                android:textSize="32sp" />
-
-            <TextView
-                android:id="@+id/headerTitle"
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="My Profile"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <View
-                android:layout_width="60dp"
-                android:layout_height="70dp" />
-
-        </LinearLayout>
+            android:title="My Profile"
+            android:titleTextColor="@android:color/white"
+            app:navigationIconTint="@android:color/white" />
 
 
         <!-- Profile Image -->
+
         <ImageView
             android:id="@+id/profileImage"
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp"
+            android:background="#DDDDDD"
             android:contentDescription="Profile Photo"
             android:scaleType="centerCrop" />
 
 
-        <!-- Change Photo -->
-        <TextView
-            android:id="@+id/changePhotoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="Change Photo"
-            android:textColor="#6A1B9A"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-
         <!-- Personal Information -->
+
         <TextView
             android:id="@+id/personalInfoTitle"
             android:layout_width="match_parent"
@@ -95,6 +57,7 @@
 
 
         <!-- Name Card -->
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/nameCard"
             android:layout_width="match_parent"
@@ -140,7 +103,7 @@
                         android:id="@+id/nameValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Shweta"
+                        android:text=""
                         android:textColor="#000000"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -153,6 +116,7 @@
 
 
         <!-- Email Card -->
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/emailCard"
             android:layout_width="match_parent"
@@ -198,7 +162,7 @@
                         android:id="@+id/profileEmail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="shweta@gmail.com"
+                        android:text=""
                         android:textColor="#000000"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -211,6 +175,7 @@
 
 
         <!-- Phone Card -->
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/phoneCard"
             android:layout_width="match_parent"
@@ -256,7 +221,7 @@
                         android:id="@+id/phoneValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+91 1234567890"
+                        android:text=""
                         android:textColor="#000000"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -269,6 +234,7 @@
 
 
         <!-- Location Card -->
+
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/locationCard"
             android:layout_width="match_parent"
@@ -314,7 +280,7 @@
                         android:id="@+id/locationValue"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Ahmedabad, Gujarat"
+                        android:text=""
                         android:textColor="#000000"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -326,7 +292,8 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-        <!-- Save Changes -->
+        <!-- Edit Profile Button -->
+
         <Button
             android:id="@+id/saveChangesButton"
             android:layout_width="match_parent"
@@ -334,11 +301,11 @@
             android:layout_marginStart="25dp"
             android:layout_marginTop="25dp"
             android:layout_marginEnd="25dp"
-            android:backgroundTint="#6A1B9A"
-            android:text="SAVE CHANGES"
+            android:text="EDIT PROFILE"
             android:textColor="#FFFFFF"
             android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:backgroundTint="#6A1B9A" />
 
     </LinearLayout>
 

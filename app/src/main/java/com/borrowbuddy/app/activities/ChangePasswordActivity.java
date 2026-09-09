@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.borrowbuddy.app.R;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 
 public class ChangePasswordActivity extends AppCompatActivity {
@@ -20,9 +21,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     View changePasswordScroll;
     View changePasswordLayout;
 
-    View headerLayout;
-    TextView backButton;
-    TextView headerTitle;
+    MaterialToolbar toolbar;
 
     TextView titleText;
     TextView subtitleText;
@@ -54,9 +53,34 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_change_password);
 
+
+        // ==============================
+        // TOOLBAR
+        // ==============================
+
+        toolbar =
+                findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIconTint(Color.WHITE);
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+
+            getSupportActionBar().setTitle(
+                    "Change Password"
+            );
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(
+                    true
+            );
         }
+
+        toolbar.setNavigationOnClickListener(
+                v -> finish()
+        );
+
 
         Window window = getWindow();
 
@@ -72,15 +96,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         changePasswordLayout =
                 findViewById(R.id.changePasswordLayout);
-
-        headerLayout =
-                findViewById(R.id.headerLayout);
-
-        backButton =
-                findViewById(R.id.backButton);
-
-        headerTitle =
-                findViewById(R.id.headerTitle);
 
         titleText =
                 findViewById(R.id.titleText);
@@ -111,13 +126,6 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         changePasswordButton =
                 findViewById(R.id.changePasswordButton);
-
-
-        // ================= BACK =================
-
-        backButton.setOnClickListener(v -> {
-            finish();
-        });
 
 
         // ================= CHANGE PASSWORD =================
@@ -267,11 +275,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         // Header always purple
 
-        headerLayout.setBackgroundColor(PURPLE);
+        toolbar.setBackgroundColor(PURPLE);
 
-        backButton.setTextColor(Color.WHITE);
+        toolbar.setTitleTextColor(Color.WHITE);
 
-        headerTitle.setTextColor(Color.WHITE);
+        toolbar.setNavigationIconTint(Color.WHITE);
 
         getWindow().setStatusBarColor(PURPLE);
 
@@ -445,3 +453,4 @@ public class ChangePasswordActivity extends AppCompatActivity {
         applyDarkMode();
     }
 }
+

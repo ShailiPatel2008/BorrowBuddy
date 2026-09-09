@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -14,14 +12,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 public class BookingCancelledActivity extends AppCompatActivity {
 
     // =========================
     // VIEWS
     // =========================
 
-    TextView backButton;
-    TextView cancelledTitle;
+    MaterialToolbar toolbar;
+
     TextView cancelledText;
     TextView cancelledMessage;
     TextView itemNameText;
@@ -32,7 +32,6 @@ public class BookingCancelledActivity extends AppCompatActivity {
     Button backToMyBookingsButton;
 
     LinearLayout cancelledMainContent;
-    LinearLayout cancelledHeader;
 
     // =========================
     // PREFERENCES
@@ -64,20 +63,47 @@ public class BookingCancelledActivity extends AppCompatActivity {
         );
 
         // =========================
-        // HIDE ACTION BAR
+        // TOOLBAR
         // =========================
 
+        toolbar =
+                findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
+
+        toolbar.setNavigationIconTint(
+                Color.WHITE
+        );
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+
+            getSupportActionBar().setTitle(
+                    "Booking Cancelled"
+            );
+
+            getSupportActionBar()
+                    .setDisplayHomeAsUpEnabled(true);
         }
+
+        toolbar.setNavigationOnClickListener(
+                v -> finish()
+        );
 
         // =========================
         // STATUS BAR
         // =========================
 
-        getWindow().setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(
+                PURPLE
+        );
 
-        getWindow().setNavigationBarColor(PURPLE);
+        getWindow().setNavigationBarColor(
+                PURPLE
+        );
 
         WindowCompat.getInsetsController(
                 getWindow(),
@@ -87,12 +113,6 @@ public class BookingCancelledActivity extends AppCompatActivity {
         // =========================
         // FIND VIEWS
         // =========================
-
-        backButton =
-                findViewById(R.id.backButton);
-
-        cancelledTitle =
-                findViewById(R.id.cancelledTitle);
 
         cancelledText =
                 findViewById(R.id.cancelledText);
@@ -117,11 +137,6 @@ public class BookingCancelledActivity extends AppCompatActivity {
         cancelledMainContent =
                 findViewById(
                         R.id.cancelledMainContent
-                );
-
-        cancelledHeader =
-                findViewById(
-                        R.id.cancelledHeader
                 );
 
         // ==================================================
@@ -162,10 +177,6 @@ public class BookingCancelledActivity extends AppCompatActivity {
         // TEXT
         // =========================
 
-        cancelledTitle.setText(
-                "Booking Cancelled"
-        );
-
         cancelledText.setText(
                 "Booking Cancelled"
         );
@@ -173,16 +184,6 @@ public class BookingCancelledActivity extends AppCompatActivity {
         cancelledMessage.setText(
                 "Your booking has been cancelled successfully."
         );
-
-        // =========================
-        // BACK BUTTON
-        // =========================
-
-        backButton.setOnClickListener(v -> {
-
-            finish();
-
-        });
 
         // =========================
         // BACK TO MY BOOKINGS
@@ -251,15 +252,15 @@ public class BookingCancelledActivity extends AppCompatActivity {
                 DARK_BACKGROUND
         );
 
-        cancelledHeader.setBackgroundColor(
+        toolbar.setBackgroundColor(
                 PURPLE
         );
 
-        backButton.setTextColor(
+        toolbar.setTitleTextColor(
                 Color.WHITE
         );
 
-        cancelledTitle.setTextColor(
+        toolbar.setNavigationIconTint(
                 Color.WHITE
         );
 
@@ -325,15 +326,15 @@ public class BookingCancelledActivity extends AppCompatActivity {
                 LIGHT_BACKGROUND
         );
 
-        cancelledHeader.setBackgroundColor(
+        toolbar.setBackgroundColor(
                 PURPLE
         );
 
-        backButton.setTextColor(
+        toolbar.setTitleTextColor(
                 Color.WHITE
         );
 
-        cancelledTitle.setTextColor(
+        toolbar.setNavigationIconTint(
                 Color.WHITE
         );
 

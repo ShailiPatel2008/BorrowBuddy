@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 
 import java.util.Calendar;
@@ -21,7 +22,8 @@ import java.util.concurrent.TimeUnit;
 
 public class BookingActivity extends AppCompatActivity {
 
-    TextView backButton;
+    private MaterialToolbar toolbar;
+
     TextView itemName;
     TextView itemPrice;
     TextView ownerName;
@@ -48,7 +50,6 @@ public class BookingActivity extends AppCompatActivity {
     Button btnConfirmBooking;
 
     View bookingLayout;
-    View bookingHeader;
 
     MaterialCardView selectedItemCard;
     MaterialCardView quantityCard;
@@ -83,9 +84,30 @@ public class BookingActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_booking);
 
+        // =========================
+        // TOOLBAR
+        // =========================
+
+        toolbar =
+                findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIconTint(Color.WHITE);
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+            getSupportActionBar().setTitle(
+                    "Confirm Booking"
+            );
+
+            getSupportActionBar()
+                    .setDisplayHomeAsUpEnabled(true);
         }
+
+        toolbar.setNavigationOnClickListener(
+                v -> finish()
+        );
 
         getWindow().setStatusBarColor(PURPLE);
 
@@ -95,9 +117,6 @@ public class BookingActivity extends AppCompatActivity {
 
         bookingLayout =
                 findViewById(R.id.bookingLayout);
-
-        bookingHeader =
-                findViewById(R.id.bookingHeader);
 
         selectedItemCard =
                 findViewById(R.id.selectedItemCard);
@@ -113,9 +132,6 @@ public class BookingActivity extends AppCompatActivity {
 
         pickupLocationCard =
                 findViewById(R.id.pickupLocationCard);
-
-        backButton =
-                findViewById(R.id.backButton);
 
         itemName =
                 findViewById(R.id.itemName);
@@ -291,14 +307,6 @@ public class BookingActivity extends AppCompatActivity {
 
         txtQuantity.setText(
                 String.valueOf(quantity)
-        );
-
-        // =========================
-        // BACK
-        // =========================
-
-        backButton.setOnClickListener(
-                v -> finish()
         );
 
         // =========================
@@ -791,20 +799,19 @@ public class BookingActivity extends AppCompatActivity {
                 PURPLE
         );
 
-        bookingHeader.setBackgroundColor(
+        // =========================
+        // TOOLBAR
+        // =========================
+
+        toolbar.setBackgroundColor(
                 PURPLE
         );
 
-        backButton.setTextColor(
+        toolbar.setTitleTextColor(
                 Color.WHITE
         );
 
-        TextView headerTitle =
-                findViewById(
-                        R.id.headerTitle
-                );
-
-        headerTitle.setTextColor(
+        toolbar.setNavigationIconTint(
                 Color.WHITE
         );
 
@@ -824,6 +831,18 @@ public class BookingActivity extends AppCompatActivity {
                 )
         );
 
+        btnStartDate.setBackgroundTintList(
+                ColorStateList.valueOf(
+                        PURPLE
+                )
+        );
+
+        btnEndDate.setBackgroundTintList(
+                ColorStateList.valueOf(
+                        PURPLE
+                )
+        );
+
         btnConfirmBooking
                 .setBackgroundTintList(
                         ColorStateList.valueOf(
@@ -831,12 +850,20 @@ public class BookingActivity extends AppCompatActivity {
                         )
                 );
 
-        // WHITE TEXT
+        // WHITE BUTTON TEXT
         btnMinus.setTextColor(
                 Color.WHITE
         );
 
         btnPlus.setTextColor(
+                Color.WHITE
+        );
+
+        btnStartDate.setTextColor(
+                Color.WHITE
+        );
+
+        btnEndDate.setTextColor(
                 Color.WHITE
         );
 
@@ -904,6 +931,24 @@ public class BookingActivity extends AppCompatActivity {
                     Color.WHITE
             );
 
+            // Keep date buttons WHITE
+            btnStartDate.setTextColor(
+                    Color.WHITE
+            );
+
+            btnEndDate.setTextColor(
+                    Color.WHITE
+            );
+
+            // Keep + and - WHITE
+            btnMinus.setTextColor(
+                    Color.WHITE
+            );
+
+            btnPlus.setTextColor(
+                    Color.WHITE
+            );
+
         } else {
 
             bookingLayout.setBackgroundColor(
@@ -959,6 +1004,24 @@ public class BookingActivity extends AppCompatActivity {
                     pickupLocationCard,
                     Color.BLACK
             );
+
+            // Keep + and - WHITE in light mode
+            btnMinus.setTextColor(
+                    Color.WHITE
+            );
+
+            btnPlus.setTextColor(
+                    Color.WHITE
+            );
+
+            // Keep Start Date and End Date WHITE in light mode
+            btnStartDate.setTextColor(
+                    Color.WHITE
+            );
+
+            btnEndDate.setTextColor(
+                    Color.WHITE
+            );
         }
     }
 
@@ -996,3 +1059,4 @@ public class BookingActivity extends AppCompatActivity {
         }
     }
 }
+

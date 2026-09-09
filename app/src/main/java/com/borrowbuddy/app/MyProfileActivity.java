@@ -5,26 +5,25 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 
 public class MyProfileActivity extends AppCompatActivity {
 
     private ScrollView profileScrollView;
     private LinearLayout profileLayout;
-    private LinearLayout profileHeader;
+    private MaterialToolbar toolbar;
 
-    private TextView backButton;
-    private TextView headerTitle;
-    private TextView changePhotoButton;
+    private ImageView profileImage;
+
     private TextView personalInfoTitle;
 
     private TextView nameValue;
@@ -46,8 +45,6 @@ public class MyProfileActivity extends AppCompatActivity {
 
     private SharedPreferences preferences;
 
-    private static final int PICK_IMAGE = 100;
-
     private final int PURPLE = Color.rgb(106, 27, 154);
 
     @Override
@@ -56,7 +53,27 @@ public class MyProfileActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_my_profile);
 
-        preferences = getSharedPreferences("BorrowBuddy", MODE_PRIVATE);
+        preferences =
+                getSharedPreferences(
+                        "BorrowBuddy",
+                        MODE_PRIVATE
+                );
+
+        toolbar = findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("My Profile");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIconTint(Color.WHITE);
+
+        toolbar.setNavigationOnClickListener(
+                v -> finish()
+        );
 
         initializeViews();
         loadProfileData();
@@ -66,177 +83,164 @@ public class MyProfileActivity extends AppCompatActivity {
 
     private void initializeViews() {
 
-        profileScrollView = findViewById(R.id.profileScrollView);
-        profileLayout = findViewById(R.id.profileLayout);
-        profileHeader = findViewById(R.id.profileHeader);
+        profileScrollView =
+                findViewById(R.id.profileScrollView);
 
-        backButton = findViewById(R.id.backButton);
-        headerTitle = findViewById(R.id.headerTitle);
-        changePhotoButton = findViewById(R.id.changePhotoButton);
-        personalInfoTitle = findViewById(R.id.personalInfoTitle);
+        profileLayout =
+                findViewById(R.id.profileLayout);
 
-        nameValue = findViewById(R.id.nameValue);
-        profileEmail = findViewById(R.id.profileEmail);
-        phoneValue = findViewById(R.id.phoneValue);
-        locationValue = findViewById(R.id.locationValue);
+        profileImage =
+                findViewById(R.id.profileImage);
 
-        nameLabel = findViewById(R.id.nameLabel);
-        emailLabel = findViewById(R.id.emailLabel);
-        phoneLabel = findViewById(R.id.phoneLabel);
-        locationLabel = findViewById(R.id.locationLabel);
+        personalInfoTitle =
+                findViewById(R.id.personalInfoTitle);
 
-        nameCard = findViewById(R.id.nameCard);
-        emailCard = findViewById(R.id.emailCard);
-        phoneCard = findViewById(R.id.phoneCard);
-        locationCard = findViewById(R.id.locationCard);
+        nameValue =
+                findViewById(R.id.nameValue);
 
-        saveChangesButton = findViewById(R.id.saveChangesButton);
+        profileEmail =
+                findViewById(R.id.profileEmail);
+
+        phoneValue =
+                findViewById(R.id.phoneValue);
+
+        locationValue =
+                findViewById(R.id.locationValue);
+
+        nameLabel =
+                findViewById(R.id.nameLabel);
+
+        emailLabel =
+                findViewById(R.id.emailLabel);
+
+        phoneLabel =
+                findViewById(R.id.phoneLabel);
+
+        locationLabel =
+                findViewById(R.id.locationLabel);
+
+        nameCard =
+                findViewById(R.id.nameCard);
+
+        emailCard =
+                findViewById(R.id.emailCard);
+
+        phoneCard =
+                findViewById(R.id.phoneCard);
+
+        locationCard =
+                findViewById(R.id.locationCard);
+
+        saveChangesButton =
+                findViewById(R.id.saveChangesButton);
+    }
+
+    private String getProfileValue(
+            String profileKey,
+            String oldUserKey,
+            String defaultValue
+    ) {
+
+        String value =
+                preferences.getString(
+                        profileKey,
+                        ""
+                );
+
+        if (value == null || value.isEmpty()) {
+
+            value =
+                    preferences.getString(
+                            oldUserKey,
+                            defaultValue
+                    );
+        }
+
+        return value;
     }
 
     private void loadProfileData() {
 
-        String name = preferences.getString("profileName", "Shweta");
-        String email = preferences.getString(
-                "profileEmail",
-                "shweta@gmail.com"
-        );
+        String name =
+                getProfileValue(
+                        "profileName",
+                        "userName",
+                        "Shweta"
+                );
 
-        String phone = preferences.getString(
-                "profilePhone",
-                "+91 1234567890"
-        );
+        String email =
+                getProfileValue(
+                        "profileEmail",
+                        "userEmail",
+                        "shweta@gmail.com"
+                );
 
-        String location = preferences.getString(
-                "profileLocation",
-                "Ahmedabad, Gujarat"
-        );
+        String phone =
+                getProfileValue(
+                        "profilePhone",
+                        "userPhone",
+                        "+91 1234567890"
+                );
+
+        String location =
+                preferences.getString(
+                        "profileLocation",
+                        "Ahmedabad, Gujarat"
+                );
 
         nameValue.setText(name);
         profileEmail.setText(email);
         phoneValue.setText(phone);
         locationValue.setText(location);
+
+        loadProfilePhoto();
     }
 
-    private void setupClickListeners() {
+    private void loadProfilePhoto() {
 
-        // Back button
-        backButton.setOnClickListener(v -> finish());
+        String photoUri =
+                preferences.getString(
+                        "profilePhotoUri",
+                        ""
+                );
 
-        // Change Photo
-        changePhotoButton.setOnClickListener(v -> openGallery());
+        if (photoUri != null &&
+                !photoUri.isEmpty()) {
 
-        // Save Changes
-        saveChangesButton.setOnClickListener(v -> saveProfileData());
-    }
+            try {
 
-    private void openGallery() {
+                profileImage.setImageURI(
+                        Uri.parse(photoUri)
+                );
 
-        Intent intent = new Intent(
-                Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        );
+            } catch (Exception e) {
 
-        intent.setType("image/*");
-
-        startActivityForResult(intent, PICK_IMAGE);
-    }
-
-    @Override
-    protected void onActivityResult(
-            int requestCode,
-            int resultCode,
-            Intent data
-    ) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE &&
-                resultCode == RESULT_OK &&
-                data != null) {
-
-            Uri selectedImage = data.getData();
-
-            if (selectedImage != null) {
-
-                // Photo URI save kar rahe hain
-                preferences.edit()
-                        .putString(
-                                "profilePhotoUri",
-                                selectedImage.toString()
-                        )
-                        .apply();
-
-                Toast.makeText(
-                        this,
-                        "Photo selected successfully",
-                        Toast.LENGTH_SHORT
-                ).show();
+                profileImage.setImageDrawable(null);
             }
         }
     }
 
-    private void saveProfileData() {
+    private void setupClickListeners() {
 
-        String name = nameValue.getText().toString().trim();
-        String email = profileEmail.getText().toString().trim();
-        String phone = phoneValue.getText().toString().trim();
-        String location = locationValue.getText().toString().trim();
+        saveChangesButton.setOnClickListener(v -> {
 
-        if (name.isEmpty()) {
-            Toast.makeText(
-                    this,
-                    "Please enter name",
-                    Toast.LENGTH_SHORT
-            ).show();
-            return;
-        }
+            Intent intent =
+                    new Intent(
+                            MyProfileActivity.this,
+                            EditProfileActivity.class
+                    );
 
-        if (email.isEmpty()) {
-            Toast.makeText(
-                    this,
-                    "Please enter email",
-                    Toast.LENGTH_SHORT
-            ).show();
-            return;
-        }
-
-        if (phone.isEmpty()) {
-            Toast.makeText(
-                    this,
-                    "Please enter phone number",
-                    Toast.LENGTH_SHORT
-            ).show();
-            return;
-        }
-
-        if (location.isEmpty()) {
-            Toast.makeText(
-                    this,
-                    "Please enter location",
-                    Toast.LENGTH_SHORT
-            ).show();
-            return;
-        }
-
-        preferences.edit()
-                .putString("profileName", name)
-                .putString("profileEmail", email)
-                .putString("profilePhone", phone)
-                .putString("profileLocation", location)
-                .apply();
-
-        Toast.makeText(
-                this,
-                "Profile saved successfully",
-                Toast.LENGTH_SHORT
-        ).show();
+            startActivity(intent);
+        });
     }
 
     private void applyTheme() {
 
-        boolean darkMode = preferences.getBoolean(
-                "darkMode",
-                false
-        );
+        boolean darkMode =
+                preferences.getBoolean(
+                        "darkMode",
+                        false
+                );
 
         if (darkMode) {
             applyDarkMode();
@@ -251,14 +255,29 @@ public class MyProfileActivity extends AppCompatActivity {
                 Color.rgb(245, 245, 245)
         );
 
-        profileHeader.setBackgroundColor(PURPLE);
+        toolbar.setBackgroundColor(PURPLE);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIconTint(Color.WHITE);
 
-        personalInfoTitle.setTextColor(Color.BLACK);
+        personalInfoTitle.setTextColor(
+                Color.BLACK
+        );
 
-        nameCard.setCardBackgroundColor(Color.WHITE);
-        emailCard.setCardBackgroundColor(Color.WHITE);
-        phoneCard.setCardBackgroundColor(Color.WHITE);
-        locationCard.setCardBackgroundColor(Color.WHITE);
+        nameCard.setCardBackgroundColor(
+                Color.WHITE
+        );
+
+        emailCard.setCardBackgroundColor(
+                Color.WHITE
+        );
+
+        phoneCard.setCardBackgroundColor(
+                Color.WHITE
+        );
+
+        locationCard.setCardBackgroundColor(
+                Color.WHITE
+        );
 
         nameValue.setTextColor(Color.BLACK);
         profileEmail.setTextColor(Color.BLACK);
@@ -281,22 +300,29 @@ public class MyProfileActivity extends AppCompatActivity {
                 Color.rgb(117, 117, 117)
         );
 
-        changePhotoButton.setTextColor(PURPLE);
-
         saveChangesButton.setBackgroundTintList(
-                android.content.res.ColorStateList.valueOf(PURPLE)
+                android.content.res.ColorStateList
+                        .valueOf(PURPLE)
         );
 
-        saveChangesButton.setTextColor(Color.WHITE);
+        saveChangesButton.setTextColor(
+                Color.WHITE
+        );
     }
 
     private void applyDarkMode() {
 
-        profileLayout.setBackgroundColor(Color.BLACK);
+        profileLayout.setBackgroundColor(
+                Color.BLACK
+        );
 
-        profileHeader.setBackgroundColor(PURPLE);
+        toolbar.setBackgroundColor(PURPLE);
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIconTint(Color.WHITE);
 
-        personalInfoTitle.setTextColor(Color.WHITE);
+        personalInfoTitle.setTextColor(
+                Color.WHITE
+        );
 
         nameCard.setCardBackgroundColor(
                 Color.rgb(45, 45, 45)
@@ -324,15 +350,14 @@ public class MyProfileActivity extends AppCompatActivity {
         phoneLabel.setTextColor(Color.LTGRAY);
         locationLabel.setTextColor(Color.LTGRAY);
 
-        changePhotoButton.setTextColor(
-                Color.rgb(206, 147, 216)
-        );
-
         saveChangesButton.setBackgroundTintList(
-                android.content.res.ColorStateList.valueOf(PURPLE)
+                android.content.res.ColorStateList
+                        .valueOf(PURPLE)
         );
 
-        saveChangesButton.setTextColor(Color.WHITE);
+        saveChangesButton.setTextColor(
+                Color.WHITE
+        );
     }
 
     @Override
@@ -340,13 +365,16 @@ public class MyProfileActivity extends AppCompatActivity {
         super.onResume();
 
         if (preferences == null) {
-            preferences = getSharedPreferences(
-                    "BorrowBuddy",
-                    MODE_PRIVATE
-            );
+
+            preferences =
+                    getSharedPreferences(
+                            "BorrowBuddy",
+                            MODE_PRIVATE
+                    );
         }
 
         loadProfileData();
         applyTheme();
     }
 }
+

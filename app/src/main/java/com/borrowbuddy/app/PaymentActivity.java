@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
@@ -52,8 +53,7 @@ public class PaymentActivity extends AppCompatActivity
     // HEADER
     // ==================================================
 
-    TextView backButton;
-    TextView paymentTitle;
+    MaterialToolbar toolbar;
 
 
     // ==================================================
@@ -146,12 +146,30 @@ public class PaymentActivity extends AppCompatActivity
 
 
         // ==================================================
-        // HIDE ACTION BAR
+        // TOOLBAR
         // ==================================================
 
+        toolbar =
+                findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+
+        toolbar.setNavigationIconTint(Color.WHITE);
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+
+            getSupportActionBar().setTitle(
+                    "Payment"
+            );
+
+            getSupportActionBar()
+                    .setDisplayHomeAsUpEnabled(true);
+
         }
+
+        toolbar.setNavigationOnClickListener(v -> finish());
 
 
         // ==================================================
@@ -168,13 +186,6 @@ public class PaymentActivity extends AppCompatActivity
         // ==================================================
         // FIND VIEWS
         // ==================================================
-
-        backButton =
-                findViewById(R.id.backButton);
-
-        paymentTitle =
-                findViewById(R.id.paymentTitle);
-
 
         txtItem =
                 findViewById(R.id.txtItem);
@@ -374,17 +385,6 @@ public class PaymentActivity extends AppCompatActivity
         // ==================================================
 
         radioCashOnDelivery.setChecked(true);
-
-
-        // ==================================================
-        // BACK BUTTON
-        // ==================================================
-
-        backButton.setOnClickListener(v -> {
-
-            finish();
-
-        });
 
 
         // ==================================================
@@ -706,22 +706,20 @@ public class PaymentActivity extends AppCompatActivity
 
 
         // ==================================================
-        // HEADER
+        // TOOLBAR
         // ==================================================
 
-        View header =
-                findViewById(
-                        R.id.paymentHeader
-                );
+        toolbar.setBackgroundColor(
+                PURPLE
+        );
 
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
 
-        if (header != null) {
-
-            header.setBackgroundColor(
-                    PURPLE
-            );
-
-        }
+        toolbar.setNavigationIconTint(
+                Color.WHITE
+        );
 
 
         // ==================================================
@@ -877,19 +875,6 @@ public class PaymentActivity extends AppCompatActivity
 
 
         // ==================================================
-        // HEADER TEXT
-        // ==================================================
-        backButton.setTextColor(
-                Color.WHITE
-        );
-
-
-        paymentTitle.setTextColor(
-                Color.WHITE
-        );
-
-
-        // ==================================================
         // PAY BUTTON
         // ==================================================
 
@@ -914,6 +899,12 @@ public class PaymentActivity extends AppCompatActivity
     private void changeAllTextColor(
             View view,
             int color) {
+
+        // Do not change toolbar title color
+        if (view == toolbar) {
+            return;
+        }
+
 
         if (view instanceof TextView) {
 
@@ -946,7 +937,7 @@ public class PaymentActivity extends AppCompatActivity
             }
 
         }
-    }
-
 
     }
+
+}

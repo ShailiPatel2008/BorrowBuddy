@@ -2,51 +2,23 @@
 
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="#FFFFFF">
 
+
     <!-- ================= HEADER ================= -->
 
-    <LinearLayout
-        android:id="@+id/headerLayout"
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:paddingStart="12dp"
-        android:paddingEnd="12dp"
-        android:background="#6A1B9A">
-
-        <TextView
-            android:id="@+id/backButton"
-            android:layout_width="40dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="←"
-            android:textSize="25sp"
-            android:textColor="#FFFFFF"/>
-
-        <TextView
-            android:id="@+id/headerTitle"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="My Activity"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"/>
-
-        <View
-            android:layout_width="40dp"
-            android:layout_height="match_parent"/>
-
-    </LinearLayout>
-
+        android:layout_height="?attr/actionBarSize"
+        android:background="#6C4AB6"
+        android:title="My Activity"
+        android:titleTextColor="@android:color/white"
+        app:navigationIconTint="@android:color/white" />
 
     <!-- ================= CONTENT ================= -->
 

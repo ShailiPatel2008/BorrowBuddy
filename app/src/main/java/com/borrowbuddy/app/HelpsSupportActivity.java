@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 
 public class HelpsSupportActivity extends AppCompatActivity {
@@ -24,8 +25,7 @@ public class HelpsSupportActivity extends AppCompatActivity {
     // VIEWS
     // =========================
 
-    TextView backButton;
-    TextView headerTitle;
+    MaterialToolbar toolbar;
 
     ScrollView helpScrollView;
     LinearLayout helpMainLayout;
@@ -55,13 +55,34 @@ public class HelpsSupportActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_helps_support);
 
+
         // =========================
-        // HIDE ACTION BAR
+        // TOOLBAR
         // =========================
 
+        toolbar =
+                findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setNavigationIconTint(Color.WHITE);
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+
+            getSupportActionBar().setTitle(
+                    "Help & Support"
+            );
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(
+                    true
+            );
         }
+
+        toolbar.setNavigationOnClickListener(
+                v -> finish()
+        );
+
 
         // =========================
         // STATUS BAR
@@ -74,15 +95,10 @@ public class HelpsSupportActivity extends AppCompatActivity {
                 .getDecorView()
                 .setSystemUiVisibility(0);
 
+
         // =========================
         // FIND VIEWS
         // =========================
-
-        backButton =
-                findViewById(R.id.backButton);
-
-        headerTitle =
-                findViewById(R.id.headerTitle);
 
         helpScrollView =
                 findViewById(R.id.helpScrollView);
@@ -98,15 +114,6 @@ public class HelpsSupportActivity extends AppCompatActivity {
 
         contactSupportButton =
                 findViewById(R.id.contactSupportButton);
-
-
-        // =========================
-        // BACK BUTTON
-        // =========================
-
-        backButton.setOnClickListener(v -> {
-            finish();
-        });
 
 
         // =========================
@@ -235,17 +242,17 @@ public class HelpsSupportActivity extends AppCompatActivity {
         // HEADER
         // =========================
 
-        View header =
-                findViewById(R.id.helpHeader);
+        toolbar.setBackgroundColor(
+                PURPLE
+        );
 
-        if (header != null) {
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
 
-            header.setBackgroundColor(
-                    PURPLE
-            );
-
-            setHeaderTextWhite(header);
-        }
+        toolbar.setNavigationIconTint(
+                Color.WHITE
+        );
 
 
         // =========================
@@ -338,17 +345,17 @@ public class HelpsSupportActivity extends AppCompatActivity {
         // HEADER
         // =========================
 
-        View header =
-                findViewById(R.id.helpHeader);
+        toolbar.setBackgroundColor(
+                PURPLE
+        );
 
-        if (header != null) {
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
 
-            header.setBackgroundColor(
-                    PURPLE
-            );
-
-            setHeaderTextWhite(header);
-        }
+        toolbar.setNavigationIconTint(
+                Color.WHITE
+        );
 
 
         // =========================
@@ -379,37 +386,6 @@ public class HelpsSupportActivity extends AppCompatActivity {
 
 
     // ==================================================
-    // SET HEADER TEXT WHITE
-    // ==================================================
-
-    private void setHeaderTextWhite(View view) {
-
-        if (view instanceof TextView) {
-
-            ((TextView) view).setTextColor(
-                    Color.WHITE
-            );
-        }
-
-
-        if (view instanceof ViewGroup) {
-
-            ViewGroup group =
-                    (ViewGroup) view;
-
-            for (int i = 0;
-                 i < group.getChildCount();
-                 i++) {
-
-                setHeaderTextWhite(
-                        group.getChildAt(i)
-                );
-            }
-        }
-    }
-
-
-    // ==================================================
     // CHANGE ALL TEXT COLOR
     // ==================================================
 
@@ -418,18 +394,19 @@ public class HelpsSupportActivity extends AppCompatActivity {
             int color
     ) {
 
+        // Do not change toolbar title
+        if (view == toolbar) {
+            return;
+        }
+
+
         if (view instanceof TextView) {
 
             TextView textView =
                     (TextView) view;
 
-            // Header ko baad mein white karenge
             if (textView.getId()
-                    != R.id.backButton &&
-                    textView.getId()
-                            != R.id.headerTitle &&
-                    textView.getId()
-                            != R.id.contactSupportButton) {
+                    != R.id.contactSupportButton) {
 
                 textView.setTextColor(color);
             }
@@ -453,3 +430,4 @@ public class HelpsSupportActivity extends AppCompatActivity {
         }
     }
 }
+

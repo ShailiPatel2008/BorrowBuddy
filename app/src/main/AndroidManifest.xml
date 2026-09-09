@@ -211,6 +211,10 @@
             android:name=".activities.RequestDetailsActivity"
             android:exported="false" />
 
+        <activity
+            android:name=".activities.OwnerChangePasswordActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

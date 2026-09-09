@@ -14,76 +14,62 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#F8F9FA">
+        android:background="#F8F9FA"
+        android:paddingBottom="30dp">
 
-        <!-- ===================================== -->
-        <!-- HEADER -->
-        <!-- ===================================== -->
+        <!-- Toolbar -->
 
-        <LinearLayout
-            android:id="@+id/editProfileHeader"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:layout_height="?attr/actionBarSize"
             android:background="#6A1B9A"
-            android:paddingStart="8dp"
-            android:paddingEnd="16dp">
-
-            <TextView
-                android:id="@+id/backButton"
-                android:layout_width="50dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="←"
-                android:textColor="#FFFFFF"
-                android:textSize="30sp"
-                android:clickable="true"
-                android:focusable="true" />
-
-            <TextView
-                android:id="@+id/headerTitle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="Edit Profile"
-                android:textColor="#FFFFFF"
-                android:textSize="21sp"
-                android:textStyle="bold" />
-
-            <!-- Right side balance -->
-            <View
-                android:layout_width="50dp"
-                android:layout_height="1dp" />
-
-        </LinearLayout>
+            android:title="Edit Profile"
+            android:titleTextColor="@android:color/white"
+            app:navigationIconTint="@android:color/white" />
 
 
-        <!-- ===================================== -->
-        <!-- BLANK PROFILE IMAGE SPACE -->
-        <!-- ===================================== -->
+        <!-- Profile Image -->
 
-        <View
-            android:id="@+id/profileImageSpace"
-            android:layout_width="match_parent"
-            android:layout_height="150dp" />
+        <ImageView
+            android:id="@+id/profileImage"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:background="#DDDDDD"
+            android:contentDescription="Profile Photo"
+            android:scaleType="centerCrop" />
 
 
-        <!-- ===================================== -->
-        <!-- PAGE TITLE -->
-        <!-- ===================================== -->
+        <!-- Change Photo -->
+
+        <TextView
+            android:id="@+id/changePhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:text="Change Photo"
+            android:textColor="#6A1B9A"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+
+        <!-- Page Title -->
 
         <TextView
             android:id="@+id/editProfileTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginEnd="25dp"
             android:text="Edit Your Profile"
             android:textColor="#000000"
-            android:textSize="22sp"
+            android:textSize="21sp"
             android:textStyle="bold" />
 
 
@@ -91,25 +77,23 @@
             android:id="@+id/editProfileDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="6dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="25dp"
             android:text="Update your personal information"
             android:textColor="#666666"
             android:textSize="14sp" />
 
 
-        <!-- ===================================== -->
-        <!-- NAME CARD -->
-        <!-- ===================================== -->
+        <!-- Name Card -->
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/nameCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="25dp"
             app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="14dp"
             app:cardElevation="2dp"
@@ -149,17 +133,15 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-        <!-- ===================================== -->
-        <!-- EMAIL CARD -->
-        <!-- ===================================== -->
+        <!-- Email Card -->
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/emailCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="25dp"
             app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="14dp"
             app:cardElevation="2dp"
@@ -199,17 +181,15 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-        <!-- ===================================== -->
-        <!-- PHONE CARD -->
-        <!-- ===================================== -->
+        <!-- Phone Card -->
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/phoneCard"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="15dp"
-            android:layout_marginEnd="20dp"
+            android:layout_marginEnd="25dp"
             app:cardBackgroundColor="#FFFFFF"
             app:cardCornerRadius="14dp"
             app:cardElevation="2dp"
@@ -250,24 +230,69 @@
         </com.google.android.material.card.MaterialCardView>
 
 
-        <!-- ===================================== -->
-        <!-- SAVE BUTTON -->
-        <!-- ===================================== -->
+        <!-- Location Card -->
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/locationCard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="25dp"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="2dp"
+            app:strokeColor="#DDDDDD"
+            app:strokeWidth="1dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textColor="#000000"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="8dp"
+                    android:backgroundTint="#6A1B9A"
+                    android:hint="Enter your location"
+                    android:inputType="textCapSentences"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:textColor="#000000"
+                    android:textColorHint="#777777"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+
+        <!-- Save Button -->
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="25dp"
             android:layout_marginTop="25dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="30dp"
-            android:backgroundTint="#6A1B9A"
-            android:text="Save Changes"
-            android:textAllCaps="false"
+            android:layout_marginEnd="25dp"
+            android:text="SAVE CHANGES"
+            android:textAllCaps="true"
             android:textColor="#FFFFFF"
             android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:backgroundTint="#6A1B9A" />
 
     </LinearLayout>
 

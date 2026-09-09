@@ -13,15 +13,14 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.appbar.MaterialToolbar;
+
 public class BookingSuccessActivity extends AppCompatActivity {
 
     private ScrollView successScrollView;
     private ViewGroup successMainLayout;
 
-    private View headerLayout;
-
-    private TextView backButton;
-    private TextView headerTitle;
+    private MaterialToolbar toolbar;
 
     private TextView successIcon;
     private TextView successText;
@@ -57,12 +56,35 @@ public class BookingSuccessActivity extends AppCompatActivity {
         );
 
         // =========================
-        // HIDE ACTION BAR
+        // TOOLBAR
         // =========================
 
+        toolbar =
+                findViewById(R.id.toolbar);
+
+        setSupportActionBar(toolbar);
+
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
+
+        toolbar.setNavigationIconTint(
+                Color.WHITE
+        );
+
         if (getSupportActionBar() != null) {
-            getSupportActionBar().hide();
+
+            getSupportActionBar().setTitle(
+                    "Booking Successful"
+            );
+
+            getSupportActionBar()
+                    .setDisplayHomeAsUpEnabled(true);
         }
+
+        toolbar.setNavigationOnClickListener(
+                v -> finish()
+        );
 
         // =========================
         // STATUS BAR
@@ -83,15 +105,6 @@ public class BookingSuccessActivity extends AppCompatActivity {
 
         successMainLayout =
                 findViewById(R.id.successMainLayout);
-
-        headerLayout =
-                findViewById(R.id.headerLayout);
-
-        backButton =
-                findViewById(R.id.backButton);
-
-        headerTitle =
-                findViewById(R.id.headerTitle);
 
         successIcon =
                 findViewById(R.id.successIcon);
@@ -155,17 +168,17 @@ public class BookingSuccessActivity extends AppCompatActivity {
         // HEADER
         // =========================
 
-        headerLayout.setBackgroundColor(PURPLE);
+        toolbar.setBackgroundColor(PURPLE);
 
-        headerTitle.setText(
+        toolbar.setTitle(
                 "Booking Successful"
         );
 
-        headerTitle.setTextColor(
+        toolbar.setTitleTextColor(
                 Color.WHITE
         );
 
-        backButton.setTextColor(
+        toolbar.setNavigationIconTint(
                 Color.WHITE
         );
 
@@ -186,14 +199,6 @@ public class BookingSuccessActivity extends AppCompatActivity {
         bookingConfirmedText.setText(
                 "✓ Booking Confirmed"
         );
-
-        // =========================
-        // BACK BUTTON
-        // =========================
-
-        backButton.setOnClickListener(v -> {
-            finish();
-        });
 
         // =========================
         // VIEW MY BOOKINGS
@@ -323,8 +328,16 @@ public class BookingSuccessActivity extends AppCompatActivity {
                 Color.BLACK
         );
 
-        headerLayout.setBackgroundColor(
+        toolbar.setBackgroundColor(
                 PURPLE
+        );
+
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
+
+        toolbar.setNavigationIconTint(
+                Color.WHITE
         );
 
         getWindow().setStatusBarColor(
@@ -341,14 +354,6 @@ public class BookingSuccessActivity extends AppCompatActivity {
 
         bookingConfirmedText.setTextColor(
                 Color.rgb(76, 175, 80)
-        );
-
-        backButton.setTextColor(
-                Color.WHITE
-        );
-
-        headerTitle.setTextColor(
-                Color.WHITE
         );
 
         viewBookingsButton.setBackgroundTintList(
@@ -386,8 +391,16 @@ public class BookingSuccessActivity extends AppCompatActivity {
                 Color.rgb(248, 249, 250)
         );
 
-        headerLayout.setBackgroundColor(
+        toolbar.setBackgroundColor(
                 PURPLE
+        );
+
+        toolbar.setTitleTextColor(
+                Color.WHITE
+        );
+
+        toolbar.setNavigationIconTint(
+                Color.WHITE
         );
 
         getWindow().setStatusBarColor(
@@ -404,14 +417,6 @@ public class BookingSuccessActivity extends AppCompatActivity {
 
         bookingConfirmedText.setTextColor(
                 Color.rgb(76, 175, 80)
-        );
-
-        backButton.setTextColor(
-                Color.WHITE
-        );
-
-        headerTitle.setTextColor(
-                Color.WHITE
         );
 
         viewBookingsButton.setBackgroundTintList(

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -20,17 +21,19 @@ public class HomeActivity extends AppCompatActivity {
     private static final String PREF_NAME = "BorrowBuddy";
     private static final String DARK_MODE = "darkMode";
 
-    private LinearLayout headerLayout;
-    private TextView backButton;
-    private TextView headerTitle;
     private TextView settingsIcon;
-
+    private LinearLayout headerLayout;
+    private LinearLayout homeRootLayout;
+    private TextView headerTitle;
     private ScrollView homeScrollView;
     private LinearLayout homeMainLayout;
 
     private TextView helloText;
     private View searchBar;
     private TextView searchText;
+
+    private TextView browseCategoriesTitle;
+    private TextView popularItemsTitle;
 
     private View electronicsCard;
     private View toolsCard;
@@ -77,8 +80,9 @@ public class HomeActivity extends AppCompatActivity {
     private void initializeViews() {
 
         headerLayout = findViewById(R.id.headerLayout);
-        backButton = findViewById(R.id.backButton);
         headerTitle = findViewById(R.id.headerTitle);
+        homeRootLayout =
+                findViewById(R.id.homeRootLayout);
         settingsIcon = findViewById(R.id.settingsIcon);
 
         homeScrollView = findViewById(R.id.homeScrollView);
@@ -87,6 +91,12 @@ public class HomeActivity extends AppCompatActivity {
         helloText = findViewById(R.id.helloText);
         searchBar = findViewById(R.id.searchBar);
         searchText = findViewById(R.id.searchText);
+
+        browseCategoriesTitle =
+                findViewById(R.id.browseCategoriesTitle);
+
+        popularItemsTitle =
+                findViewById(R.id.popularItemsTitle);
 
         electronicsCard = findViewById(R.id.electronicsCard);
         toolsCard = findViewById(R.id.toolsCard);
@@ -124,11 +134,6 @@ public class HomeActivity extends AppCompatActivity {
     // =========================================================
 
     private void setupHeader() {
-
-        if (backButton != null) {
-
-            backButton.setOnClickListener(v -> finish());
-        }
 
         if (settingsIcon != null) {
 
@@ -322,9 +327,16 @@ public class HomeActivity extends AppCompatActivity {
 
         if (searchNav != null) {
 
-            searchNav.setOnClickListener(v ->
-                    openSearchFilter("")
-            );
+            searchNav.setOnClickListener(v -> {
+
+                Intent intent =
+                        new Intent(
+                                HomeActivity.this,
+                                MyActivityActivity.class
+                        );
+
+                startActivity(intent);
+            });
         }
 
 
@@ -394,36 +406,144 @@ public class HomeActivity extends AppCompatActivity {
 
     private void applyDarkMode() {
 
+        // Main background
+
         if (headerLayout != null) {
             headerLayout.setBackgroundColor(PURPLE);
         }
 
         if (homeScrollView != null) {
-            homeScrollView.setBackgroundColor(Color.rgb(18, 18, 18));
+            homeScrollView.setBackgroundColor(
+                    Color.rgb(18, 18, 18)
+            );
         }
 
         if (homeMainLayout != null) {
-            homeMainLayout.setBackgroundColor(Color.rgb(18, 18, 18));
+            homeMainLayout.setBackgroundColor(
+                    Color.rgb(18, 18, 18)
+            );
         }
+
+        // Greeting
 
         if (helloText != null) {
             helloText.setTextColor(WHITE);
         }
 
+        // Header
+
         if (headerTitle != null) {
             headerTitle.setTextColor(WHITE);
-        }
-
-        if (backButton != null) {
-            backButton.setTextColor(WHITE);
         }
 
         if (settingsIcon != null) {
             settingsIcon.setTextColor(WHITE);
         }
 
-        // Bottom navigation
+        // =====================================================
+        // SECTION TITLES
+        // =====================================================
+
+        if (browseCategoriesTitle != null) {
+            browseCategoriesTitle.setTextColor(WHITE);
+        }
+
+        if (popularItemsTitle != null) {
+            popularItemsTitle.setTextColor(WHITE);
+        }
+
+        // =====================================================
+        // SEARCH BAR
+        // =====================================================
+
+        if (searchBar != null) {
+            searchBar.setBackgroundColor(
+                    Color.rgb(45, 45, 45)
+            );
+        }
+
+        if (searchText != null) {
+            searchText.setTextColor(
+                    Color.LTGRAY
+            );
+        }
+
+        // =====================================================
+        // CATEGORY CARDS
+        // =====================================================
+
+        setCardBackgroundDark(electronicsCard);
+        setCardBackgroundDark(toolsCard);
+        setCardBackgroundDark(booksCard);
+        setCardBackgroundDark(sportsCard);
+        setCardBackgroundDark(furnitureCard);
+        setCardBackgroundDark(kitchenCard);
+
+        // =====================================================
+        // POPULAR ITEM CARDS
+        // =====================================================
+
+        setCardBackgroundDark(bicycleCard);
+        setCardBackgroundDark(gamingCard);
+
+        // View All
+
+        if (viewAllButton != null) {
+            viewAllButton.setTextColor(
+                    Color.rgb(186, 104, 200)
+            );
+        }
+
+        // =====================================================
+        // CATEGORY + POPULAR ITEM TEXT
+        // =====================================================
+
+        setChildTextColor(
+                electronicsCard,
+                WHITE
+        );
+
+        setChildTextColor(
+                toolsCard,
+                WHITE
+        );
+
+        setChildTextColor(
+                booksCard,
+                WHITE
+        );
+
+        setChildTextColor(
+                sportsCard,
+                WHITE
+        );
+
+        setChildTextColor(
+                furnitureCard,
+                WHITE
+        );
+
+        setChildTextColor(
+                kitchenCard,
+                WHITE
+        );
+
+        setChildTextColor(
+                bicycleCard,
+                WHITE
+        );
+
+        setChildTextColor(
+                gamingCard,
+                WHITE
+        );
+
+        // =====================================================
+        // BOTTOM NAVIGATION
+        // =====================================================
+
         if (bottomNavigationCard != null) {
+
             ((androidx.cardview.widget.CardView)
                     bottomNavigationCard)
                     .setCardBackgroundColor(
@@ -432,12 +552,18 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         if (bottomNavigation != null) {
+
             bottomNavigation.setBackgroundColor(
                     Color.TRANSPARENT
             );
         }
 
-        // ALL ICONS WHITE
+        if (homeRootLayout != null) {
+            homeRootLayout.setBackgroundColor(
+                    Color.rgb(18, 18, 18)
+            );
+        }
+
         setAllBottomIconsColor(WHITE);
     }
 
@@ -474,16 +600,112 @@ public class HomeActivity extends AppCompatActivity {
             headerTitle.setTextColor(WHITE);
         }
 
-        if (backButton != null) {
-            backButton.setTextColor(WHITE);
-        }
-
         if (settingsIcon != null) {
             settingsIcon.setTextColor(WHITE);
         }
 
-        // Bottom navigation
+        // =====================================================
+        // SECTION TITLES
+        // =====================================================
+
+        if (browseCategoriesTitle != null) {
+            browseCategoriesTitle.setTextColor(
+                    Color.rgb(34, 34, 34)
+            );
+        }
+
+        if (popularItemsTitle != null) {
+            popularItemsTitle.setTextColor(
+                    Color.rgb(34, 34, 34)
+            );
+        }
+
+        // =====================================================
+        // SEARCH BAR
+        // =====================================================
+
+        if (searchBar != null) {
+            searchBar.setBackgroundColor(
+                    Color.rgb(242, 242, 242)
+            );
+        }
+
+        if (searchText != null) {
+            searchText.setTextColor(
+                    Color.rgb(119, 119, 119)
+            );
+        }
+
+        // =====================================================
+        // CATEGORY CARDS
+        // =====================================================
+
+        setCardBackgroundLight(electronicsCard);
+        setCardBackgroundLight(toolsCard);
+        setCardBackgroundLight(booksCard);
+        setCardBackgroundLight(sportsCard);
+        setCardBackgroundLight(furnitureCard);
+        setCardBackgroundLight(kitchenCard);
+
+        // =====================================================
+        // POPULAR ITEM CARDS
+        // =====================================================
+
+        setCardBackgroundLight(bicycleCard);
+        setCardBackgroundLight(gamingCard);
+
+        // Category + popular item text
+
+        setChildTextColor(
+                electronicsCard,
+                Color.rgb(51, 51, 51)
+        );
+
+        setChildTextColor(
+                toolsCard,
+                Color.rgb(51, 51, 51)
+        );
+
+        setChildTextColor(
+                booksCard,
+                Color.rgb(51, 51, 51)
+        );
+
+        setChildTextColor(
+                sportsCard,
+                Color.rgb(51, 51, 51)
+        );
+
+        setChildTextColor(
+                furnitureCard,
+                Color.rgb(51, 51, 51)
+        );
+
+        setChildTextColor(
+                kitchenCard,
+                Color.rgb(51, 51, 51)
+        );
+
+        setChildTextColor(
+                bicycleCard,
+                Color.rgb(34, 34, 34)
+        );
+
+        setChildTextColor(
+                gamingCard,
+                Color.rgb(34, 34, 34)
+        );
+
+        if (viewAllButton != null) {
+            viewAllButton.setTextColor(PURPLE);
+        }
+
+        // =====================================================
+        // BOTTOM NAVIGATION
+        // =====================================================
+
         if (bottomNavigationCard != null) {
+
             ((androidx.cardview.widget.CardView)
                     bottomNavigationCard)
                     .setCardBackgroundColor(
@@ -492,13 +714,91 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         if (bottomNavigation != null) {
+
             bottomNavigation.setBackgroundColor(
                     Color.TRANSPARENT
             );
         }
 
-        // ALL ICONS PURPLE
+        if (homeRootLayout != null) {
+            homeRootLayout.setBackgroundColor(
+                    Color.WHITE
+            );
+        }
+
         setAllBottomIconsColor(PURPLE);
+    }
+
+
+    // =========================================================
+    // CARD BACKGROUND - DARK
+    // =========================================================
+
+    private void setCardBackgroundDark(View card) {
+
+        if (card != null) {
+
+            card.setBackgroundColor(
+                    Color.rgb(35, 35, 35)
+            );
+        }
+    }
+
+
+    // =========================================================
+    // CARD BACKGROUND - LIGHT
+    // =========================================================
+
+    private void setCardBackgroundLight(View card) {
+
+        if (card != null) {
+
+            if (card == bicycleCard ||
+                    card == gamingCard) {
+
+                card.setBackgroundColor(
+                        Color.rgb(247, 247, 247)
+                );
+
+            } else {
+
+                card.setBackgroundColor(
+                        Color.rgb(245, 240, 255)
+                );
+            }
+        }
+    }
+
+
+    // =========================================================
+    // CHANGE TEXT INSIDE CARD
+    // =========================================================
+
+    private void setChildTextColor(
+            View view,
+            int color
+    ) {
+
+        if (view instanceof TextView) {
+
+            ((TextView) view).setTextColor(color);
+        }
+
+        if (view instanceof ViewGroup) {
+
+            ViewGroup group =
+                    (ViewGroup) view;
+
+            for (int i = 0;
+                 i < group.getChildCount();
+                 i++) {
+
+                setChildTextColor(
+                        group.getChildAt(i),
+                        color
+                );
+            }
+        }
     }
 
 
@@ -600,3 +900,4 @@ public class HomeActivity extends AppCompatActivity {
         applySavedTheme();
     }
 }
+

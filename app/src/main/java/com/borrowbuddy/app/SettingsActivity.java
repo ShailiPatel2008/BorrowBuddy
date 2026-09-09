@@ -348,8 +348,8 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         // ==========================================
-        // LOGOUT
-        // ==========================================
+// LOGOUT
+// ==========================================
 
         if (logoutCard != null) {
 
@@ -376,6 +376,17 @@ public class SettingsActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT
                                     ).show();
 
+                                    Intent intent = new Intent(
+                                            SettingsActivity.this,
+                                            ChooseRoleActivity.class
+                                    );
+
+                                    intent.setFlags(
+                                            Intent.FLAG_ACTIVITY_NEW_TASK |
+                                                    Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    );
+
+                                    startActivity(intent);
                                 }
                         )
                         .show();
