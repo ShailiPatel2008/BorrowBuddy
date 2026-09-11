@@ -134,7 +134,7 @@ public class ManageItemActivity extends AppCompatActivity {
             Intent intent =
                     new Intent(
                             ManageItemActivity.this,
-                            ItemDetailsActivity.class
+                            AdminItemDetailsActivity.class
                     );
 
             intent.putExtra(
@@ -190,7 +190,7 @@ public class ManageItemActivity extends AppCompatActivity {
             Intent intent =
                     new Intent(
                             ManageItemActivity.this,
-                            ItemDetailsActivity.class
+                            AdminItemDetailsActivity.class
                     );
 
             intent.putExtra(
@@ -246,7 +246,7 @@ public class ManageItemActivity extends AppCompatActivity {
             Intent intent =
                     new Intent(
                             ManageItemActivity.this,
-                            ItemDetailsActivity.class
+                            AdminItemDetailsActivity.class
                     );
 
             intent.putExtra(

@@ -5,13 +5,13 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class AdminMainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Intent intent = new Intent(MainActivity.this, AdminDashboardActivity.class);
+        Intent intent = new Intent(AdminMainActivity.this, AdminDashboardActivity.class);
         startActivity(intent);
 
         finish();

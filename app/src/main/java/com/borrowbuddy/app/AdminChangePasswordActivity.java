@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class ChangePasswordActivity extends AppCompatActivity {
+public class AdminChangePasswordActivity extends AppCompatActivity {
 
     View mainLayout;
 
@@ -36,7 +36,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_change_password);
+        setContentView(R.layout.activity_admin_change_password);
 
 
         // ================= FIND VIEWS =================
@@ -207,7 +207,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             edtCurrentPassword.requestFocus();
 
             Toast.makeText(
-                    ChangePasswordActivity.this,
+                    AdminChangePasswordActivity.this,
                     "Current password is incorrect",
                     Toast.LENGTH_SHORT
             ).show();
@@ -240,7 +240,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             edtConfirmPassword.requestFocus();
 
             Toast.makeText(
-                    ChangePasswordActivity.this,
+                    AdminChangePasswordActivity.this,
                     "Passwords do not match",
                     Toast.LENGTH_SHORT
             ).show();
@@ -262,7 +262,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
         // ================= SUCCESS =================
 
         Toast.makeText(
-                ChangePasswordActivity.this,
+                AdminChangePasswordActivity.this,
                 "Password changed successfully",
                 Toast.LENGTH_SHORT
         ).show();

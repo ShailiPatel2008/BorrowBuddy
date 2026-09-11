@@ -247,7 +247,7 @@ public class ManageSettings extends AppCompatActivity {
 
             Intent intent = new Intent(
                     ManageSettings.this,
-                    ChangePasswordActivity.class
+                    AdminChangePasswordActivity.class
             );
 
             startActivity(intent);

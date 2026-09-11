@@ -15,7 +15,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class AdminEditProfileActivity extends AppCompatActivity {
 
     View mainLayout;
 
@@ -43,7 +43,7 @@ public class EditProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_edit_profile);
+        setContentView(R.layout.activity_admin_edit_profile);
 
         // ================= FIND VIEWS =================
 
@@ -237,7 +237,7 @@ public class EditProfileActivity extends AppCompatActivity {
         // ================= SUCCESS MESSAGE =================
 
         Toast.makeText(
-                EditProfileActivity.this,
+                AdminEditProfileActivity.this,
                 "Profile updated successfully",
                 Toast.LENGTH_SHORT
         ).show();

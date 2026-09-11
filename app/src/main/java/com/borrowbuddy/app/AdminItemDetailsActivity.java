@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
-public class ItemDetailsActivity extends AppCompatActivity {
+public class AdminItemDetailsActivity extends AppCompatActivity {
 
     LinearLayout mainLayout;
     LinearLayout photoContainer;
@@ -41,7 +41,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_item_details);
+        setContentView(R.layout.activity_admin_item_details);
 
         mainLayout = findViewById(R.id.mainLayout);
         photoContainer = findViewById(R.id.photoContainer);

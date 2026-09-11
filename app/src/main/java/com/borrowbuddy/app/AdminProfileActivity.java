@@ -111,7 +111,7 @@ public class AdminProfileActivity extends AppCompatActivity {
 
             Intent intent = new Intent(
                     AdminProfileActivity.this,
-                    EditProfileActivity.class
+                    AdminEditProfileActivity.class
             );
 
             startActivity(intent);

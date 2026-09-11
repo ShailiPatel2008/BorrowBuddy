@@ -14,7 +14,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".ChangePasswordActivity"
+            android:name=".AdminChangePasswordActivity"
             android:exported="false" />
 
 
@@ -35,7 +35,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".AdminEditProfileActivity"
             android:exported="false" />
 
         <activity
@@ -55,7 +55,7 @@
             android:exported="false" />
 
         <activity
-            android:name=".ItemDetailsActivity"
+            android:name=".AdminItemDetailsActivity"
             android:exported="false" />
 
 
