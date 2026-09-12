@@ -100,9 +100,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 v -> finish()
         );
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         getWindow()
                 .getDecorView()
@@ -571,7 +569,7 @@ public class EditProfileActivity extends AppCompatActivity {
         );
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -626,9 +624,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 PURPLE
         );
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
     }
 
     private void applyLightMode() {
@@ -680,7 +676,7 @@ public class EditProfileActivity extends AppCompatActivity {
         );
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -735,9 +731,7 @@ public class EditProfileActivity extends AppCompatActivity {
                 PURPLE
         );
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
     }
 
     private void changeAllTextColor(

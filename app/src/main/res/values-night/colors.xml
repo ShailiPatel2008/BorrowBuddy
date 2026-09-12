@@ -13,4 +13,31 @@
     <color name="reviews_card">#2B2B2B</color>
     <color name="reviews_text">#FFFFFF</color>
 
+    <!-- Admin Module Dark Mode Colors -->
+    <color name="purple">#AB47BC</color>
+    <color name="purple_dark">#6A1B9A</color>
+
+    <color name="screen_bg">#181818</color>
+    <color name="card_bg">#252525</color>
+
+    <color name="green">#66BB7A</color>
+    <color name="red">#EF7777</color>
+    <color name="orange">#FFB866</color>
+
+    <color name="divider">#AAAAAA</color>
+    <color name="photo_bg">#2A2A2A</color>
+
+    <color name="button_bg">#808080</color>
+    <color name="button_text">#FFFFFF</color>
+    <color name="button_grey">#707070</color>
+    <color name="grey_button">#666666</color>
+
+    <color name="background">#121212</color>
+    <color name="image_background">#242424</color>
+
+    <color name="hint_color">#CCCCCC</color>
+    <color name="input_background">#1E1E1E</color>
+    <color name="input_border">#777777</color>
+    <color name="medium_grey_button">#555555</color>
+
 </resources>

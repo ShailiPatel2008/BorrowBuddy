@@ -95,6 +95,9 @@ public class BookingActivity extends AppCompatActivity {
 
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIconTint(Color.WHITE);
+        getWindow().setStatusBarColor(
+                Color.rgb(108, 74, 182)
+        );
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle(
@@ -109,7 +112,6 @@ public class BookingActivity extends AppCompatActivity {
                 v -> finish()
         );
 
-        getWindow().setStatusBarColor(PURPLE);
 
         // =========================
         // FIND VIEWS
@@ -795,18 +797,15 @@ public class BookingActivity extends AppCompatActivity {
                         false
                 );
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        Color.rgb(108, 74, 182);
 
         // =========================
         // TOOLBAR
         // =========================
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
-
         toolbar.setTitleTextColor(
                 Color.WHITE
         );
@@ -875,11 +874,13 @@ public class BookingActivity extends AppCompatActivity {
         // DARK MODE ON
         // =========================
 
-        if (darkMode) {
+            if (darkMode) {
 
-            bookingLayout.setBackgroundColor(
-                    Color.BLACK
-            );
+                getWindow().setNavigationBarColor(Color.BLACK);
+
+                bookingLayout.setBackgroundColor(
+                        Color.BLACK
+                );
 
             selectedItemCard
                     .setCardBackgroundColor(
@@ -1022,8 +1023,18 @@ public class BookingActivity extends AppCompatActivity {
             btnEndDate.setTextColor(
                     Color.WHITE
             );
+
         }
-    }
+
+            // =========================
+            // STATUS BAR
+            // =========================
+
+            getWindow().setStatusBarColor(
+                Color.rgb(108, 74, 182)
+            );
+        }
+
 
     // ==================================================
     // SET TEXT COLOR INSIDE CARD

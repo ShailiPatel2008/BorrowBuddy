@@ -19,7 +19,7 @@
         android:gravity="center_vertical"
         android:paddingStart="12dp"
         android:paddingEnd="12dp"
-        android:background="#6A1B9A">
+        android:background="#6C4AB6">
 
         <!-- LEFT SPACE -->
 

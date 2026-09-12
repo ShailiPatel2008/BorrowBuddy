@@ -34,6 +34,10 @@ public class BorrowerRatingActivity extends AppCompatActivity {
                 getResources().getColor(android.R.color.white)
         );
 
+        getWindow().setStatusBarColor(
+                android.graphics.Color.rgb(108, 74, 182)
+        );
+
         toolbar.setNavigationOnClickListener(v -> finish());
 
 

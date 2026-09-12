@@ -1,0 +1,331 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#FFFFFF">
+
+    <!-- ========================= -->
+    <!-- TOOLBAR -->
+    <!-- ========================= -->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#6C4AB6">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="start|center_vertical"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Back"
+            android:padding="6dp"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@android:color/white"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <TextView
+            android:id="@+id/txtToolbarTitle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Manage Users"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"/>
+
+        <View
+            android:layout_width="55dp"
+            android:layout_height="1dp"/>
+
+    </LinearLayout>
+
+
+    <!-- ========================= -->
+    <!-- CONTENT -->
+    <!-- ========================= -->
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="18dp">
+
+            <!-- ========================= -->
+            <!-- USERS TITLE -->
+            <!-- ========================= -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Users"
+                android:textColor="#111111"
+                android:textSize="28sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="15dp"/>
+
+
+            <!-- ========================= -->
+            <!-- RAHUL CARD -->
+            <!-- ========================= -->
+
+            <LinearLayout
+                android:id="@+id/userCard1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp"
+                android:background="#EEEEEE"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="👤  Rahul"
+                    android:textColor="#111111"
+                    android:textSize="27sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email: rahul@gmail.com"
+                    android:textColor="#222222"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Trust Score: 4.8 ⭐"
+                    android:textColor="#222222"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:id="@+id/statusUser1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Status: Active"
+                    android:textColor="#4CAF50"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"/>
+
+                <!-- VIEW PROFILE -->
+
+                <Button
+                    android:id="@+id/btnViewProfile1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="View Profile"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="@drawable/grey_button"
+                    android:backgroundTint="#808080"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- BLOCK USER -->
+
+                <Button
+                    android:id="@+id/btnBlockUser1"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="Block User"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="@drawable/grey_button"
+                    android:backgroundTint="#808080"/>
+
+            </LinearLayout>
+
+
+            <!-- ========================= -->
+            <!-- PRIYA CARD -->
+            <!-- ========================= -->
+
+            <LinearLayout
+                android:id="@+id/userCard2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp"
+                android:background="#EEEEEE"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="👤  Priya"
+                    android:textColor="#111111"
+                    android:textSize="27sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email: priya@gmail.com"
+                    android:textColor="#222222"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Trust Score: 4.7 ⭐"
+                    android:textColor="#222222"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:id="@+id/statusUser2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Status: Active"
+                    android:textColor="#4CAF50"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"/>
+
+                <!-- VIEW PROFILE -->
+
+                <Button
+                    android:id="@+id/btnViewProfile2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="View Profile"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="@drawable/grey_button"
+                    android:backgroundTint="#808080"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- BLOCK USER -->
+
+                <Button
+                    android:id="@+id/btnBlockUser2"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="Block User"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="@drawable/grey_button"
+                    android:backgroundTint="#808080"/>
+
+            </LinearLayout>
+
+
+            <!-- ========================= -->
+            <!-- AMIT CARD -->
+            <!-- ========================= -->
+
+            <LinearLayout
+                android:id="@+id/userCard3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="18dp"
+                android:background="#EEEEEE"
+                android:layout_marginBottom="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="👤  Amit"
+                    android:textColor="#111111"
+                    android:textSize="27sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Email: amit@gmail.com"
+                    android:textColor="#222222"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Trust Score: 4.6 ⭐"
+                    android:textColor="#222222"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="10dp"/>
+
+                <TextView
+                    android:id="@+id/statusUser3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Status: Active"
+                    android:textColor="#4CAF50"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="20dp"/>
+
+                <!-- VIEW PROFILE -->
+
+                <Button
+                    android:id="@+id/btnViewProfile3"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="View Profile"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="@drawable/grey_button"
+                    android:backgroundTint="#808080"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- BLOCK USER -->
+
+                <Button
+                    android:id="@+id/btnBlockUser3"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:text="Block User"
+                    android:textColor="#FFFFFF"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textAllCaps="false"
+                    android:background="@drawable/grey_button"
+                    android:backgroundTint="#808080"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

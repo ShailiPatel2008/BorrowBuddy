@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.borrowbuddy.app.activities.ChangePasswordActivity;
-import com.borrowbuddy.app.activities.TermsActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -55,7 +54,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         // Status Bar
-        getWindow().setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
         getWindow().getDecorView().setSystemUiVisibility(0);
 
         // ==========================================
@@ -427,7 +426,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (settingsToolbar != null) {
 
             settingsToolbar.setBackgroundColor(
-                    PURPLE
+                    Color.rgb(108, 74, 182)
             );
         }
 
@@ -445,9 +444,7 @@ public class SettingsActivity extends AppCompatActivity {
             );
         }
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         getWindow()
                 .getDecorView()
@@ -490,7 +487,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (settingsToolbar != null) {
 
             settingsToolbar.setBackgroundColor(
-                    PURPLE
+                    Color.rgb(108, 74, 182)
             );
         }
 
@@ -506,9 +503,7 @@ public class SettingsActivity extends AppCompatActivity {
             backButton.clearColorFilter();
         }
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         getWindow()
                 .getDecorView()

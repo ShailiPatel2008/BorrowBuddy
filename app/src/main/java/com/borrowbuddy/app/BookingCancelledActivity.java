@@ -97,13 +97,9 @@ public class BookingCancelledActivity extends AppCompatActivity {
         // STATUS BAR
         // =========================
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        Color.rgb(108, 74, 182);
 
-        getWindow().setNavigationBarColor(
-                PURPLE
-        );
+        getWindow().setNavigationBarColor(Color.rgb(248, 249, 250));
 
         WindowCompat.getInsetsController(
                 getWindow(),
@@ -253,7 +249,7 @@ public class BookingCancelledActivity extends AppCompatActivity {
         );
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -307,13 +303,9 @@ public class BookingCancelledActivity extends AppCompatActivity {
 
         // Status + Navigation bar
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
-        getWindow().setNavigationBarColor(
-                PURPLE
-        );
+        getWindow().setNavigationBarColor(Color.rgb(248, 249, 250));
     }
 
     // ==================================================
@@ -327,7 +319,7 @@ public class BookingCancelledActivity extends AppCompatActivity {
         );
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -381,13 +373,9 @@ public class BookingCancelledActivity extends AppCompatActivity {
 
         // Status + Navigation bar
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
-        getWindow().setNavigationBarColor(
-                PURPLE
-        );
+        getWindow().setNavigationBarColor(Color.rgb(248, 249, 250));
     }
 
     // ==================================================

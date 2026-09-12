@@ -10,7 +10,7 @@
         android:id="@+id/toolbar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:background="#6C4AB6"
         app:title="Owner Profile"
         app:titleCentered="true"
         app:titleTextColor="@android:color/white"

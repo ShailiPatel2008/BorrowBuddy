@@ -115,7 +115,7 @@ public class RentalReviewActivity extends AppCompatActivity {
         // STATUS BAR
         // =========================
 
-        getWindow().setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         WindowCompat.getInsetsController(
                 getWindow(),
@@ -443,7 +443,7 @@ public class RentalReviewActivity extends AppCompatActivity {
 
         // Header
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -526,9 +526,7 @@ public class RentalReviewActivity extends AppCompatActivity {
         );
 
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         WindowCompat.getInsetsController(
                 getWindow(),
@@ -568,7 +566,7 @@ public class RentalReviewActivity extends AppCompatActivity {
 
         // Header
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -648,9 +646,7 @@ public class RentalReviewActivity extends AppCompatActivity {
         );
 
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         WindowCompat.getInsetsController(
                 getWindow(),

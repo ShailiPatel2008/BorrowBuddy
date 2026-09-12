@@ -105,6 +105,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".TermsActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".PaymentActivity"
             android:exported="false" />
 
@@ -140,6 +144,72 @@
 
         <activity
             android:name=".AdminHomeActivity"
+            android:exported="false" />
+
+        <!-- ================= ADMIN MODULE ================= -->
+
+        <activity
+            android:name=".AdminMainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ManageSettings"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminChangePasswordActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ListingRequestDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ItemUpdateRequestsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".UpdateRequestDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminEditProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ManageUserActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".UserProfileActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ManageListingRequestActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ManageItemActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminItemDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ManageBookingActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".BookingDetailsActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".AdminDashboardActivity"
             android:exported="false" />
 
         <!-- ================= OWNER MODULE ================= -->

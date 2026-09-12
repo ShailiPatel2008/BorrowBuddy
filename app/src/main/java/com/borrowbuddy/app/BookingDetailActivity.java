@@ -722,6 +722,10 @@ public class BookingDetailActivity extends AppCompatActivity {
                     Color.BLACK
             );
 
+            cancelBookingButton.setTextColor(
+                    Color.WHITE
+            );
+
             // Status
             statusText.setTextColor(
                     Color.rgb(
@@ -741,11 +745,15 @@ public class BookingDetailActivity extends AppCompatActivity {
         // and toolbar title/arrow white.
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
                 Color.WHITE
+        );
+
+        getWindow().setStatusBarColor(
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setNavigationIconTint(

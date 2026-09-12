@@ -90,7 +90,7 @@ public class BookingSuccessActivity extends AppCompatActivity {
         // STATUS BAR
         // =========================
 
-        getWindow().setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         getWindow()
                 .getDecorView()
@@ -168,7 +168,9 @@ public class BookingSuccessActivity extends AppCompatActivity {
         // HEADER
         // =========================
 
-        toolbar.setBackgroundColor(PURPLE);
+        toolbar.setBackgroundColor(
+                Color.rgb(108, 74, 182)
+        );
 
         toolbar.setTitle(
                 "Booking Successful"
@@ -329,7 +331,7 @@ public class BookingSuccessActivity extends AppCompatActivity {
         );
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -340,9 +342,7 @@ public class BookingSuccessActivity extends AppCompatActivity {
                 Color.WHITE
         );
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         successText.setTextColor(
                 Color.WHITE
@@ -392,7 +392,7 @@ public class BookingSuccessActivity extends AppCompatActivity {
         );
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -403,9 +403,7 @@ public class BookingSuccessActivity extends AppCompatActivity {
                 Color.WHITE
         );
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         successText.setTextColor(
                 Color.BLACK

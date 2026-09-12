@@ -152,9 +152,8 @@ public class SearchFilterActivity extends AppCompatActivity {
 
         Window window = getWindow();
 
-        window.setStatusBarColor(PURPLE);
-        window.setNavigationBarColor(PURPLE);
-
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
+        getWindow().setNavigationBarColor(Color.rgb(248, 249, 250));
         window.getDecorView().setSystemUiVisibility(0);
 
 
@@ -715,7 +714,7 @@ public class SearchFilterActivity extends AppCompatActivity {
         // ==================================================
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -727,13 +726,9 @@ public class SearchFilterActivity extends AppCompatActivity {
         // STATUS BAR
         // ==================================================
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
-        getWindow().setNavigationBarColor(
-                PURPLE
-        );
+        getWindow().setNavigationBarColor(Color.rgb(248, 249, 250));
 
         getWindow()
                 .getDecorView()

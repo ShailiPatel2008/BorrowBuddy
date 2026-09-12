@@ -84,7 +84,13 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         Window window = getWindow();
 
-        window.setStatusBarColor(PURPLE);
+        window.setStatusBarColor(
+                Color.rgb(108, 74, 182)
+        );
+
+        window.setNavigationBarColor(
+                Color.rgb(108, 74, 182)
+        );
 
         window.getDecorView().setSystemUiVisibility(0);
 
@@ -275,13 +281,15 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         // Header always purple
 
-        toolbar.setBackgroundColor(PURPLE);
+        toolbar.setBackgroundColor(
+                Color.rgb(108, 74, 182)
+        );
 
         toolbar.setTitleTextColor(Color.WHITE);
 
         toolbar.setNavigationIconTint(Color.WHITE);
 
-        getWindow().setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         getWindow()
                 .getDecorView()

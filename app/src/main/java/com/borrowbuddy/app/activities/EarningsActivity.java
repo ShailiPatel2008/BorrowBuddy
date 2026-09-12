@@ -23,6 +23,9 @@ public class EarningsActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         toolbar.setTitleTextColor(Color.WHITE);
+        getWindow().setStatusBarColor(
+                Color.rgb(108, 74, 182)
+        );
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

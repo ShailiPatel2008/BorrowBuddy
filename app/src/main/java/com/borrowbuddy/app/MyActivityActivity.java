@@ -133,7 +133,7 @@ public class MyActivityActivity extends AppCompatActivity {
 
         Window window = getWindow();
 
-        window.setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         // White status bar icons
         window.getDecorView()
@@ -157,7 +157,9 @@ public class MyActivityActivity extends AppCompatActivity {
         // HEADER
         // =========================
 
-        toolbar.setBackgroundColor(PURPLE);
+        toolbar.setBackgroundColor(
+                Color.rgb(108, 74, 182)
+        );
         toolbar.setTitleTextColor(Color.WHITE);
 
 
@@ -197,7 +199,7 @@ public class MyActivityActivity extends AppCompatActivity {
 
         Window window = getWindow();
 
-        window.setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         // White status bar icons
         window.getDecorView()
@@ -221,7 +223,9 @@ public class MyActivityActivity extends AppCompatActivity {
         // HEADER
         // =========================
 
-        toolbar.setBackgroundColor(PURPLE);
+        toolbar.setBackgroundColor(
+                Color.rgb(108, 74, 182)
+        );
 
         toolbar.setTitleTextColor(Color.WHITE);
 

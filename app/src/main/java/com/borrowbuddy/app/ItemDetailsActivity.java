@@ -94,7 +94,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         Window window = getWindow();
 
-        window.setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         window.getDecorView().setSystemUiVisibility(0);
 
@@ -596,7 +596,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         // ================= STATUS BAR =================
 
-        getWindow().setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         getWindow()
                 .getDecorView()
@@ -605,8 +605,9 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         // ================= HEADER =================
 
-        toolbar.setBackgroundColor(PURPLE);
-
+        toolbar.setBackgroundColor(
+                Color.rgb(108, 74, 182)
+        );
         toolbar.setTitleTextColor(
                 Color.WHITE
         );

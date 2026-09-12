@@ -113,6 +113,9 @@ public class AddItemActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         toolbar.setTitleTextColor(Color.WHITE);
+        getWindow().setStatusBarColor(
+                Color.rgb(108, 74, 182)
+        );
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setTitle("Add Item");

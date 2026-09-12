@@ -75,6 +75,10 @@ public class MyProfileActivity extends AppCompatActivity {
                 v -> finish()
         );
 
+        getWindow().setStatusBarColor(
+                Color.rgb(108, 74, 182)
+        );
+
         initializeViews();
         loadProfileData();
         setupClickListeners();
@@ -255,7 +259,9 @@ public class MyProfileActivity extends AppCompatActivity {
                 Color.rgb(245, 245, 245)
         );
 
-        toolbar.setBackgroundColor(PURPLE);
+        toolbar.setBackgroundColor(
+                Color.rgb(108, 74, 182)
+        );
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIconTint(Color.WHITE);
 
@@ -316,7 +322,9 @@ public class MyProfileActivity extends AppCompatActivity {
                 Color.BLACK
         );
 
-        toolbar.setBackgroundColor(PURPLE);
+        toolbar.setBackgroundColor(
+                Color.rgb(108, 74, 182)
+        );
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setNavigationIconTint(Color.WHITE);
 

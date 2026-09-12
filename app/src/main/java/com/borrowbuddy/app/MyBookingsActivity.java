@@ -108,7 +108,7 @@ public class MyBookingsActivity extends AppCompatActivity {
         // STATUS BAR
         // =========================
 
-        getWindow().setStatusBarColor(HOME_PURPLE);
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         getWindow()
                 .getDecorView()
@@ -461,13 +461,12 @@ public class MyBookingsActivity extends AppCompatActivity {
                 Color.WHITE
         );
 
-        toolbar.setBackgroundColor(HOME_PURPLE);
+        toolbar.setBackgroundColor(
+                Color.rgb(108, 74, 182)
+        );
         toolbar.setTitleTextColor(Color.WHITE);
 
-        getWindow().setStatusBarColor(
-                HOME_PURPLE
-        );
-
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
         bookingItemPrice.setTextColor(
                 Color.rgb(186, 104, 200)
         );
@@ -533,12 +532,12 @@ public class MyBookingsActivity extends AppCompatActivity {
                 Color.BLACK
         );
 
-        toolbar.setBackgroundColor(HOME_PURPLE);
+        toolbar.setBackgroundColor(
+                Color.rgb(108, 74, 182)
+        );
         toolbar.setTitleTextColor(Color.WHITE);
 
-        getWindow().setStatusBarColor(
-                HOME_PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         bookingItemPrice.setTextColor(
                 HOME_PURPLE

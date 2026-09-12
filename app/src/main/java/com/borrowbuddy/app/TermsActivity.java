@@ -21,14 +21,26 @@ public class TermsActivity extends AppCompatActivity {
     private static final String PREF_NAME = "BorrowBuddy";
     private static final String DARK_MODE = "darkMode";
 
-    private static final int PURPLE =
-            Color.rgb(106, 27, 154);
+    private static final int TOOLBAR_PURPLE =
+            Color.rgb(108, 74, 182);
 
     private static final int LIGHT_BACKGROUND =
             Color.rgb(248, 249, 250);
 
+    private static final int DARK_BACKGROUND =
+            Color.BLACK;
+
+    private static final int LIGHT_CARD =
+            Color.WHITE;
+
+    private static final int DARK_CARD =
+            Color.rgb(43, 41, 50);
+
     private static final int LIGHT_STROKE =
             Color.rgb(221, 221, 221);
+
+    private static final int DARK_STROKE =
+            Color.rgb(80, 80, 80);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,46 +48,18 @@ public class TermsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_terms);
 
-        // =========================
-        // HIDE ACTION BAR
-        // =========================
-
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
 
-        // =========================
-        // FIND VIEWS
-        // =========================
+        toolbarTerms = findViewById(R.id.toolbarTerms);
+        termsScrollView = findViewById(R.id.termsScrollView);
 
-        toolbarTerms =
-                findViewById(R.id.toolbarTerms);
-
-        termsScrollView =
-                findViewById(R.id.termsScrollView);
-
-        // =========================
-        // TOOLBAR BACK BUTTON
-        // =========================
+        toolbarTerms.setNavigationIconTint(Color.WHITE);
 
         toolbarTerms.setNavigationOnClickListener(
                 v -> finish()
         );
-
-        // =========================
-        // STATUS BAR
-        // =========================
-
-        getWindow().setStatusBarColor(PURPLE);
-
-        // White status bar icons
-        getWindow()
-                .getDecorView()
-                .setSystemUiVisibility(0);
-
-        // =========================
-        // LOAD DARK MODE
-        // =========================
 
         SharedPreferences preferences =
                 getSharedPreferences(
@@ -90,9 +74,9 @@ public class TermsActivity extends AppCompatActivity {
                 );
 
         if (isDarkMode) {
-            darkMode();
+            applyDarkMode();
         } else {
-            lightMode();
+            applyLightMode();
         }
     }
 
@@ -100,11 +84,17 @@ public class TermsActivity extends AppCompatActivity {
     // DARK MODE
     // ==================================================
 
-    private void darkMode() {
+    private void applyDarkMode() {
 
-        // Background
+        // Entire activity background
+        View root =
+                findViewById(android.R.id.content);
+
+        root.setBackgroundColor(DARK_BACKGROUND);
+
+        // ScrollView
         termsScrollView.setBackgroundColor(
-                Color.BLACK
+                DARK_BACKGROUND
         );
 
         View content =
@@ -113,35 +103,34 @@ public class TermsActivity extends AppCompatActivity {
         if (content != null) {
 
             content.setBackgroundColor(
-                    Color.BLACK
+                    DARK_BACKGROUND
             );
 
-            changeAllTextColor(
+            changeTextColor(
                     content,
                     Color.WHITE
             );
 
             changeCardsColor(
                     content,
-                    Color.BLACK
+                    DARK_CARD
             );
         }
 
         // Toolbar
         toolbarTerms.setBackgroundColor(
-                PURPLE
+                TOOLBAR_PURPLE
         );
 
-        toolbarTerms.setNavigationIcon(
-                R.drawable.ic_arrow_back
+        toolbarTerms.setNavigationIconTint(
+                Color.WHITE
         );
 
-        // Toolbar title white
         setToolbarTextWhite();
 
-        // Status bar
+        // Status bar SAME as toolbar
         getWindow().setStatusBarColor(
-                PURPLE
+                TOOLBAR_PURPLE
         );
 
         getWindow()
@@ -153,27 +142,33 @@ public class TermsActivity extends AppCompatActivity {
     // LIGHT MODE
     // ==================================================
 
-    private void lightMode() {
+    private void applyLightMode() {
 
-        // Background
-        termsScrollView.setBackgroundColor(
-                LIGHT_BACKGROUND
-        );
+        int lightBackground = Color.rgb(248, 249, 250);
 
-        View content =
-                termsScrollView.getChildAt(0);
+        // Entire activity
+        View root = findViewById(android.R.id.content);
+        root.setBackgroundColor(lightBackground);
+
+        // ScrollView
+        termsScrollView.setBackgroundColor(lightBackground);
+
+        // Content inside ScrollView
+        View content = termsScrollView.getChildAt(0);
 
         if (content != null) {
 
-            content.setBackgroundColor(
-                    LIGHT_BACKGROUND
+            setLightBackgroundRecursively(
+                    content,
+                    lightBackground
             );
 
-            changeAllTextColor(
+            changeTextColor(
                     content,
                     Color.BLACK
             );
 
+            // Cards must remain white
             changeCardsColor(
                     content,
                     Color.WHITE
@@ -182,28 +177,26 @@ public class TermsActivity extends AppCompatActivity {
 
         // Toolbar
         toolbarTerms.setBackgroundColor(
-                PURPLE
+                TOOLBAR_PURPLE
         );
 
-        toolbarTerms.setNavigationIcon(
-                R.drawable.ic_arrow_back
+        toolbarTerms.setNavigationIconTint(
+                Color.WHITE
         );
 
-        // Toolbar title white
         setToolbarTextWhite();
 
-        // Status bar
+        // Status bar SAME as toolbar
         getWindow().setStatusBarColor(
-                PURPLE
+                TOOLBAR_PURPLE
         );
 
         getWindow()
                 .getDecorView()
                 .setSystemUiVisibility(0);
     }
-
     // ==================================================
-    // TOOLBAR TEXT WHITE
+    // TOOLBAR TEXT
     // ==================================================
 
     private void setToolbarTextWhite() {
@@ -222,18 +215,16 @@ public class TermsActivity extends AppCompatActivity {
             if (child instanceof TextView) {
 
                 ((TextView) child)
-                        .setTextColor(
-                                Color.WHITE
-                        );
+                        .setTextColor(Color.WHITE);
             }
         }
     }
 
     // ==================================================
-    // CHANGE ALL TEXT COLOR
+    // CHANGE TEXT COLOR
     // ==================================================
 
-    private void changeAllTextColor(
+    private void changeTextColor(
             View view,
             int color
     ) {
@@ -253,7 +244,7 @@ public class TermsActivity extends AppCompatActivity {
                  i < group.getChildCount();
                  i++) {
 
-                changeAllTextColor(
+                changeTextColor(
                         group.getChildAt(i),
                         color
                 );
@@ -262,7 +253,7 @@ public class TermsActivity extends AppCompatActivity {
     }
 
     // ==================================================
-    // CHANGE ALL CARDS
+    // CHANGE CARD COLOR
     // ==================================================
 
     private void changeCardsColor(
@@ -279,22 +270,20 @@ public class TermsActivity extends AppCompatActivity {
                     color
             );
 
-            if (color == Color.BLACK) {
+            if (color == DARK_CARD) {
 
                 card.setStrokeColor(
-                        Color.WHITE
+                        DARK_STROKE
                 );
-
-                card.setStrokeWidth(1);
 
             } else {
 
                 card.setStrokeColor(
                         LIGHT_STROKE
                 );
-
-                card.setStrokeWidth(1);
             }
+
+            card.setStrokeWidth(1);
         }
 
         if (view instanceof ViewGroup) {
@@ -307,6 +296,35 @@ public class TermsActivity extends AppCompatActivity {
                  i++) {
 
                 changeCardsColor(
+                        group.getChildAt(i),
+                        color
+                );
+            }
+        }
+    }
+
+    private void setLightBackgroundRecursively(
+            View view,
+            int color
+    ) {
+
+        // Don't overwrite card backgrounds
+        if (view instanceof MaterialCardView) {
+            return;
+        }
+
+        view.setBackgroundColor(color);
+
+        if (view instanceof ViewGroup) {
+
+            ViewGroup group =
+                    (ViewGroup) view;
+
+            for (int i = 0;
+                 i < group.getChildCount();
+                 i++) {
+
+                setLightBackgroundRecursively(
                         group.getChildAt(i),
                         color
                 );

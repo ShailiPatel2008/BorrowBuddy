@@ -409,8 +409,14 @@ public class HomeActivity extends AppCompatActivity {
         // Main background
 
         if (headerLayout != null) {
-            headerLayout.setBackgroundColor(PURPLE);
+            headerLayout.setBackgroundColor(
+                    Color.rgb(108, 74, 182)
+            );
         }
+
+        getWindow().setStatusBarColor(
+                Color.rgb(108, 74, 182)
+        );
 
         if (homeScrollView != null) {
             homeScrollView.setBackgroundColor(
@@ -575,8 +581,14 @@ public class HomeActivity extends AppCompatActivity {
     private void applyLightMode() {
 
         if (headerLayout != null) {
-            headerLayout.setBackgroundColor(PURPLE);
+            headerLayout.setBackgroundColor(
+                    Color.rgb(108, 74, 182)
+            );
         }
+
+        getWindow().setStatusBarColor(
+                Color.rgb(108, 74, 182)
+        );
 
         if (homeScrollView != null) {
             homeScrollView.setBackgroundColor(

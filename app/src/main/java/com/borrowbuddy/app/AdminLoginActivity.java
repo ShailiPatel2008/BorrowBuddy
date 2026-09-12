@@ -57,7 +57,7 @@ public class AdminLoginActivity extends AppCompatActivity {
                 // Directly open Welcome Admin page
                 Intent intent = new Intent(
                         AdminLoginActivity.this,
-                        AdminHomeActivity.class
+                        AdminMainActivity.class
                 );
 
                 startActivity(intent);

@@ -75,7 +75,9 @@ public class NotificationActivity extends AppCompatActivity {
         // STATUS BAR PURPLE
         // ==============================
 
-        getWindow().setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(
+                Color.rgb(108, 74, 182)
+        );
 
         // White icons on status bar
         getWindow().getDecorView().setSystemUiVisibility(0);
@@ -176,7 +178,7 @@ public class NotificationActivity extends AppCompatActivity {
         // ==============================
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -222,7 +224,7 @@ public class NotificationActivity extends AppCompatActivity {
         // STATUS BAR
         // ==============================
 
-        getWindow().setStatusBarColor(PURPLE);
+        getWindow().setNavigationBarColor(Color.rgb(248, 249, 250));
         getWindow().getDecorView().setSystemUiVisibility(0);
     }
 
@@ -248,7 +250,7 @@ public class NotificationActivity extends AppCompatActivity {
         // ==============================
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(
@@ -294,7 +296,7 @@ public class NotificationActivity extends AppCompatActivity {
         // STATUS BAR
         // ==============================
 
-        getWindow().setStatusBarColor(PURPLE);
+        getWindow().setNavigationBarColor(Color.BLACK);
         getWindow().getDecorView().setSystemUiVisibility(0);
     }
 

@@ -176,7 +176,7 @@ public class PaymentActivity extends AppCompatActivity
         // STATUS BAR
         // ==================================================
 
-        getWindow().setStatusBarColor(PURPLE);
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
         getWindow()
                 .getDecorView()
@@ -695,9 +695,7 @@ public class PaymentActivity extends AppCompatActivity
         // STATUS BAR
         // ==================================================
 
-        getWindow().setStatusBarColor(
-                PURPLE
-        );
+        getWindow().setStatusBarColor(Color.rgb(108, 74, 182));
 
 
         getWindow()
@@ -710,7 +708,7 @@ public class PaymentActivity extends AppCompatActivity
         // ==================================================
 
         toolbar.setBackgroundColor(
-                PURPLE
+                Color.rgb(108, 74, 182)
         );
 
         toolbar.setTitleTextColor(

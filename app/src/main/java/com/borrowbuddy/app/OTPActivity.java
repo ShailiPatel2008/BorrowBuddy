@@ -214,7 +214,7 @@ public class OTPActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(
                             OTPActivity.this,
-                            AdminHomeActivity.class
+                            AdminMainActivity.class
                     );
 
                     startActivity(intent);
