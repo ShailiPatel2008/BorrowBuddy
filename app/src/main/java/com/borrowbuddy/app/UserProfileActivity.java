@@ -5,11 +5,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -17,6 +19,7 @@ public class UserProfileActivity extends AppCompatActivity {
     LinearLayout profileInfoCard;
 
     ImageButton btnBack;
+
     TextView txtName;
     TextView txtEmail;
     TextView txtPhone;
@@ -24,44 +27,50 @@ public class UserProfileActivity extends AppCompatActivity {
 
     boolean darkMode = false;
 
+    private FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_user_profile);
+
+        db = FirebaseFirestore.getInstance();
 
         mainLayout = findViewById(R.id.mainLayout);
         profileInfoCard = findViewById(R.id.profileInfoCard);
 
         btnBack = findViewById(R.id.btnBack);
+
         txtName = findViewById(R.id.txtName);
         txtEmail = findViewById(R.id.txtEmail);
         txtPhone = findViewById(R.id.txtPhone);
         txtTrustScore = findViewById(R.id.txtTrustScore);
 
-        // User information
-        String name = getIntent().getStringExtra("userName");
-        String email = getIntent().getStringExtra("userEmail");
-        String phone = getIntent().getStringExtra("userPhone");
-        String trust = getIntent().getStringExtra("trustScore");
-
-        if (name != null) {
-            txtName.setText(name);
-        }
-
-        if (email != null) {
-            txtEmail.setText(email);
-        }
-
-        if (phone != null) {
-            txtPhone.setText(phone);
-        }
-
-        if (trust != null) {
-            txtTrustScore.setText("Trust Score: " + trust + " ⭐");
-        }
-
         btnBack.setOnClickListener(v -> finish());
+
+        String userId = getIntent().getStringExtra("USER_ID");
+
+        if (userId != null) {
+
+            db.collection("users")
+                    .document(userId)
+                    .get()
+                    .addOnSuccessListener(documentSnapshot -> {
+
+                        if (documentSnapshot.exists()) {
+
+                            txtName.setText(documentSnapshot.getString("full_name"));
+
+                            txtEmail.setText(documentSnapshot.getString("email"));
+
+                            txtPhone.setText(documentSnapshot.getString("phone"));
+
+                            txtTrustScore.setText("5.0 ⭐");
+                        }
+
+                    });
+
+        }
 
         applyDarkMode();
     }
@@ -81,118 +90,72 @@ public class UserProfileActivity extends AppCompatActivity {
 
         if (darkMode) {
 
-            // Main background
-            mainLayout.setBackgroundColor(
-                    Color.rgb(18, 18, 18)
-            );
+            mainLayout.setBackgroundColor(Color.rgb(18, 18, 18));
+            profileInfoCard.setBackgroundColor(Color.rgb(35, 35, 35));
 
-            // Profile card
-            profileInfoCard.setBackgroundColor(
-                    Color.rgb(35, 35, 35)
-            );
-
-            // Normal text WHITE
-            setAllTextColors(
-                    mainLayout,
-                    Color.WHITE
-            );
+            setAllTextColors(mainLayout, Color.WHITE);
 
         } else {
 
-            // Main background
-            mainLayout.setBackgroundColor(
-                    Color.WHITE
-            );
+            mainLayout.setBackgroundColor(Color.WHITE);
+            profileInfoCard.setBackgroundColor(Color.rgb(238, 238, 238));
 
-            // Profile card LIGHT GREY
-            profileInfoCard.setBackgroundColor(
-                    Color.rgb(238, 238, 238)
-            );
-
-            // Normal text BLACK
-            setAllTextColors(
-                    mainLayout,
-                    Color.rgb(20, 20, 20)
-            );
+            setAllTextColors(mainLayout, Color.rgb(20, 20, 20));
         }
 
-        // Name
-        txtName.setTextColor(
-                darkMode ? Color.WHITE : Color.rgb(20, 20, 20)
-        );
+        txtName.setTextColor(darkMode ? Color.WHITE : Color.rgb(20,20,20));
+        txtEmail.setTextColor(darkMode ? Color.WHITE : Color.rgb(20,20,20));
+        txtPhone.setTextColor(darkMode ? Color.WHITE : Color.rgb(20,20,20));
+        txtTrustScore.setTextColor(darkMode ? Color.WHITE : Color.rgb(20,20,20));
 
-        // Email
-        txtEmail.setTextColor(
-                darkMode ? Color.WHITE : Color.rgb(20, 20, 20)
-        );
-
-        // Phone
-        txtPhone.setTextColor(
-                darkMode ? Color.WHITE : Color.rgb(20, 20, 20)
-        );
-
-        // Trust
-        txtTrustScore.setTextColor(
-                darkMode ? Color.WHITE : Color.rgb(20, 20, 20)
-        );
-
-        // Toolbar always PURPLE
         View toolbar = mainLayout.getChildAt(0);
 
         if (toolbar != null) {
 
-            toolbar.setBackgroundColor(
-                    Color.rgb(108, 74, 182)
-            );
+            toolbar.setBackgroundColor(Color.rgb(108,74,182));
 
             if (toolbar instanceof ViewGroup) {
 
-                ViewGroup toolbarGroup =
-                        (ViewGroup) toolbar;
+                ViewGroup toolbarGroup = (ViewGroup) toolbar;
 
-                for (int i = 0;
-                     i < toolbarGroup.getChildCount();
-                     i++) {
+                for (int i = 0; i < toolbarGroup.getChildCount(); i++) {
 
-                    View child =
-                            toolbarGroup.getChildAt(i);
+                    View child = toolbarGroup.getChildAt(i);
 
                     if (child instanceof TextView) {
 
-                        ((TextView) child)
-                                .setTextColor(Color.WHITE);
+                        ((TextView) child).setTextColor(Color.WHITE);
+
                     }
+
                 }
+
             }
+
         }
+
     }
 
-    private void setAllTextColors(
-            View view,
-            int color) {
+    private void setAllTextColors(View view, int color) {
 
         if (view instanceof TextView) {
 
-            TextView textView =
-                    (TextView) view;
+            ((TextView) view).setTextColor(color);
 
-            textView.setTextColor(color);
         }
 
         if (view instanceof ViewGroup) {
 
-            ViewGroup group =
-                    (ViewGroup) view;
+            ViewGroup group = (ViewGroup) view;
 
-            for (int i = 0;
-                 i < group.getChildCount();
-                 i++) {
+            for (int i = 0; i < group.getChildCount(); i++) {
 
-                setAllTextColors(
-                        group.getChildAt(i),
-                        color
-                );
+                setAllTextColors(group.getChildAt(i), color);
+
             }
+
         }
+
     }
+
 }

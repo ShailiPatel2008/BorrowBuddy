@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class AdminLoginActivity extends AppCompatActivity {
 
@@ -17,10 +19,17 @@ public class AdminLoginActivity extends AppCompatActivity {
     private MaterialButton btnAdminLogin;
     private TextView txtBack;
 
+    // Firebase
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login);
+
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         etAdminEmail = findViewById(R.id.etAdminEmail);
         etAdminPassword = findViewById(R.id.etAdminPassword);
@@ -44,36 +53,78 @@ public class AdminLoginActivity extends AppCompatActivity {
                 return;
             }
 
-            // Admin Login
-            if (email.equals("admin@gmail.com")
-                    && password.equals("123456")) {
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
 
-                Toast.makeText(
-                        AdminLoginActivity.this,
-                        "Admin Login Successful",
-                        Toast.LENGTH_SHORT
-                ).show();
+                        if (task.isSuccessful()) {
 
-                // Directly open Welcome Admin page
-                Intent intent = new Intent(
-                        AdminLoginActivity.this,
-                        AdminMainActivity.class
-                );
+                            String uid = auth.getCurrentUser().getUid();
 
-                startActivity(intent);
-                finish();
+                            db.collection("users")
+                                    .document(uid)
+                                    .get()
+                                    .addOnSuccessListener(documentSnapshot -> {
 
-            } else {
+                                        if (documentSnapshot.exists()) {
 
-                Toast.makeText(
-                        AdminLoginActivity.this,
-                        "Invalid Admin Email or Password",
-                        Toast.LENGTH_SHORT
-                ).show();
-            }
+                                            String role = documentSnapshot.getString("role");
+
+                                            if ("admin".equals(role)) {
+
+                                                Toast.makeText(
+                                                        AdminLoginActivity.this,
+                                                        "Admin Login Successful",
+                                                        Toast.LENGTH_SHORT
+                                                ).show();
+
+                                                Intent intent = new Intent(
+                                                        AdminLoginActivity.this,
+                                                        AdminMainActivity.class
+                                                );
+
+                                                startActivity(intent);
+                                                finish();
+
+                                            } else {
+
+                                                FirebaseAuth.getInstance().signOut();
+
+                                                Toast.makeText(
+                                                        AdminLoginActivity.this,
+                                                        "This account is not registered as an Admin.",
+                                                        Toast.LENGTH_LONG
+                                                ).show();
+                                            }
+
+                                        } else {
+
+                                            FirebaseAuth.getInstance().signOut();
+
+                                            Toast.makeText(
+                                                    AdminLoginActivity.this,
+                                                    "User data not found.",
+                                                    Toast.LENGTH_LONG
+                                            ).show();
+                                        }
+
+                                    });
+
+                        } else {
+
+                            Toast.makeText(
+                                    AdminLoginActivity.this,
+                                    task.getException().getMessage(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                        }
+
+                    });
+
         });
 
-        // Back to Choose Role
+        // Back
         txtBack.setOnClickListener(v -> finish());
+
     }
 }

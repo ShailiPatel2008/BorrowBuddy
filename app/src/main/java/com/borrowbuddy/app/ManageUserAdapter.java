@@ -3,12 +3,14 @@ package com.borrowbuddy.app;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.widget.Button;
-import android.widget.TextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,6 +46,29 @@ public class ManageUserAdapter extends RecyclerView.Adapter<ManageUserAdapter.Us
 
         UserModel user = userList.get(position);
 
+        SharedPreferences preferences =
+                context.getSharedPreferences("Settings", Context.MODE_PRIVATE);
+
+        boolean darkMode =
+                preferences.getBoolean("dark_mode", false);
+
+        if (darkMode) {
+
+            holder.userCard.setBackgroundColor(Color.rgb(35,35,35));
+
+            holder.txtUserName.setTextColor(Color.WHITE);
+            holder.txtEmail.setTextColor(Color.WHITE);
+            holder.txtTrustScore.setTextColor(Color.WHITE);
+
+        } else {
+
+            holder.userCard.setBackgroundColor(Color.rgb(238,238,238));
+
+            holder.txtUserName.setTextColor(Color.BLACK);
+            holder.txtEmail.setTextColor(Color.BLACK);
+            holder.txtTrustScore.setTextColor(Color.BLACK);
+        }
+
         holder.txtUserName.setText(user.getFullname());
         holder.txtEmail.setText("Email: " + user.getEmail());
         holder.txtTrustScore.setText("Trust Score: " + user.getTrustscore());
@@ -61,15 +86,10 @@ public class ManageUserAdapter extends RecyclerView.Adapter<ManageUserAdapter.Us
 
             Intent intent = new Intent(context, UserProfileActivity.class);
 
-            intent.putExtra("userName", user.getFullname());
-            intent.putExtra("userEmail", user.getEmail());
-            intent.putExtra("userPhone", user.getPhone());
-            intent.putExtra("trustScore", user.getTrustscore());
+            intent.putExtra("USER_ID", user.getUserid());
 
             context.startActivity(intent);
         });
-
-
 
         holder.btnBlockUser.setOnClickListener(v -> {
 
@@ -117,6 +137,8 @@ public class ManageUserAdapter extends RecyclerView.Adapter<ManageUserAdapter.Us
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout userCard;
+
         TextView txtUserName;
         TextView txtEmail;
         TextView txtTrustScore;
@@ -127,6 +149,8 @@ public class ManageUserAdapter extends RecyclerView.Adapter<ManageUserAdapter.Us
 
         public UserViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            userCard = itemView.findViewById(R.id.userCard);
 
             txtUserName = itemView.findViewById(R.id.txtUserName);
             txtEmail = itemView.findViewById(R.id.txtEmail);

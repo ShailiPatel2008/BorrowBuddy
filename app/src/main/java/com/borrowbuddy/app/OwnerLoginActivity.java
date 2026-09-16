@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class OwnerLoginActivity extends AppCompatActivity {
 
@@ -22,11 +24,17 @@ public class OwnerLoginActivity extends AppCompatActivity {
     private TextView txtOwnerForgot;
     private TextView txtOwnerBack;
 
+    // Firebase
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_owner_login);
+
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         // Initialize Views
         etOwnerEmail = findViewById(R.id.etOwnerEmail);
@@ -38,74 +46,92 @@ public class OwnerLoginActivity extends AppCompatActivity {
         txtOwnerForgot = findViewById(R.id.txtOwnerForgot);
         txtOwnerBack = findViewById(R.id.txtOwnerBack);
 
-
         // =========================
         // OWNER LOGIN
         // =========================
 
         btnOwnerLogin.setOnClickListener(v -> {
 
-            String email =
-                    etOwnerEmail.getText().toString().trim();
-
-            String password =
-                    etOwnerPassword.getText().toString().trim();
-
+            String email = etOwnerEmail.getText().toString().trim();
+            String password = etOwnerPassword.getText().toString().trim();
 
             if (email.isEmpty()) {
-
                 etOwnerEmail.setError("Enter Owner Email");
                 etOwnerEmail.requestFocus();
-
                 return;
             }
-
 
             if (password.isEmpty()) {
-
                 etOwnerPassword.setError("Enter Password");
                 etOwnerPassword.requestFocus();
-
                 return;
             }
 
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
 
-            // Demo Owner Login
-            if (email.equals("owner@gmail.com")
-                    && password.equals("123456")) {
+                        if (task.isSuccessful()) {
 
-                Toast.makeText(
-                        OwnerLoginActivity.this,
-                        "Owner Login Successful",
-                        Toast.LENGTH_SHORT
-                ).show();
+                            String uid = auth.getCurrentUser().getUid();
 
+                            db.collection("users")
+                                    .document(uid)
+                                    .get()
+                                    .addOnSuccessListener(documentSnapshot -> {
 
-                Intent intent = new Intent(
-                        OwnerLoginActivity.this,
-                        OTPActivity.class
-                );
+                                        if (documentSnapshot.exists()) {
 
-                // VERY IMPORTANT
-                intent.putExtra("role", "owner");
+                                            String role = documentSnapshot.getString("role");
 
-                startActivity(intent);
+                                            if ("owner".equals(role)) {
 
-                finish();
+                                                Toast.makeText(
+                                                        OwnerLoginActivity.this,
+                                                        "Owner Login Successful",
+                                                        Toast.LENGTH_SHORT
+                                                ).show();
 
-            } else {
+                                                Intent intent = new Intent(
+                                                        OwnerLoginActivity.this,
+                                                        OTPActivity.class
+                                                );
 
-                Toast.makeText(
-                        OwnerLoginActivity.this,
-                        "Invalid Owner Email or Password",
-                        Toast.LENGTH_SHORT
-                ).show();
-            }
+                                                intent.putExtra("role", "owner");
+
+                                                startActivity(intent);
+                                                finish();
+
+                                            } else {
+
+                                                FirebaseAuth.getInstance().signOut();
+
+                                                Toast.makeText(
+                                                        OwnerLoginActivity.this,
+                                                        "This account is not registered as an Owner.",
+                                                        Toast.LENGTH_LONG
+                                                ).show();
+                                            }
+
+                                        }
+
+                                    });
+
+                        } else {
+
+                            Toast.makeText(
+                                    OwnerLoginActivity.this,
+                                    task.getException().getMessage(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                        }
+
+                    });
+
         });
 
-
         // =========================
-        // CREATE NEW OWNER ACCOUNT
+        // CREATE ACCOUNT
         // =========================
 
         btnOwnerCreate.setOnClickListener(v -> {
@@ -115,13 +141,11 @@ public class OwnerLoginActivity extends AppCompatActivity {
                     RegisterActivity.class
             );
 
-            // VERY IMPORTANT
-            // Tell RegisterActivity this is OWNER registration
             intent.putExtra("role", "owner");
 
             startActivity(intent);
-        });
 
+        });
 
         // =========================
         // FORGOT PASSWORD
@@ -135,16 +159,14 @@ public class OwnerLoginActivity extends AppCompatActivity {
             );
 
             startActivity(intent);
-        });
 
+        });
 
         // =========================
         // BACK
         // =========================
 
-        txtOwnerBack.setOnClickListener(v -> {
+        txtOwnerBack.setOnClickListener(v -> finish());
 
-            finish();
-        });
     }
 }

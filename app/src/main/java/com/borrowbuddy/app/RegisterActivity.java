@@ -1,5 +1,9 @@
 package com.borrowbuddy.app;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.auth.FirebaseUser;
+import java.util.HashMap;
+import java.util.Map;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,6 +31,10 @@ public class RegisterActivity extends AppCompatActivity {
 
     private MaterialButton btnRegister;
     private TextView txtLogin;
+    // ================= FIREBASE =================
+
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
 
     // Role
     private String role;
@@ -36,6 +44,8 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_register);
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         // Get role
         role = getIntent().getStringExtra("role");
@@ -155,18 +165,79 @@ public class RegisterActivity extends AppCompatActivity {
             }
 
 
-            Toast.makeText(
-                    RegisterActivity.this,
-                    "Registration Successful",
-                    Toast.LENGTH_SHORT
-            ).show();
+
 
 
             // =========================
             // GO TO CORRECT LOGIN
             // =========================
 
-            openCorrectLogin();
+            auth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
+
+                        if (task.isSuccessful()) {
+
+                            FirebaseUser firebaseUser = auth.getCurrentUser();
+
+                            if (firebaseUser != null) {
+
+                                String uid = firebaseUser.getUid();
+
+
+                                Map<String, Object> user = new HashMap<>();
+
+                                user.put("full_name", name);
+                                user.put("email", email);
+                                user.put("id", uid);
+                                user.put("uid", uid);
+                                user.put("id", uid);
+                                user.put("phone", "");
+                                user.put("location", "");
+                                user.put("role", role);
+                                user.put("is_active", true);
+                                user.put("is_verified", false);
+                                user.put("created_at",
+                                        com.google.firebase.Timestamp.now());
+                                user.put("updated_at",
+                                        com.google.firebase.Timestamp.now());
+
+                                db.collection("users")
+                                        .document(uid)
+                                        .set(user)
+                                        .addOnSuccessListener(unused -> {
+
+                                            Toast.makeText(
+                                                    RegisterActivity.this,
+                                                    "Registration Successful",
+                                                    Toast.LENGTH_SHORT
+                                            ).show();
+
+                                            openCorrectLogin();
+
+                                        })
+                                        .addOnFailureListener(e -> {
+
+                                            Toast.makeText(
+                                                    RegisterActivity.this,
+                                                    "Failed to save user data",
+                                                    Toast.LENGTH_LONG
+                                            ).show();
+
+                                        });
+
+                            }
+
+                        } else {
+
+                            Toast.makeText(
+                                    RegisterActivity.this,
+                                    task.getException().getMessage(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                        }
+
+                    });
         });
 
 

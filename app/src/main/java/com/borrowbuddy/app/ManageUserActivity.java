@@ -1,8 +1,13 @@
 package com.borrowbuddy.app;
 
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -23,10 +28,19 @@ public class ManageUserActivity extends AppCompatActivity {
 
     private FirebaseFirestore db;
 
+    // Dark mode
+    private LinearLayout mainLayout;
+    private ScrollView scrollView;
+    private TextView txtUsersTitle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_users);
+
+        mainLayout = findViewById(R.id.mainLayout);
+        scrollView = findViewById(R.id.scrollView);
+        txtUsersTitle = findViewById(R.id.txtUsersTitle);
 
         btnBack = findViewById(R.id.btnBack);
         recyclerUsers = findViewById(R.id.recyclerUsers);
@@ -42,6 +56,13 @@ public class ManageUserActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
 
         loadUsers();
+        applyDarkMode();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        applyDarkMode();
     }
 
     private void loadUsers() {
@@ -73,11 +94,6 @@ public class ManageUserActivity extends AppCompatActivity {
 
                         Log.d("FIREBASE_TEST", document.getData().toString());
 
-                        Log.d("FIREBASE_TEST", "Document ID = " + document.getId());
-                        Log.d("FIREBASE_TEST", "Name = " + user.getFullname());
-                        Log.d("FIREBASE_TEST", "Email = " + user.getEmail());
-
-                        // ADD USER ONLY ONCE
                         userList.add(user);
                     }
 
@@ -86,4 +102,27 @@ public class ManageUserActivity extends AppCompatActivity {
                 .addOnFailureListener(e ->
                         Log.e("FIREBASE_TEST", "Firestore Error", e)
                 );
-    }}
+    }
+
+    private void applyDarkMode() {
+
+        SharedPreferences preferences =
+                getSharedPreferences("Settings", MODE_PRIVATE);
+
+        boolean darkMode =
+                preferences.getBoolean("dark_mode", false);
+
+        if (darkMode) {
+
+            mainLayout.setBackgroundColor(Color.rgb(18, 18, 18));
+            scrollView.setBackgroundColor(Color.rgb(18, 18, 18));
+            txtUsersTitle.setTextColor(Color.WHITE);
+
+        } else {
+
+            mainLayout.setBackgroundColor(Color.WHITE);
+            scrollView.setBackgroundColor(Color.WHITE);
+            txtUsersTitle.setTextColor(Color.BLACK);
+        }
+    }
+}

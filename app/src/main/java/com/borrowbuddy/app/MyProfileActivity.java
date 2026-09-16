@@ -15,7 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 public class MyProfileActivity extends AppCompatActivity {
 
     private ScrollView profileScrollView;
@@ -44,6 +46,8 @@ public class MyProfileActivity extends AppCompatActivity {
     private Button saveChangesButton;
 
     private SharedPreferences preferences;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
 
     private final int PURPLE = Color.rgb(106, 27, 154);
 
@@ -58,6 +62,8 @@ public class MyProfileActivity extends AppCompatActivity {
                         "BorrowBuddy",
                         MODE_PRIVATE
                 );
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         toolbar = findViewById(R.id.toolbar);
 
@@ -165,41 +171,54 @@ public class MyProfileActivity extends AppCompatActivity {
 
     private void loadProfileData() {
 
-        String name =
-                getProfileValue(
-                        "profileName",
-                        "userName",
-                        "Shweta"
-                );
+        FirebaseUser currentUser = auth.getCurrentUser();
 
-        String email =
-                getProfileValue(
-                        "profileEmail",
-                        "userEmail",
-                        "shweta@gmail.com"
-                );
+        if (currentUser == null) {
+            return;
+        }
 
-        String phone =
-                getProfileValue(
-                        "profilePhone",
-                        "userPhone",
-                        "+91 1234567890"
-                );
+        String uid = currentUser.getUid();
 
-        String location =
-                preferences.getString(
-                        "profileLocation",
-                        "Ahmedabad, Gujarat"
-                );
+        db.collection("users")
+                .document(uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
 
-        nameValue.setText(name);
-        profileEmail.setText(email);
-        phoneValue.setText(phone);
-        locationValue.setText(location);
+                    if (documentSnapshot.exists()) {
 
-        loadProfilePhoto();
+                        String name =
+                                documentSnapshot.getString("full_name");
+
+                        String email =
+                                documentSnapshot.getString("email");
+
+                        String phone =
+                                documentSnapshot.getString("phone");
+
+                        String location =
+                                documentSnapshot.getString("location");
+
+                        nameValue.setText(
+                                name == null ? "" : name
+                        );
+
+                        profileEmail.setText(
+                                email == null ? "" : email
+                        );
+
+                        phoneValue.setText(
+                                phone == null ? "" : phone
+                        );
+
+                        locationValue.setText(
+                                location == null ? "" : location
+                        );
+
+                        loadProfilePhoto();
+                    }
+
+                });
     }
-
     private void loadProfilePhoto() {
 
         String photoUri =

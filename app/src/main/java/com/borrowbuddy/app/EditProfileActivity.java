@@ -18,6 +18,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -45,6 +51,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private View mainLayout;
 
     private SharedPreferences preferences;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
 
     private static final String PREF_NAME =
             "BorrowBuddy";
@@ -71,6 +79,8 @@ public class EditProfileActivity extends AppCompatActivity {
                         PREF_NAME,
                         MODE_PRIVATE
                 );
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         toolbar =
                 findViewById(R.id.toolbar);
@@ -215,37 +225,37 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void loadProfileData() {
 
-        String name =
-                getProfileValue(
-                        "profileName",
-                        "userName",
-                        ""
-                );
+        FirebaseUser user = auth.getCurrentUser();
 
-        String email =
-                getProfileValue(
-                        "profileEmail",
-                        "userEmail",
-                        ""
-                );
+        if (user == null)
+            return;
 
-        String phone =
-                getProfileValue(
-                        "profilePhone",
-                        "userPhone",
-                        ""
-                );
+        db.collection("users")
+                .document(user.getUid())
+                .get()
+                .addOnSuccessListener(document -> {
 
-        String location =
-                preferences.getString(
-                        "profileLocation",
-                        ""
-                );
+                    if(document.exists()){
 
-        editName.setText(name);
-        editEmail.setText(email);
-        editPhone.setText(phone);
-        editLocation.setText(location);
+                        editName.setText(
+                                document.getString("full_name")
+                        );
+
+                        editEmail.setText(
+                                document.getString("email")
+                        );
+
+                        editPhone.setText(
+                                document.getString("phone")
+                        );
+
+                        editLocation.setText(
+                                document.getString("location")
+                        );
+
+                    }
+
+                });
 
         loadProfilePhoto();
     }
@@ -451,56 +461,47 @@ public class EditProfileActivity extends AppCompatActivity {
 
         // Save the unified profile data
 
-        preferences.edit()
+        FirebaseUser currentUser = auth.getCurrentUser();
 
-                .putString(
-                        "profileName",
-                        name
-                )
+        if (currentUser == null) {
+            Toast.makeText(
+                    this,
+                    "User not logged in",
+                    Toast.LENGTH_SHORT
+            ).show();
+            return;
+        }
 
-                .putString(
-                        "profileEmail",
-                        email
-                )
+        Map<String, Object> updates = new HashMap<>();
 
-                .putString(
-                        "profilePhone",
-                        phone
-                )
+        updates.put("full_name", name);
+        updates.put("email", email);
+        updates.put("phone", phone);
+        updates.put("location", location);
 
-                .putString(
-                        "profileLocation",
-                        location
-                )
+        db.collection("users")
+                .document(currentUser.getUid())
+                .update(updates)
+                .addOnSuccessListener(unused -> {
 
-                // Keep old User-module keys
-                // compatible as well
+                    Toast.makeText(
+                            EditProfileActivity.this,
+                            "Profile Updated Successfully",
+                            Toast.LENGTH_SHORT
+                    ).show();
 
-                .putString(
-                        "userName",
-                        name
-                )
+                    finish();
 
-                .putString(
-                        "userEmail",
-                        email
-                )
+                })
+                .addOnFailureListener(e -> {
 
-                .putString(
-                        "userPhone",
-                        phone
-                )
+                    Toast.makeText(
+                            EditProfileActivity.this,
+                            "Update Failed",
+                            Toast.LENGTH_SHORT
+                    ).show();
 
-                .apply();
-
-        Toast.makeText(
-                EditProfileActivity.this,
-                "Profile updated successfully",
-                Toast.LENGTH_SHORT
-        ).show();
-
-        finish();
-    }
+                });    }
 
     private void applyTheme() {
 

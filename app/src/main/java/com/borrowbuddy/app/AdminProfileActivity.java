@@ -1,5 +1,7 @@
 package com.borrowbuddy.app;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -36,6 +38,11 @@ public class AdminProfileActivity extends AppCompatActivity {
     // ================= SHARED PREFERENCES =================
 
     SharedPreferences profilePreferences;
+    // ================= FIREBASE =================
+
+    FirebaseAuth auth;
+    FirebaseFirestore db;
+
 
 
     @Override
@@ -89,6 +96,8 @@ public class AdminProfileActivity extends AppCompatActivity {
                         "AdminProfile",
                         MODE_PRIVATE
                 );
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
 
         // ================= LOAD PROFILE =================
@@ -142,72 +151,56 @@ public class AdminProfileActivity extends AppCompatActivity {
     // LOAD PROFILE
     // =========================================================
 
+
+
     private void loadProfile() {
 
-        // ================= GET SAVED DATA =================
+        FirebaseUser currentUser = auth.getCurrentUser();
 
-        String name =
-                profilePreferences.getString(
-                        "name",
-                        "Admin"
-                );
+        if (currentUser == null) {
 
-        String email =
-                profilePreferences.getString(
-                        "email",
-                        "admin@gmail.com"
-                );
-
-        String phone =
-                profilePreferences.getString(
-                        "phone",
-                        ""
-                );
-
-        String location =
-                profilePreferences.getString(
-                        "location",
-                        ""
-                );
-
-
-        // ================= SHOW DATA =================
-
-        txtName.setText(name);
-
-        txtEmail.setText(email);
-
-        txtPhone.setText(phone);
-
-        txtLocation.setText(location);
-
-
-        // ================= LOAD PROFILE PHOTO =================
-
-        String photoUri =
-                profilePreferences.getString(
-                        "photoUri",
-                        ""
-                );
-
-        if (!photoUri.isEmpty()) {
-
-            try {
-
-                imgAdminProfile.setImageURI(
-                        Uri.parse(photoUri)
-                );
-
-            } catch (Exception e) {
-
-                imgAdminProfile.setImageResource(
-                        android.R.drawable.ic_menu_myplaces
-                );
-            }
+            finish();
+            return;
         }
 
-    }
+        String uid = currentUser.getUid();
 
+        db.collection("users")
+                .document(uid)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+
+                    if (documentSnapshot.exists()) {
+
+                        String name =
+                                documentSnapshot.getString("full_name");
+
+                        String email =
+                                documentSnapshot.getString("email");
+
+                        String phone =
+                                documentSnapshot.getString("phone");
+
+                        String location =
+                                documentSnapshot.getString("location");
+
+                        if (phone == null || phone.isEmpty()) {
+                            phone = "Not Added";
+                        }
+
+                        if (location == null || location.isEmpty()) {
+                            location = "Not Added";
+                        }
+
+                        txtName.setText(name);
+                        txtEmail.setText(email);
+                        txtPhone.setText(phone);
+                        txtLocation.setText(location);
+                    }
+
+                });
+
+    }
 
     // =========================================================
     // DARK MODE

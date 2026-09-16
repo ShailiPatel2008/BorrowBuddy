@@ -13,6 +13,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
@@ -24,11 +26,16 @@ public class LoginActivity extends AppCompatActivity {
 
     private String role;
 
+    // Firebase
+    private FirebaseAuth auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_login);
+
+        // Firebase
+        auth = FirebaseAuth.getInstance();
 
         // Get selected role
         role = getIntent().getStringExtra("role");
@@ -68,11 +75,8 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin.setOnClickListener(v -> {
 
-            String email =
-                    etEmail.getText().toString().trim();
-
-            String password =
-                    etPassword.getText().toString().trim();
+            String email = etEmail.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
 
             if (email.isEmpty()) {
                 etEmail.setError("Enter email");
@@ -86,36 +90,39 @@ public class LoginActivity extends AppCompatActivity {
                 return;
             }
 
-            // TEST LOGIN
-            if (email.equals("admin@gmail.com")
-                    && password.equals("123456")) {
+            auth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(task -> {
 
-                Toast.makeText(
-                        LoginActivity.this,
-                        "Login Successful",
-                        Toast.LENGTH_SHORT
-                ).show();
+                        if (task.isSuccessful()) {
 
-                // Go to OTP
-                Intent intent = new Intent(
-                        LoginActivity.this,
-                        OTPActivity.class
-                );
+                            Toast.makeText(
+                                    LoginActivity.this,
+                                    "Login Successful",
+                                    Toast.LENGTH_SHORT
+                            ).show();
 
-                // Pass selected role
-                intent.putExtra("role", role);
+                            Intent intent = new Intent(
+                                    LoginActivity.this,
+                                    OTPActivity.class
+                            );
 
-                startActivity(intent);
-                finish();
+                            intent.putExtra("role", role);
 
-            } else {
+                            startActivity(intent);
+                            finish();
 
-                Toast.makeText(
-                        LoginActivity.this,
-                        "Invalid Email or Password",
-                        Toast.LENGTH_SHORT
-                ).show();
-            }
+                        } else {
+
+                            Toast.makeText(
+                                    LoginActivity.this,
+                                    task.getException().getMessage(),
+                                    Toast.LENGTH_LONG
+                            ).show();
+
+                        }
+
+                    });
+
         });
 
         // =========================
@@ -129,10 +136,10 @@ public class LoginActivity extends AppCompatActivity {
                     RegisterActivity.class
             );
 
-            // Keep role
             intent.putExtra("role", role);
 
             startActivity(intent);
+
         });
 
         // =========================
@@ -147,14 +154,14 @@ public class LoginActivity extends AppCompatActivity {
             );
 
             startActivity(intent);
+
         });
 
         // =========================
         // BACK
         // =========================
 
-        txtBackLogin.setOnClickListener(v -> {
-            finish();
-        });
+        txtBackLogin.setOnClickListener(v -> finish());
+
     }
 }
