@@ -1,7 +1,10 @@
 package com.borrowbuddy.app;
 
+
+
 public class SearchItem {
 
+    String id;
     String name;
     String price;
     String location;
@@ -9,12 +12,14 @@ public class SearchItem {
     int image;
 
     public SearchItem(
+            String id,
             String name,
             String price,
             String location,
             String rating,
             int image) {
 
+        this.id = id;
         this.name = name;
         this.price = price;
         this.location = location;

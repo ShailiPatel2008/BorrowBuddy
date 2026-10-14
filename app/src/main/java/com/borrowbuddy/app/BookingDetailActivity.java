@@ -116,36 +116,15 @@ public class BookingDetailActivity extends AppCompatActivity {
     // BOOKING DATA
     // =========================================================
 
-    private String bookingItemName =
-            "Canon Camera";
-
-    private String bookingPrice =
-            "₹300 / day";
-
-    private String bookingDuration =
-            "3 Days";
-
-    private String bookingStartDate =
-            "05 Aug 2026";
-
-    private String bookingEndDate =
-            "07 Aug 2026";
-
-    private String bookingStatus =
-            "● Completed";
-
-    private String bookingId =
-            "BB1025";
-
-    private String ownerName =
-            "Rahul Patel";
-
-    private String ownerContact =
-            "9876543210";
-
-    // =========================================================
-    // ON CREATE
-    // =========================================================
+    private String bookingItemName = "";
+    private String bookingPrice = "";
+    private String bookingDuration = "";
+    private String bookingStartDate = "";
+    private String bookingEndDate = "";
+    private String bookingStatus = "";
+    private String bookingId = "";
+    private String ownerName = "";
+    private String ownerContact = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

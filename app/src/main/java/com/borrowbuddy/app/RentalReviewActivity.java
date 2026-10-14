@@ -13,7 +13,11 @@ import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Date;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 
@@ -75,7 +79,12 @@ public class RentalReviewActivity extends AppCompatActivity {
     private static final int LIGHT_BACKGROUND =
             Color.rgb(248, 249, 250);
 
+    FirebaseFirestore db;
+    FirebaseAuth auth;
 
+    String itemId;
+    String ownerId;
+    String bookingId;
     // ==================================================
     // ON CREATE
     // ==================================================
@@ -86,7 +95,8 @@ public class RentalReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_rental_review);
-
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
         // =========================
 // MATERIAL TOOLBAR
 // =========================
@@ -184,7 +194,9 @@ public class RentalReviewActivity extends AppCompatActivity {
         String receivedBookingStatus =
                 getIntent().getStringExtra("bookingStatus");
 
-
+        itemId = getIntent().getStringExtra("itemId");
+        ownerId = getIntent().getStringExtra("ownerId");
+        bookingId = getIntent().getStringExtra("bookingId");
         // =========================
         // ITEM NAME
         // =========================
@@ -343,11 +355,7 @@ public class RentalReviewActivity extends AppCompatActivity {
             // REVIEW SUBMITTED
             // =========================
 
-            Toast.makeText(
-                    RentalReviewActivity.this,
-                    "Review submitted successfully",
-                    Toast.LENGTH_SHORT
-            ).show();
+            saveReview();
 
 
             finish();
@@ -379,7 +387,51 @@ public class RentalReviewActivity extends AppCompatActivity {
         }
     }
 
+    private void saveReview(){
 
+        String userId = auth.getCurrentUser().getUid();
+
+        HashMap<String,Object> review = new HashMap<>();
+
+        review.put("userId", userId);
+        review.put("itemId", itemId);
+        review.put("ownerId", ownerId);
+        review.put("bookingId", bookingId);
+
+        review.put("itemName", itemName.getText().toString());
+        review.put("ownerName", ownerName.getText().toString());
+
+        review.put("rating", ratingBar.getRating());
+        review.put("reviewText",
+                reviewText.getText().toString().trim());
+
+        review.put("timestamp", new Date());
+
+
+        db.collection("Reviews")
+                .add(review)
+                .addOnSuccessListener(documentReference -> {
+
+                    Toast.makeText(
+                            this,
+                            "Review submitted successfully",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    finish();
+
+                })
+                .addOnFailureListener(e -> {
+
+                    Toast.makeText(
+                            this,
+                            "Failed: " + e.getMessage(),
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                });
+
+    }
     // ==================================================
     // APPLY DARK MODE
     // ==================================================

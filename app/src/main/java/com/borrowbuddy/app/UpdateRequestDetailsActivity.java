@@ -15,7 +15,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
 public class UpdateRequestDetailsActivity extends AppCompatActivity {
 
     LinearLayout mainLayout;
@@ -39,7 +40,7 @@ public class UpdateRequestDetailsActivity extends AppCompatActivity {
     TextView btnReject;
     TextView btnApprove;
 
-    int requestId;
+    String requestId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +74,7 @@ public class UpdateRequestDetailsActivity extends AppCompatActivity {
         btnReject = findViewById(R.id.btnReject);
         btnApprove = findViewById(R.id.btnApprove);
 
-        requestId = getIntent().getIntExtra(
-                "requestId",
-                1
-        );
+        requestId = getIntent().getStringExtra("requestId");
 
         loadRequestData();
 
@@ -101,55 +99,45 @@ public class UpdateRequestDetailsActivity extends AppCompatActivity {
 
     private void loadRequestData() {
 
-        if (requestId == 1) {
+        FirebaseFirestore.getInstance()
+                .collection("itemUpdateRequests")
+                .document(requestId)
+                .get()
+                .addOnSuccessListener(document -> {
 
-            txtItemName.setText("Item Name: DSLR Camera");
-            txtOwner.setText("Owner: Amit Patel");
-            txtCategory.setText("Category: Electronics");
-            txtDescription.setText(
-                    "Description: Professional DSLR camera"
-            );
-            txtPrice.setText(
-                    "Price: ₹500/day → ₹700/day"
-            );
-            txtQuantity.setText(
-                    "Quantity: 2 → 3"
-            );
-            txtCondition.setText(
-                    "Condition: Good → New"
-            );
-            txtDeposit.setText(
-                    "Security Deposit: ₹2,000"
-            );
-            txtPickup.setText(
-                    "Pickup Location: Hazira, Surat"
-            );
+                    if (!document.exists()) return;
 
-        } else {
+                    txtItemName.setText("Item Name: " +
+                            document.getString("itemName"));
 
-            txtItemName.setText("Item Name: Bicycle");
-            txtOwner.setText("Owner: Rahul");
-            txtCategory.setText("Category: Sports");
-            txtDescription.setText(
-                    "Description: Mountain bicycle for daily use"
-            );
-            txtPrice.setText(
-                    "Price: ₹300/day → ₹400/day"
-            );
-            txtQuantity.setText(
-                    "Quantity: 1 → 2"
-            );
-            txtCondition.setText(
-                    "Condition: Good → Excellent"
-            );
-            txtDeposit.setText(
-                    "Security Deposit: ₹1,000"
-            );
-            txtPickup.setText(
-                    "Pickup Location: Hazira, Surat"
-            );
+                    txtOwner.setText("Owner: " +
+                            document.getString("ownerName"));
+
+                    txtCategory.setText("Category: " +
+                            document.getString("category"));
+
+                    txtDescription.setText("Description: " +
+                            document.getString("description"));
+
+                    txtPrice.setText("Price: ₹" +
+                            document.getLong("pricePerDay") + "/day");
+
+                    txtQuantity.setText("Quantity: " +
+                            document.getLong("quantity"));
+
+                    txtCondition.setText("Condition: " +
+                            document.getString("condition"));
+
+                    txtDeposit.setText("Security Deposit: ₹" +
+                            document.getLong("securitydeposit"));
+
+                    txtPickup.setText("Pickup Location: " +
+                            document.getString("pickuplocation"));
+
+                });
+
         }
-    }
+
 
     private void showApproveDialog() {
 
@@ -168,38 +156,103 @@ public class UpdateRequestDetailsActivity extends AppCompatActivity {
                 )
                 .create();
 
-        dialog.setOnShowListener(d -> {
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
 
-            styleUpdateDialog(dialog);
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            dialog.getButton(
-                    AlertDialog.BUTTON_POSITIVE
-            ).setOnClickListener(v -> {
+            String requestId =
+                    getIntent().getStringExtra("requestId");
 
-                Toast.makeText(
-                        UpdateRequestDetailsActivity.this,
-                        "Update approved successfully",
-                        Toast.LENGTH_SHORT
-                ).show();
+            db.collection("itemUpdateRequests")
+                    .document(requestId)
+                    .get()
+                    .addOnSuccessListener(request -> {
 
-                Intent result = new Intent();
+                        if (!request.exists()) {
 
-                result.putExtra(
-                        "requestId",
-                        requestId
-                );
+                            Toast.makeText(
+                                    UpdateRequestDetailsActivity.this,
+                                    "Request not found",
+                                    Toast.LENGTH_SHORT
+                            ).show();
 
-                setResult(
-                        RESULT_OK,
-                        result
-                );
+                            return;
+                        }
 
-                dialog.dismiss();
-                finish();
-            });
+                        String itemId =
+                                request.getString("itemId");
+
+                        HashMap<String, Object> item = new HashMap<>();
+
+                        item.put("itemName",
+                                request.getString("itemName"));
+
+                        item.put("description",
+                                request.getString("description"));
+
+                        item.put("category",
+                                request.getString("category"));
+
+                        item.put("pricePerDay",
+                                request.getLong("pricePerDay"));
+
+                        item.put("securitydeposit",
+                                request.getLong("securitydeposit"));
+
+                        item.put("pickuplocation",
+                                request.getString("pickuplocation"));
+
+                        item.put("contactnumber",
+                                request.getString("contactnumber"));
+
+                        item.put("quantity",
+                                request.getLong("quantity"));
+
+                        item.put("condition",
+                                request.getString("condition"));
+
+                        db.collection("items")
+                                .document(itemId)
+                                .update(item)
+                                .addOnSuccessListener(unused -> {
+
+                                    db.collection("itemUpdateRequests")
+                                            .document(requestId)
+                                            .update("status", "approved")
+                                            .addOnSuccessListener(aVoid -> {
+
+                                                Toast.makeText(
+                                                        UpdateRequestDetailsActivity.this,
+                                                        "Update Approved",
+                                                        Toast.LENGTH_SHORT
+                                                ).show();
+
+                                                setResult(RESULT_OK);
+                                                finish();
+
+                                            });
+
+                                })
+                                .addOnFailureListener(e ->
+
+                                        Toast.makeText(
+                                                UpdateRequestDetailsActivity.this,
+                                                e.getMessage(),
+                                                Toast.LENGTH_LONG
+                                        ).show());
+
+                    })
+                    .addOnFailureListener(e ->
+
+                            Toast.makeText(
+                                    UpdateRequestDetailsActivity.this,
+                                    e.getMessage(),
+                                    Toast.LENGTH_LONG
+                            ).show());
+
         });
-
         dialog.show();
+
     }
 
     private void showRejectDialog() {

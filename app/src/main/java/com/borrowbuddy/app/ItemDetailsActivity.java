@@ -12,10 +12,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
-
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
-
+import com.google.firebase.firestore.FirebaseFirestore;
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,9 +51,8 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
     MaterialCardView itemImageCard;
     MaterialCardView detailsCard;
-
     ViewPager2 imageViewPager;
-
+    private FirebaseFirestore db;
     private static final int PURPLE =
             Color.rgb(106, 27, 154);
 
@@ -66,7 +66,7 @@ public class ItemDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_item_details);
-
+        db = FirebaseFirestore.getInstance();
 
         // ================= TOOLBAR =================
 
@@ -166,274 +166,10 @@ public class ItemDetailsActivity extends AppCompatActivity {
         // ================= GET DATA =================
         // HomeActivity sends "itemName"
 
-        String name =
-                getIntent().getStringExtra("itemName");
-
-        String price =
-                getIntent().getStringExtra("price");
-
-        String location =
-                getIntent().getStringExtra("location");
-
-        String rating =
-                getIntent().getStringExtra("rating");
-
-        String category =
-                getIntent().getStringExtra("category");
-
-
-        // ================= ITEM NAME =================
-
-        if (name != null && !name.isEmpty()) {
-
-            itemName.setText(name);
-
-        } else {
-
-            itemName.setText("Item");
-        }
-
-
-        // ================= OWNER =================
-
-        if ("Camera".equalsIgnoreCase(name) ||
-                "Canon Camera".equalsIgnoreCase(name)) {
-
-            itemOwner.setText(
-                    "Owner: Rahul Patel"
-            );
-
-        } else if ("Laptop".equalsIgnoreCase(name)) {
-
-            itemOwner.setText(
-                    "Owner: Amit Shah"
-            );
-
-        } else if ("Bicycle".equalsIgnoreCase(name)) {
-
-            itemOwner.setText(
-                    "Owner: Karan Patel"
-            );
-
-        } else if ("Gaming Console".equalsIgnoreCase(name)) {
-
-            itemOwner.setText(
-                    "Owner: Neha Patel"
-            );
-
-        } else if (name != null && !name.isEmpty()) {
-
-            itemOwner.setText(
-                    "Owner: Neha Patel"
-            );
-
-        } else {
-
-            itemOwner.setText(
-                    "Owner: Not Available"
-            );
-        }
-
-
-        // ================= CATEGORY =================
-
-        if (category != null &&
-                !category.isEmpty()) {
-
-            itemCategory.setText(
-                    "Category: " + category
-            );
-
-        } else if ("Bicycle".equalsIgnoreCase(name)) {
-
-            itemCategory.setText(
-                    "Category: Sports"
-            );
-
-        } else if ("Gaming Console".equalsIgnoreCase(name)) {
-
-            itemCategory.setText(
-                    "Category: Electronics"
-            );
-
-        } else if ("Laptop".equalsIgnoreCase(name)) {
-
-            itemCategory.setText(
-                    "Category: Electronics"
-            );
-
-        } else if ("Camera".equalsIgnoreCase(name) ||
-                "Canon Camera".equalsIgnoreCase(name)) {
-
-            itemCategory.setText(
-                    "Category: Electronics"
-            );
-
-        } else {
-
-            itemCategory.setText(
-                    "Category: General"
-            );
-        }
-
-
-        // ================= PRICE =================
-
-        if (price != null &&
-                !price.isEmpty()) {
-
-            itemPrice.setText(
-                    "Price: " + price
-            );
-
-        } else if ("Bicycle".equalsIgnoreCase(name)) {
-
-            itemPrice.setText(
-                    "Price: ₹100/day"
-            );
-
-        } else if ("Gaming Console".equalsIgnoreCase(name)) {
-
-            itemPrice.setText(
-                    "Price: ₹500/day"
-            );
-
-        } else if ("Laptop".equalsIgnoreCase(name)) {
-
-            itemPrice.setText(
-                    "Price: ₹300/day"
-            );
-
-        } else if ("Camera".equalsIgnoreCase(name) ||
-                "Canon Camera".equalsIgnoreCase(name)) {
-
-            itemPrice.setText(
-                    "Price: ₹300/day"
-            );
-
-        } else {
-
-            itemPrice.setText(
-                    "Price: ₹150/day"
-            );
-        }
-
-
-        // ================= LOCATION =================
-
-        if (location != null &&
-                !location.isEmpty()) {
-
-            itemCity.setText(location);
-
-            itemLocation.setText(
-                    location + ", Gujarat"
-            );
-
-        } else if ("Bicycle".equalsIgnoreCase(name)) {
-
-            itemCity.setText("Ahmedabad");
-
-            itemLocation.setText(
-                    "Ahmedabad, Gujarat"
-            );
-
-        } else if ("Gaming Console".equalsIgnoreCase(name)) {
-
-            itemCity.setText("Surat");
-
-            itemLocation.setText(
-                    "Surat, Gujarat"
-            );
-
-        } else if ("Laptop".equalsIgnoreCase(name)) {
-
-            itemCity.setText("Vadodara");
-
-            itemLocation.setText(
-                    "Vadodara, Gujarat"
-            );
-
-        } else {
-
-            itemCity.setText("Ahmedabad");
-
-            itemLocation.setText(
-                    "Ahmedabad, Gujarat"
-            );
-        }
-
-
-        // ================= RATING =================
-
-        if (rating != null &&
-                !rating.isEmpty()) {
-
-            itemRating.setText(rating);
-
-        } else if ("Bicycle".equalsIgnoreCase(name)) {
-
-            itemRating.setText("★★★★★");
-
-        } else if ("Gaming Console".equalsIgnoreCase(name)) {
-
-            itemRating.setText("★★★★☆");
-
-        } else if ("Laptop".equalsIgnoreCase(name)) {
-
-            itemRating.setText("★★★★☆");
-
-        } else {
-
-            itemRating.setText("★★★★☆");
-        }
-
-
-        // ================= DESCRIPTION =================
-
-        if ("Bicycle".equalsIgnoreCase(name)) {
-
-            itemDescription.setText(
-                    "Good quality bicycle available " +
-                            "for borrowing. It is suitable " +
-                            "for daily rides and outdoor use. " +
-                            "Please handle it carefully and " +
-                            "return it on time."
-            );
-
-        } else if ("Gaming Console".equalsIgnoreCase(name)) {
-
-            itemDescription.setText(
-                    "Gaming console available for " +
-                            "borrowing. Please use it carefully " +
-                            "and return it on time."
-            );
-
-        } else if ("Laptop".equalsIgnoreCase(name)) {
-
-            itemDescription.setText(
-                    "Good quality laptop available for " +
-                            "borrowing. Please handle it " +
-                            "carefully and return it on time."
-            );
-
-        } else if ("Camera".equalsIgnoreCase(name) ||
-                "Canon Camera".equalsIgnoreCase(name)) {
-
-            itemDescription.setText(
-                    "Good quality camera available for " +
-                            "borrowing. Please handle it " +
-                            "carefully and return it on time."
-            );
-
-        } else {
-
-            itemDescription.setText(
-                    "Good quality item available for " +
-                            "borrowing. Please handle the item " +
-                            "carefully and return it on time."
-            );
-        }
+        String itemId =
+                getIntent().getStringExtra("itemId");
+        Toast.makeText(this, itemId, Toast.LENGTH_LONG).show();
+        loadItemDetails(itemId);
 
 
         // ================= 5 IMAGES =================
@@ -532,11 +268,62 @@ public class ItemDetailsActivity extends AppCompatActivity {
                     "category",
                     itemCategory.getText().toString()
             );
-
+            intent.putExtra(
+                    "itemId",
+                    itemId
+            );
             startActivity(intent);
         });
     }
 
+    private void loadItemDetails(String itemId) {
+
+        db.collection("itemRequests")
+                .document(itemId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+
+                    if (!documentSnapshot.exists())
+                        return;
+
+                    DocumentSnapshot document = documentSnapshot;
+                    itemName.setText(
+                            document.getString("itemName")
+                    );
+
+                    itemOwner.setText(
+                            "Owner: " +
+                                    document.getString("ownerName")
+                    );
+
+                    itemCategory.setText(
+                            "Category: " +
+                                    document.getString("category")
+                    );
+
+                    Long price =
+                            document.getLong("pricePerDay");
+
+                    itemPrice.setText(
+                            "Price: ₹" + price + "/day"
+                    );
+
+                    String location =
+                            document.getString("pickuplocation");
+
+                    itemCity.setText(location);
+
+                    itemLocation.setText(location);
+
+                    itemDescription.setText(
+                            document.getString("description")
+                    );
+
+                    itemRating.setText("★★★★☆");
+
+                });
+
+    }
 
     // ==================================================
     // 5 DOTS

@@ -85,10 +85,9 @@ public class ManageUserAdapter extends RecyclerView.Adapter<ManageUserAdapter.Us
         holder.btnViewProfile.setOnClickListener(v -> {
 
             Intent intent = new Intent(context, UserProfileActivity.class);
-
             intent.putExtra("USER_ID", user.getUserid());
-
             context.startActivity(intent);
+
         });
 
         holder.btnBlockUser.setOnClickListener(v -> {
@@ -103,10 +102,10 @@ public class ManageUserAdapter extends RecyclerView.Adapter<ManageUserAdapter.Us
                     ? "Are you sure you want to unblock this user?"
                     : "Are you sure you want to block this user?";
 
-            new AlertDialog.Builder(context)
+            AlertDialog dialog = new AlertDialog.Builder(context)
                     .setTitle(title)
                     .setMessage(message)
-                    .setPositiveButton("Yes", (dialog, which) -> {
+                    .setPositiveButton("Yes", (dialogInterface, which) -> {
 
                         db.collection("users")
                                 .document(user.getUserid())
@@ -118,13 +117,59 @@ public class ManageUserAdapter extends RecyclerView.Adapter<ManageUserAdapter.Us
                                     notifyItemChanged(holder.getAdapterPosition());
 
                                 })
-                                .addOnFailureListener(e -> {
-                                    e.printStackTrace();
-                                });
+                                .addOnFailureListener(e -> e.printStackTrace());
 
                     })
                     .setNegativeButton("Cancel", null)
-                    .show();
+                    .create();
+
+            dialog.show();
+
+
+
+// Dialog background
+            if (dialog.getWindow() != null) {
+                if (darkMode) {
+                    dialog.getWindow().setBackgroundDrawable(
+                            new android.graphics.drawable.ColorDrawable(
+                                    Color.rgb(55, 55, 55)
+                            )
+                    );
+                } else {
+                    dialog.getWindow().setBackgroundDrawable(
+                            new android.graphics.drawable.ColorDrawable(
+                                    Color.WHITE
+                            )
+                    );
+                }
+            }
+
+// Title
+            int titleId = context.getResources().getIdentifier(
+                    "alertTitle",
+                    "id",
+                    "android"
+            );
+
+            TextView titleText = dialog.findViewById(titleId);
+
+            if (titleText != null) {
+                titleText.setTextColor(darkMode ? Color.WHITE : Color.BLACK);
+            }
+
+// Message
+            TextView messageText = dialog.findViewById(android.R.id.message);
+
+            if (messageText != null) {
+                messageText.setTextColor(darkMode ? Color.WHITE : Color.BLACK);
+            }
+
+// Buttons
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                    .setTextColor(darkMode ? Color.WHITE : Color.rgb(108,74,182));
+
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                    .setTextColor(darkMode ? Color.WHITE : Color.rgb(108,74,182));
 
         });
 

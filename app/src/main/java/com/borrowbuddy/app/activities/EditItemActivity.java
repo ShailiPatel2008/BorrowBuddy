@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -44,8 +45,10 @@ import java.util.Locale;
 import android.app.Dialog;
 import android.view.Window;
 import android.view.WindowManager;
-
-
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.util.HashMap;
+import java.util.Map;
+import com.google.firebase.auth.FirebaseAuth;
 public class EditItemActivity extends AppCompatActivity {
 
     // =========================================================
@@ -93,9 +96,11 @@ public class EditItemActivity extends AppCompatActivity {
     private static final int IMAGE_PICK_REQUEST = 402;
     private static final int CAMERA_REQUEST = 403;
     private static final int CAMERA_PERMISSION_REQUEST = 404;
-
+    FirebaseAuth auth = FirebaseAuth.getInstance();
+    String ownerId = auth.getCurrentUser().getUid();
     private static final int MAX_PHOTOS = 5;
-
+    private FirebaseFirestore db;
+    private String documentId;
     // =========================================================
     // IMAGE LIST
     // =========================================================
@@ -108,7 +113,7 @@ public class EditItemActivity extends AppCompatActivity {
             new ArrayList<>();
 
     private EditItemImageAdapter imageAdapter;
-
+    private String ownerName = "";
     // =========================================================
     // ON CREATE
     // =========================================================
@@ -119,7 +124,8 @@ public class EditItemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_edit_item);
-
+        db = FirebaseFirestore.getInstance();
+        documentId = getIntent().getStringExtra("documentId");
         // =====================================================
         // TOOLBAR
         // =====================================================
@@ -228,7 +234,10 @@ public class EditItemActivity extends AppCompatActivity {
 
         String itemName =
                 getIntent().getStringExtra("itemName");
-
+        SharedPreferences sp =
+                getSharedPreferences("OwnerProfile", MODE_PRIVATE);
+         ownerName =
+                sp.getString("full_name", "");
         String description =
                 getIntent().getStringExtra("description");
 
@@ -729,155 +738,109 @@ public class EditItemActivity extends AppCompatActivity {
 
     private void updateItem() {
 
-        if (etItemName.getText()
-                .toString()
-                .trim()
-                .isEmpty()) {
-
-            etItemName.setError(
-                    "Enter Item Name"
-            );
-
-            etItemName.requestFocus();
-
+        if (etItemName.getText().toString().trim().isEmpty()) {
+            etItemName.setError("Enter Item Name");
             return;
         }
 
-        if (etDescription.getText()
-                .toString()
-                .trim()
-                .isEmpty()) {
-
-            etDescription.setError(
-                    "Enter Description"
-            );
-
-            etDescription.requestFocus();
-
+        if (etDescription.getText().toString().trim().isEmpty()) {
+            etDescription.setError("Enter Description");
             return;
         }
 
-        if (etRentalPrice.getText()
-                .toString()
-                .trim()
-                .isEmpty()) {
-
-            etRentalPrice.setError(
-                    "Enter Rental Price"
-            );
-
-            etRentalPrice.requestFocus();
-
+        if (etRentalPrice.getText().toString().trim().isEmpty()) {
+            etRentalPrice.setError("Enter Rental Price");
             return;
         }
 
-        if (etQuantity.getText()
-                .toString()
-                .trim()
-                .isEmpty()) {
-
-            etQuantity.setError(
-                    "Enter Quantity"
-            );
-
-            etQuantity.requestFocus();
-
+        if (etQuantity.getText().toString().trim().isEmpty()) {
+            etQuantity.setError("Enter Quantity");
             return;
         }
 
-        int quantity;
-
-        try {
-
-            quantity = Integer.parseInt(
-                    etQuantity.getText()
-                            .toString()
-                            .trim()
-            );
-
-        } catch (NumberFormatException e) {
-
-            etQuantity.setError(
-                    "Enter a valid quantity"
-            );
-
-            etQuantity.requestFocus();
-
+        if (etSecurityDeposit.getText().toString().trim().isEmpty()) {
+            etSecurityDeposit.setError("Enter Security Deposit");
             return;
         }
 
-        if (quantity < 1) {
-
-            etQuantity.setError(
-                    "Quantity must be at least 1"
-            );
-
-            etQuantity.requestFocus();
-
+        if (etPickupLocation.getText().toString().trim().isEmpty()) {
+            etPickupLocation.setError("Enter Pickup Location");
             return;
         }
 
-        if (etSecurityDeposit.getText()
-                .toString()
-                .trim()
-                .isEmpty()) {
-
-            etSecurityDeposit.setError(
-                    "Enter Security Deposit"
-            );
-
-            etSecurityDeposit.requestFocus();
-
+        if (etContact.getText().toString().trim().isEmpty()) {
+            etContact.setError("Enter Contact Number");
             return;
         }
 
-        if (etPickupLocation.getText()
-                .toString()
-                .trim()
-                .isEmpty()) {
-
-            etPickupLocation.setError(
-                    "Enter Pickup Location"
-            );
-
-            etPickupLocation.requestFocus();
-
+        if (rgCondition.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(this, "Please select item condition", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (etContact.getText()
-                .toString()
-                .trim()
-                .isEmpty()) {
+        RadioButton rb = findViewById(rgCondition.getCheckedRadioButtonId());
 
-            etContact.setError(
-                    "Enter Contact Number"
-            );
+        Map<String, Object> item = new HashMap<>();
 
-            etContact.requestFocus();
 
-            return;
-        }
 
-        if (rgCondition.getCheckedRadioButtonId()
-                == -1) {
+// IDs
+        item.put("updateRequestId", documentId);
+        item.put("itemId", documentId);
+        item.put("ownerId", ownerId);
+        item.put("ownerName", ownerName);
 
-            Toast.makeText(
-                    this,
-                    "Please select item condition",
-                    Toast.LENGTH_SHORT
-            ).show();
+// Updated Item Details
+        item.put("itemName", etItemName.getText().toString().trim());
+        item.put("description", etDescription.getText().toString().trim());
+        item.put("category", spCategory.getSelectedItem().toString());
 
-            return;
-        }
+        item.put("pricePerDay",
+                Integer.parseInt(etRentalPrice.getText().toString().trim()));
 
-        Toast.makeText(
-                this,
-                "Changes submitted successfully. Waiting for admin approval.",
-                Toast.LENGTH_SHORT
-        ).show();
+        item.put("securitydeposit",
+                Integer.parseInt(etSecurityDeposit.getText().toString().trim()));
 
-        finish();
+        item.put("pickuplocation",
+                etPickupLocation.getText().toString().trim());
+
+        item.put("contactnumber",
+                etContact.getText().toString().trim());
+
+        item.put("quantity",
+                Integer.parseInt(etQuantity.getText().toString().trim()));
+
+        item.put("condition", rb.getText().toString());
+
+// Images
+
+// Request Info
+        item.put("status", "pending");
+        item.put("requestDate",
+                com.google.firebase.Timestamp.now());
+
+// Optional
+        item.put("changes", "Item details updated");
+        db.collection("itemUpdateRequests")
+                .add(item)
+                .addOnSuccessListener(unused -> {
+
+                    Toast.makeText(
+                            EditItemActivity.this,
+                            "Item updated successfully",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    finish();
+
+                })
+                .addOnFailureListener(e ->
+
+                        Toast.makeText(
+                                EditItemActivity.this,
+                                e.getMessage(),
+                                Toast.LENGTH_LONG
+                        ).show());
     }
 
     // =========================================================
@@ -1217,4 +1180,3 @@ public class EditItemActivity extends AppCompatActivity {
         return true;
     }
 }
-

@@ -1,24 +1,24 @@
 package com.borrowbuddy.app.activities;
-
+import android.widget.Toast;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.borrowbuddy.app.R;
 import com.borrowbuddy.app.adapters.MyListingsAdapter;
 import com.borrowbuddy.app.models.ListingModel;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 public class MyListingsActivity extends AppCompatActivity {
 
     private RecyclerView rvListings;
@@ -32,7 +32,8 @@ public class MyListingsActivity extends AppCompatActivity {
     private List<ListingModel> listingList;
 
     private LinearLayout layoutEmptyListings;
-
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(
@@ -44,7 +45,8 @@ public class MyListingsActivity extends AppCompatActivity {
         setContentView(
                 R.layout.activity_my_listings
         );
-
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         // =========================
         // INITIALIZE VIEWS
@@ -115,43 +117,6 @@ public class MyListingsActivity extends AppCompatActivity {
                 new ArrayList<>();
 
 
-        // =========================
-        // DEMO LISTING 1
-        // =========================
-
-        listingList.add(
-                new ListingModel(
-                        "Drill Machine",
-                        "Tools",
-                        "Heavy-duty electric drill for home and construction work.",
-                        "150",
-                        "Adajan, Surat",
-                        "9876543210",
-                        "",
-                        "Available",
-                        3
-                )
-        );
-
-
-        // =========================
-        // DEMO LISTING 2
-        // =========================
-
-        listingList.add(
-                new ListingModel(
-                        "DSLR Camera",
-                        "Electronics",
-                        "Canon DSLR camera with lens and charger.",
-                        "500",
-                        "Vesu, Surat",
-                        "9876543210",
-                        "",
-                        "Rented",
-                        1
-                )
-        );
-
 
         // =========================
         // ADAPTER
@@ -173,7 +138,7 @@ public class MyListingsActivity extends AppCompatActivity {
         // =========================
 
         updateEmptyState();
-
+        loadMyListings();
 
         // =========================
         // FLOATING ADD BUTTON
@@ -241,7 +206,88 @@ public class MyListingsActivity extends AppCompatActivity {
             );
         }
     }
+    private void loadMyListings() {
 
+        FirebaseUser user = auth.getCurrentUser();
+
+        if (user == null) {
+            return;
+        }
+
+        String ownerId = user.getUid();
+
+        db.collection("itemRequests")
+                .whereEqualTo("ownerId", ownerId)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                    listingList.clear();
+
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+
+                        ListingModel listing = new ListingModel();
+                        listing.setDocumentId(document.getId());
+                        listing.setItemName(
+                                document.getString("itemName")
+                        );
+
+                        listing.setCategory(
+                                document.getString("category")
+                        );
+
+                        listing.setDescription(
+                                document.getString("description")
+                        );
+
+                        Long price =
+                                document.getLong("pricePerDay");
+
+                        listing.setPrice(
+                                price == null ? "" : String.valueOf(price)
+                        );
+
+                        Long deposit =
+                                document.getLong("securitydeposit");
+
+                        listing.setSecurityDeposit(
+                                deposit == null ? "" : String.valueOf(deposit)
+                        );
+
+                        listing.setLocation(
+                                document.getString("pickuplocation")
+                        );
+
+                        listing.setMobileNumber(
+                                document.getString("contactnumber")
+                        );
+
+                        Long quantity =
+                                document.getLong("quantity");
+
+                        listing.setQuantity(
+                                quantity == null ? 0 : quantity.intValue()
+                        );
+
+                        listing.setStatus(
+                                document.getString("status")
+                        );
+
+                        listingList.add(listing);
+                    }
+
+                    adapter.notifyDataSetChanged();
+                    updateEmptyState();
+
+                })
+                .addOnFailureListener(e ->
+
+                        Toast.makeText(
+                                MyListingsActivity.this,
+                                e.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show()
+                );
+    }
 
     // =========================
     // BACK BUTTON

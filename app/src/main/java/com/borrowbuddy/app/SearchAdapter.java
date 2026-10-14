@@ -117,9 +117,10 @@ public class SearchAdapter
             );
 
             intent.putExtra(
-                    "name",
+                    "itemName",
                     item.name
             );
+            intent.putExtra("itemId", item.id);
 
             intent.putExtra(
                     "price",

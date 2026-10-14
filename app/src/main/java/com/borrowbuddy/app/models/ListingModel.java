@@ -13,10 +13,10 @@ public class ListingModel {
     private String mobileNumber;
     private String securityDeposit;
     private String status;
-
+    private String itemId;
     // Quantity
     private int quantity;
-
+    private String documentId;
     // Multiple item images
     private List<String> imageUrls = new ArrayList<>();
 
@@ -102,15 +102,25 @@ public class ListingModel {
     public void setSecurityDeposit(String securityDeposit) {
         this.securityDeposit = securityDeposit;
     }
+    public String getDocumentId() {
+        return documentId;
+    }
 
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
     public String getStatus() {
         return status;
     }
-
+    public String getItemId() {
+        return itemId;
+    }
     public void setStatus(String status) {
         this.status = status;
     }
-
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
     // Quantity getter
     public int getQuantity() {
         return quantity;

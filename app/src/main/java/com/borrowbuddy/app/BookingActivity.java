@@ -190,12 +190,10 @@ public class BookingActivity extends AppCompatActivity {
                 findViewById(R.id.btnConfirmBooking);
 
         // =========================
-        // RECEIVE ITEM DATA
-        // =========================
+// RECEIVE ITEM DATA
+// =========================
 
-        Intent receivedIntent =
-                getIntent();
-
+        Intent receivedIntent = getIntent();
         String receivedName =
                 receivedIntent.getStringExtra("name");
 
@@ -205,11 +203,89 @@ public class BookingActivity extends AppCompatActivity {
         String receivedLocation =
                 receivedIntent.getStringExtra("location");
 
-        String receivedRating =
-                receivedIntent.getStringExtra("rating");
-
         String receivedCategory =
                 receivedIntent.getStringExtra("category");
+        String itemId =
+                receivedIntent.getStringExtra("itemId");
+
+        if (itemId != null) {
+
+            com.google.firebase.firestore.FirebaseFirestore
+                    .getInstance()
+                    .collection("items")
+                    .document(itemId)
+                    .get()
+                    .addOnSuccessListener(document -> {
+
+                        if (!document.exists()) {
+                            return;
+                        }
+
+                        itemName.setText(
+                                document.getString("name")
+                        );
+
+                        String price =
+                                document.getString("price");
+
+                        itemPrice.setText(
+                                "₹" + price + "/day"
+                        );
+
+                        String owner =
+                                document.getString("ownerName");
+
+                        ownerName.setText(
+                                "Owner: " + owner
+                        );
+                        String contact =
+                                document.getString("ownerContact");
+
+                        if(contact != null){
+                            txtOwnerContact.setText(contact);
+                        }
+                        String location =
+                                document.getString("location");
+
+                        txtPickupLocation.setText(
+                                "📍 " + location
+                        );
+
+                        Long qty =
+                                document.getLong("quantity");
+
+                        if (qty != null) {
+
+                            available = qty.intValue();
+
+                            availableQuantity.setText(
+                                    "Available Quantity: " + available
+                            );
+                        }
+
+                        try {
+
+                            pricePerDay =
+                                    Integer.parseInt(price);
+
+                        } catch (Exception ignored) {
+                        }
+
+                        calculateAmount();
+                    });
+
+        } else {
+
+
+            if (receivedName != null)
+                itemName.setText(receivedName);
+
+            if (receivedPrice != null)
+                itemPrice.setText(receivedPrice);
+
+            if (receivedLocation != null)
+                txtPickupLocation.setText("📍 " + receivedLocation);
+        }
 
         // =========================
         // ITEM NAME
@@ -294,13 +370,7 @@ public class BookingActivity extends AppCompatActivity {
         // DEFAULT OWNER
         // =========================
 
-        ownerName.setText(
-                "Owner: Not Available"
-        );
 
-        txtOwnerContact.setText(
-                "📞 Contact available after booking"
-        );
 
         availableQuantity.setText(
                 "Available Quantity: " +
@@ -401,7 +471,10 @@ public class BookingActivity extends AppCompatActivity {
                     "itemName",
                     itemName.getText().toString()
             );
-
+            intent.putExtra(
+                    "itemId",
+                    itemId
+            );
             intent.putExtra(
                     "name",
                     itemName.getText().toString()
@@ -483,8 +556,23 @@ public class BookingActivity extends AppCompatActivity {
                     "totalAmount",
                     totalAmount
             );
+            if (startDateMillis == 0 || endDateMillis == 0) {
+                btnStartDate.setError("Select start date");
+                btnEndDate.setError("Select end date");
+                return;
+            }
+            intent.putExtra("rentalPrice", itemPrice.getText().toString());
+            String owner =
+                    ownerName.getText()
+                            .toString()
+                            .replace("Owner: ", "");
 
+            intent.putExtra("ownerName", owner);
+            intent.putExtra("ownerContact", txtOwnerContact.getText().toString());
+            intent.putExtra("startDate", btnStartDate.getText().toString());
+            intent.putExtra("endDate", btnEndDate.getText().toString());
             startActivity(intent);
+
         });
     }
 

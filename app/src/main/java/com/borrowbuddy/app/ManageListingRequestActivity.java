@@ -14,17 +14,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ImageButton;
 import android.graphics.drawable.ColorDrawable;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.DocumentSnapshot;
+import java.util.ArrayList;
 public class ManageListingRequestActivity extends AppCompatActivity {
 
     LinearLayout mainLayout;
-
+    private FirebaseFirestore db;
     LinearLayout requestCard1;
     LinearLayout requestCard2;
     LinearLayout requestCard3;
-
+    private ArrayList<DocumentSnapshot> requestList = new ArrayList<>();
     TextView txtHeader;
     TextView txtPendingCount;
 
@@ -65,7 +68,7 @@ public class ManageListingRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_listing_request);
-
+        db = FirebaseFirestore.getInstance();
         // Main Layout
         mainLayout = findViewById(R.id.mainLayout);
 
@@ -135,59 +138,24 @@ public class ManageListingRequestActivity extends AppCompatActivity {
 
         btnViewDetails1.setOnClickListener(v -> {
 
-            Intent intent = new Intent(
-                    ManageListingRequestActivity.this,
-                    ListingRequestDetailsActivity.class
-            );
+            if(requestList.size() > 0){
+                openDetails(requestList.get(0));
+            }
 
-            intent.putExtra("itemName", "Canon Camera");
-            intent.putExtra("ownerName", "Rahul Patel");
-            intent.putExtra("category", "Camera");
-
-            intent.putExtra(
-                    "description",
-                    "Canon camera suitable for photography and video recording."
-            );
-
-            intent.putExtra("price", "₹300 / day");
-            intent.putExtra("deposit", "₹1,000");
-            intent.putExtra("pickup", "Hazira, Surat");
-            intent.putExtra("availableFrom", "05 Sep 2026");
-            intent.putExtra("contact", "9876543210");
-            intent.putExtra("condition", "Good");
-
-            startActivity(intent);
         });
 
         // =========================
         // VIEW DETAILS - REQUEST 2
         // =========================
-
         btnViewDetails2.setOnClickListener(v -> {
 
-            Intent intent = new Intent(
-                    ManageListingRequestActivity.this,
-                    ListingRequestDetailsActivity.class
-            );
+            if(requestList.size() > 1){
+                openDetails(requestList.get(1));
+            }
 
-            intent.putExtra("itemName", "Drill Machine");
-            intent.putExtra("ownerName", "Priya Patel");
-            intent.putExtra("category", "Tools");
-
-            intent.putExtra(
-                    "description",
-                    "Heavy duty drill machine for home and workshop use."
-            );
-
-            intent.putExtra("price", "₹250 / day");
-            intent.putExtra("deposit", "₹800");
-            intent.putExtra("pickup", "Surat");
-            intent.putExtra("availableFrom", "06 Sep 2026");
-            intent.putExtra("contact", "9876543211");
-            intent.putExtra("condition", "Good");
-
-            startActivity(intent);
         });
+
+
 
         // =========================
         // VIEW DETAILS - REQUEST 3
@@ -195,29 +163,12 @@ public class ManageListingRequestActivity extends AppCompatActivity {
 
         btnViewDetails3.setOnClickListener(v -> {
 
-            Intent intent = new Intent(
-                    ManageListingRequestActivity.this,
-                    ListingRequestDetailsActivity.class
-            );
+            if(requestList.size() > 2){
+                openDetails(requestList.get(2));
+            }
 
-            intent.putExtra("itemName", "Projector");
-            intent.putExtra("ownerName", "Amit");
-            intent.putExtra("category", "Electronics");
-
-            intent.putExtra(
-                    "description",
-                    "HD projector suitable for presentations and movie viewing."
-            );
-
-            intent.putExtra("price", "₹400 / day");
-            intent.putExtra("deposit", "₹1,500");
-            intent.putExtra("pickup", "Surat");
-            intent.putExtra("availableFrom", "07 Sep 2026");
-            intent.putExtra("contact", "9876543212");
-            intent.putExtra("condition", "New");
-
-            startActivity(intent);
         });
+
 
         // Approve
         btnApprove1.setOnClickListener(v ->
@@ -246,6 +197,7 @@ public class ManageListingRequestActivity extends AppCompatActivity {
         );
 
         applyDarkMode();
+        loadListingRequests();
     }
 
     @Override
@@ -278,18 +230,35 @@ public class ManageListingRequestActivity extends AppCompatActivity {
 
             approve.setOnClickListener(v -> {
 
-                Toast.makeText(
-                        ManageListingRequestActivity.this,
-                        "Listing approved successfully",
-                        Toast.LENGTH_SHORT
-                ).show();
+                int position = 0;
 
-                // Temporary removal
-                card.setVisibility(View.GONE);
+                if (card == requestCard2) {
+                    position = 1;
+                } else if (card == requestCard3) {
+                    position = 2;
+                }
 
-                updatePendingCount();
+                if (position < requestList.size()) {
 
-                dialog.dismiss();
+                    DocumentSnapshot doc = requestList.get(position);
+
+                    db.collection("itemRequests")
+                            .document(doc.getId())
+                            .update("status", "approved")
+                            .addOnSuccessListener(unused -> {
+
+                                loadListingRequests();
+                                updatePendingCount();
+
+                                Toast.makeText(
+                                        this,
+                                        "Listing Approved",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                dialog.dismiss();
+                            });
+                }
             });
         });
 
@@ -397,24 +366,184 @@ public class ManageListingRequestActivity extends AppCompatActivity {
                     return;
                 }
 
-                Toast.makeText(
-                        ManageListingRequestActivity.this,
-                        "Listing rejected",
-                        Toast.LENGTH_SHORT
-                ).show();
+                int position = 0;
 
-                // Temporary removal
-                card.setVisibility(View.GONE);
+                if (card == requestCard2) {
+                    position = 1;
+                } else if (card == requestCard3) {
+                    position = 2;
+                }
 
-                updatePendingCount();
+                if (position < requestList.size()) {
 
-                dialog.dismiss();
+                    DocumentSnapshot doc = requestList.get(position);
+
+                    db.collection("itemRequests")
+                            .document(doc.getId())
+                            .update(
+                                    "status", "rejected",
+                                    "rejectionReason", reason
+                            )
+                            .addOnSuccessListener(unused -> {
+
+                                loadListingRequests();
+                                updatePendingCount();
+
+                                Toast.makeText(
+                                        this,
+                                        "Listing Rejected",
+                                        Toast.LENGTH_SHORT
+                                ).show();
+
+                                dialog.dismiss();
+                            });
+                }
             });
         });
 
         dialog.show();
     }
+    private void loadListingRequests() {
 
+        db.collection("itemRequests")
+                .whereEqualTo("status", "pending")
+                .limit(3)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    Toast.makeText(
+                            this,
+                            "Documents = " + queryDocumentSnapshots.size(),
+                            Toast.LENGTH_LONG
+                    ).show();
+                    int index = 0;
+                    requestList.clear();
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
+                        requestList.add(document);
+                        String itemName =
+                                document.getString("itemName");
+
+                        String owner =
+                                document.getString("ownerName");
+
+                        String category =
+                                document.getString("category");
+
+                        Long price =
+                                document.getLong("pricePerDay");
+
+                        if (index == 0) {
+
+                            txtItemName1.setText(itemName);
+
+                            txtOwner1.setText("Owner : " + owner);
+
+                            txtCategory1.setText("Category : " + category);
+
+                            txtPrice1.setText("₹" + price + " / day");
+
+                        }
+
+                        else if (index == 1) {
+
+                            txtItemName2.setText(itemName);
+
+                            txtOwner2.setText("Owner : " + owner);
+
+                            txtCategory2.setText("Category : " + category);
+
+                            txtPrice2.setText("₹" + price + " / day");
+
+                        }
+
+                        else if (index == 2) {
+
+                            txtItemName3.setText(itemName);
+
+                            txtOwner3.setText("Owner : " + owner);
+
+                            txtCategory3.setText("Category : " + category);
+
+                            txtPrice3.setText("₹" + price + " / day");
+
+                        }
+
+                        index++;
+                    }
+
+                    txtPendingCount.setText(String.valueOf(index));
+
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(
+                                this,
+                                e.getMessage(),
+                                Toast.LENGTH_SHORT
+                        ).show());
+    }
+    private void openDetails(DocumentSnapshot document){
+
+        Intent intent = new Intent(
+                ManageListingRequestActivity.this,
+                ListingRequestDetailsActivity.class
+        );
+
+        intent.putExtra(
+                "itemName",
+                document.getString("itemName")
+        );
+
+        intent.putExtra(
+                "ownerName",
+                document.getString("ownerName")
+        );
+
+        intent.putExtra(
+                "category",
+                document.getString("category")
+        );
+
+        intent.putExtra(
+                "description",
+                document.getString("description")
+        );
+
+        Long price = document.getLong("pricePerDay");
+
+        intent.putExtra(
+                "price",
+                price == null ? "" : String.valueOf(price)
+        );
+
+        Long deposit = document.getLong("securitydeposit");
+
+        intent.putExtra(
+                "deposit",
+                deposit == null ? "" : String.valueOf(deposit)
+        );
+
+        intent.putExtra(
+                "pickup",
+                document.getString("pickuplocation")
+        );
+
+        intent.putExtra(
+                "availableFrom",
+                document.getString("availableFrom")
+        );
+
+        intent.putExtra(
+                "contact",
+                document.getString("contactnumber")
+        );
+
+        intent.putExtra(
+                "condition",
+                document.getString("condition")
+        );
+
+        startActivity(intent);
+
+    }
     // =================================================
 // DIALOG STYLE
 // =================================================

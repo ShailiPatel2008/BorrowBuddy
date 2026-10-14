@@ -27,26 +27,28 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import com.borrowbuddy.app.R;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-
 import android.app.Dialog;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.Timestamp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import java.util.HashMap;
+import java.util.Map;
 public class AddItemActivity extends AppCompatActivity {
 
     // =========================
@@ -97,16 +99,16 @@ public class AddItemActivity extends AppCompatActivity {
      * Bitmap -> Camera photo
      */
     private ArrayList<Object> selectedImages = new ArrayList<>();
-
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_add_item);
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
-        // =========================
-        // TOOLBAR
-        // =========================
 
         MaterialToolbar toolbar = findViewById(R.id.toolbar);
 
@@ -810,11 +812,121 @@ public class AddItemActivity extends AppCompatActivity {
             return;
         }
 
-        Toast.makeText(
-                this,
-                "Item request submitted successfully. Waiting for admin approval.",
-                Toast.LENGTH_LONG
-        ).show();
+        saveItemRequest();
+    }
+    private void saveItemRequest() {
+
+        FirebaseUser firebaseUser = auth.getCurrentUser();
+
+        if (firebaseUser == null) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String ownerId = firebaseUser.getUid();
+
+        DocumentReference docRef =
+                db.collection("itemRequests").document();
+
+        String itemId = docRef.getId();
+
+        Map<String, Object> item = new HashMap<>();
+
+        item.put("itemId", itemId);
+        item.put("ownerId", ownerId);
+
+        item.put("itemName",
+                etItemName.getText().toString().trim());
+
+        item.put("description",
+                etDescription.getText().toString().trim());
+
+
+
+        item.put("securitydeposit",
+                Integer.parseInt(
+                        etSecurityDeposit.getText().toString().trim()));
+
+        item.put("pickuplocation",
+                etPickupLocation.getText().toString().trim());
+
+        item.put("availabilitydate",
+                Timestamp.now());
+
+        item.put("availableFrom",
+                etAvailability.getText().toString().trim());
+
+        item.put("category",
+                spCategory.getSelectedItem().toString());
+
+        int selectedId = rgCondition.getCheckedRadioButtonId();
+
+        android.widget.RadioButton rb =
+                findViewById(selectedId);
+
+        item.put("condition",
+                rb.getText().toString());
+
+        item.put("contactnumber",
+                etContact.getText().toString().trim());
+
+        item.put("quantity",
+                Integer.parseInt(
+                        etQuantity.getText().toString().trim()));
+
+        item.put("imageurl", "");
+
+
+
+        item.put("pricePerDay",
+                Integer.parseInt(
+                        etRentalPrice.getText().toString().trim()));
+
+        item.put("status", "pending");
+
+        db.collection("users")
+                .document(ownerId)
+                .get()
+                .addOnSuccessListener(snapshot -> {
+
+                    String ownerName = snapshot.getString("full_name");
+
+                    if (ownerName == null) {
+                        ownerName = "";
+                    }
+
+                    item.put("ownerName", ownerName);
+
+                    docRef.set(item)
+                            .addOnSuccessListener(unused -> {
+
+                                Toast.makeText(
+                                        AddItemActivity.this,
+                                        "Item request sent to Admin",
+                                        Toast.LENGTH_LONG
+                                ).show();
+
+                                finish();
+
+                            })
+                            .addOnFailureListener(e ->
+
+                                    Toast.makeText(
+                                            AddItemActivity.this,
+                                            e.getMessage(),
+                                            Toast.LENGTH_LONG
+                                    ).show()
+                            );
+
+                })
+                .addOnFailureListener(e ->
+
+                        Toast.makeText(
+                                AddItemActivity.this,
+                                "Unable to fetch owner name",
+                                Toast.LENGTH_SHORT
+                        ).show()
+                );
     }
 
     // =========================================================

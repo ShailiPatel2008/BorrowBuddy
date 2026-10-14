@@ -24,7 +24,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
-
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import java.util.ArrayList;
 
 
@@ -84,7 +85,7 @@ public class SearchFilterActivity extends AppCompatActivity {
     RecyclerView resultRecyclerView;
 
     SearchAdapter searchAdapter;
-
+    private FirebaseFirestore db;
 
     // ==================================================
     // DATA
@@ -121,7 +122,7 @@ public class SearchFilterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_search_filter);
-
+        db = FirebaseFirestore.getInstance();
 
         // ==================================================
         // MATERIAL TOOLBAR
@@ -236,7 +237,7 @@ public class SearchFilterActivity extends AppCompatActivity {
         // LOAD ITEMS
         // ==================================================
 
-        loadItems();
+        loadItemsFromFirestore();
 
 
         // ==================================================
@@ -363,54 +364,53 @@ public class SearchFilterActivity extends AppCompatActivity {
     // LOAD SAMPLE ITEMS
     // ==================================================
 
-    private void loadItems() {
+    private void loadItemsFromFirestore() {
 
         allItems.clear();
 
+        db.collection("itemRequests")
+                .whereEqualTo("status", "approved")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
 
-        // CAMERA
+                    for (QueryDocumentSnapshot document : queryDocumentSnapshots) {
 
-        allItems.add(
-                new SearchItem(
-                        "Camera",
-                        "₹300/day",
-                        "Ahmedabad",
-                        "★★★★",
-                        0
-                )
-        );
+                        String itemName =
+                                document.getString("itemName");
 
+                        Long price =
+                                document.getLong("pricePerDay");
 
-        // LAPTOP
+                        String location =
+                                document.getString("pickuplocation");
 
-        allItems.add(
-                new SearchItem(
-                        "Laptop",
-                        "₹500/day",
-                        "Ahmedabad",
-                        "★★★★",
-                        0
-                )
-        );
+                        if (itemName == null)
+                            itemName = "";
 
+                        if (location == null)
+                            location = "";
 
-        // FOOTBALL
+                        String priceText =
+                                "₹" + (price == null ? 0 : price) + "/day";
 
-        allItems.add(
-                new SearchItem(
-                        "Football",
-                        "₹150/day",
-                        "Ahmedabad",
-                        "★★★★",
-                        0
-                )
-        );
+                        allItems.add(
+                                new SearchItem(
+                                        document.getId(),
+                                        itemName,
+                                        priceText,
+                                        location,
+                                        "★★★★",
+                                        0
+                                )
+                        );
+                    }
 
+                    filteredItems.clear();
+                    filteredItems.addAll(allItems);
 
-        filteredItems.clear();
+                    searchAdapter.notifyDataSetChanged();
 
-        filteredItems.addAll(allItems);
-
+                });
     }
 
 

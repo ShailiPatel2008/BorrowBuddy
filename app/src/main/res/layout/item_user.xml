@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/userCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,6 +8,8 @@
     android:background="#EEEEEE"
     android:orientation="vertical"
     android:padding="18dp">
+
+    <!-- User Icon + Name -->
 
     <TextView
         android:id="@+id/txtUserName"
@@ -18,49 +19,57 @@
         android:textColor="#111111"
         android:textSize="27sp"
         android:textStyle="bold"/>
-
     <TextView
         android:id="@+id/txtEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="18dp"
         android:text="Email"
         android:textColor="#111111"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/txtTrustScore"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="14dp"
         android:text="Trust Score"
         android:textColor="#111111"
-        android:textSize="18sp"/>
+        android:textSize="18sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/txtStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="14dp"
         android:text="Status"
-        android:textColor="#111111"
         android:textSize="18sp"
         android:textStyle="bold"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnViewProfile"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/grey_button"
         android:text="View Profile"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnBlockUser"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/grey_button"
         android:text="Block User"
-        android:textAllCaps="false"/>
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
 
 </LinearLayout>

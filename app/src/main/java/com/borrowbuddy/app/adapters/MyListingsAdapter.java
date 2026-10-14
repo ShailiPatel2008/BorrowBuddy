@@ -21,16 +21,17 @@ import com.borrowbuddy.app.activities.EditItemActivity;
 import com.borrowbuddy.app.activities.MyListingsActivity;
 import com.borrowbuddy.app.models.ListingModel;
 import com.google.android.material.card.MaterialCardView;
-
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FieldValue;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MyListingsAdapter
         extends RecyclerView.Adapter<MyListingsAdapter.ViewHolder> {
-
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Context context;
     private List<ListingModel> listingList;
-
+    private String documentId;
     public MyListingsAdapter(
             Context context,
             List<ListingModel> listingList
@@ -100,6 +101,7 @@ public class MyListingsAdapter
         holder.txtStatus.setText(
                 listing.getStatus()
         );
+
 
         // -------------------------
         // PRODUCT IMAGES
@@ -219,6 +221,10 @@ public class MyListingsAdapter
                     "quantity",
                     listing.getQuantity()
             );
+            intent.putExtra(
+                    "documentId",
+                    listing.getDocumentId()
+            );
 
             // -------------------------
             // SEND EXISTING IMAGES
@@ -277,14 +283,13 @@ public class MyListingsAdapter
         // DELETE
         // -------------------------
 
+
         holder.btnDelete.setOnClickListener(v -> {
 
             AlertDialog.Builder builder =
                     new AlertDialog.Builder(context);
 
-            builder.setTitle(
-                    "Delete Item"
-            );
+            builder.setTitle("Delete Item");
 
             builder.setMessage(
                     "Are you sure you want to delete \""
@@ -299,44 +304,50 @@ public class MyListingsAdapter
                         int currentPosition =
                                 holder.getAdapterPosition();
 
-                        if (currentPosition !=
-                                RecyclerView.NO_POSITION) {
-
-                            listingList.remove(
-                                    currentPosition
-                            );
-
-                            notifyItemRemoved(
-                                    currentPosition
-                            );
-
-                            if (listingList.isEmpty()
-                                    && context instanceof
-                                    MyListingsActivity) {
-
-                                ((MyListingsActivity) context)
-                                        .updateEmptyState();
-                            }
-
-                            Toast.makeText(
-                                    context,
-                                    "Item deleted successfully",
-                                    Toast.LENGTH_SHORT
-                            ).show();
+                        if (currentPosition == RecyclerView.NO_POSITION) {
+                            return;
                         }
-                    }
-            );
+
+                        db.collection("itemRequests")
+                                .document(listing.getDocumentId())
+                                .delete()
+                                .addOnSuccessListener(unused -> {
+
+                                    listingList.remove(currentPosition);
+
+                                    notifyItemRemoved(currentPosition);
+
+                                    if (listingList.isEmpty()
+                                            && context instanceof MyListingsActivity) {
+
+                                        ((MyListingsActivity) context)
+                                                .updateEmptyState();
+                                    }
+
+                                    Toast.makeText(
+                                            context,
+                                            "Item deleted successfully",
+                                            Toast.LENGTH_SHORT
+                                    ).show();
+
+                                })
+                                .addOnFailureListener(e ->
+
+                                        Toast.makeText(
+                                                context,
+                                                e.getMessage(),
+                                                Toast.LENGTH_SHORT
+                                        ).show());
+                    });
 
             builder.setNegativeButton(
                     "Cancel",
-                    (dialog, which) ->
-                            dialog.dismiss()
+                    (dialog, which) -> dialog.dismiss()
             );
 
             builder.show();
         });
     }
-
     // -------------------------
     // STATUS DESIGN
     // -------------------------
@@ -348,9 +359,7 @@ public class MyListingsAdapter
 
         holder.txtStatus.setText(status);
 
-        if (status.equalsIgnoreCase(
-                "Available"
-        )) {
+        if (status.equalsIgnoreCase("Available")) {
 
             holder.txtStatus.setBackgroundResource(
                     R.drawable.status_available
@@ -362,9 +371,7 @@ public class MyListingsAdapter
                     R.drawable.status_rented
             );
         }
-    }
-
-    // -------------------------
+    }    // -------------------------
     // CREATE IMAGE DOTS
     // -------------------------
 

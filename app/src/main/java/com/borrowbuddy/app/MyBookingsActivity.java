@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.card.MaterialCardView;
@@ -64,30 +66,32 @@ public class MyBookingsActivity extends AppCompatActivity {
     // BOOKING DATA
     // =========================
 
-    private String itemName = "Canon Camera";
-
-    private int totalAmount = 5820;
-
-    private int duration = 3;
-
-    private int quantity = 2;
-
-    private String itemPrice = "₹300 / day";
-
+    private String itemName = "";
+    private int totalAmount = 0;
+    private int duration = 0;
+    private int quantity = 0;
+    private String itemPrice = "";
     // =========================
     // OWNER DATA
     // =========================
+    private String bookingId = "";
+    private String ownerId="";
+    private String itemId="";
+    private String startDate = "";
+    private String endDate = "";
+    private String ownerName = "";
 
-    private String ownerName = "Rahul Patel";
-
-    private String ownerContact = "9876543210";
-
+    private String ownerContact = "";
+    private FirebaseFirestore db;
+    private FirebaseAuth auth;
+    private String bookingStatusValue = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_my_bookings);
 
         // =========================
@@ -160,74 +164,22 @@ public class MyBookingsActivity extends AppCompatActivity {
         // GET BOOKING DATA
         // ==================================================
 
-        String receivedItemName =
-                getIntent().getStringExtra("itemName");
 
-        if (receivedItemName != null &&
-                !receivedItemName.trim().isEmpty()) {
-
-            itemName = receivedItemName;
-        }
-
-        totalAmount =
-                getIntent().getIntExtra(
-                        "totalAmount",
-                        5820
-                );
-
-        duration =
-                getIntent().getIntExtra(
-                        "duration",
-                        3
-                );
-
-        quantity =
-                getIntent().getIntExtra(
-                        "quantity",
-                        2
-                );
-
-        String receivedPrice =
-                getIntent().getStringExtra("price");
-
-        if (receivedPrice != null &&
-                !receivedPrice.trim().isEmpty()) {
-
-            itemPrice = receivedPrice;
-        }
 
         // ==================================================
         // GET OWNER ACCORDING TO ITEM
         // ==================================================
 
-        setOwnerAccordingToItem();
+        // ==================================================
+    // OWNER ACCORDING TO ITEM
+    // ==================================================
+
 
         // ==================================================
         // SHOW BOOKING DATA
         // ==================================================
 
-        bookingItemName.setText(itemName);
 
-        bookingItemPrice.setText(itemPrice);
-
-        bookingDate.setText(
-                "📅  Booking Date: Today"
-        );
-
-        bookingDuration.setText(
-                "⏱  Duration: " +
-                        duration +
-                        " Days"
-        );
-
-        bookingTotal.setText(
-                "💰  Total Amount: ₹" +
-                        totalAmount
-        );
-
-        bookingStatus.setText(
-                "●  Completed"
-        );
 
         // ==================================================
         // ITEM IMAGE
@@ -269,10 +221,7 @@ public class MyBookingsActivity extends AppCompatActivity {
             );
 
             // STATUS
-            intent.putExtra(
-                    "status",
-                    "Completed"
-            );
+            intent.putExtra("status", bookingStatusValue);
 
             // QUANTITY
             intent.putExtra(
@@ -289,7 +238,7 @@ public class MyBookingsActivity extends AppCompatActivity {
             // BOOKING ID
             intent.putExtra(
                     "bookingId",
-                    "BB1025"
+                    bookingId
             );
 
             // =========================
@@ -305,6 +254,18 @@ public class MyBookingsActivity extends AppCompatActivity {
                     "ownerContact",
                     ownerContact
             );
+            intent.putExtra(
+                    "startDate",
+                    startDate
+            );
+            intent.putExtra(
+                    "endDate",
+                    endDate
+            );
+            intent.putExtra("itemId", itemId);
+            intent.putExtra("ownerId", ownerId);
+
+
 
             // =========================
             // ITEM IMAGE
@@ -344,9 +305,10 @@ public class MyBookingsActivity extends AppCompatActivity {
 
             // STATUS
             intent.putExtra(
-                    "bookingStatus",
-                    "Completed"
+                    "status",
+                    bookingStatusValue
             );
+
 
             startActivity(intent);
         });
@@ -354,10 +316,90 @@ public class MyBookingsActivity extends AppCompatActivity {
         // ==================================================
         // DARK MODE
         // ==================================================
-
+        loadBookingData();
         applyDarkMode();
     }
+    private void loadBookingData() {
 
+        if(auth.getCurrentUser() == null){
+            return;
+        }
+
+        String uid = auth.getCurrentUser().getUid();
+
+        db.collection("Bookings")
+                .whereEqualTo("userId", uid)
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+
+                    if(queryDocumentSnapshots.isEmpty()){
+                        return;
+                    }
+
+                    for(QueryDocumentSnapshot document : queryDocumentSnapshots){
+                        System.out.println("========== BOOKING ==========");
+                        System.out.println(document.getData());
+                        System.out.println("=============================");
+
+                        itemName = document.getString("itemName");
+
+
+                        Long amount = document.getLong("totalAmount");
+                        if(amount != null){
+                            totalAmount = amount.intValue();
+                        }
+
+
+                        Long durationValue = document.getLong("duration");
+                        if(durationValue != null){
+                            duration = durationValue.intValue();
+                        }
+
+
+                        Long quantityValue = document.getLong("quantity");
+                        if(quantityValue != null){
+                            quantity = quantityValue.intValue();
+                        }
+                        bookingStatusValue = document.getString("status");
+
+                        if (bookingStatusValue == null) {
+                            bookingStatusValue = "Completed";
+                        }
+
+                        itemPrice = document.getString("rentalPrice");
+                        bookingId = document.getId();
+
+                        startDate = document.getString("startDate");
+
+                        endDate = document.getString("endDate");
+
+                        ownerName = document.getString("ownerName");
+                        ownerContact = document.getString("ownerContact");
+                        if(ownerName == null || ownerName.isEmpty()){
+                            setOwnerAccordingToItem();
+                        }
+
+                        // UPDATE UI HERE
+                        bookingItemName.setText(itemName);
+                        bookingItemPrice.setText("₹ " + itemPrice);
+                        bookingDuration.setText(duration + " Days");
+                        bookingTotal.setText("Total: ₹ " + totalAmount);
+                        bookingStatus.setText(bookingStatusValue);
+                        System.out.println("Owner Name = " + ownerName);
+                        System.out.println("Owner Contact = " + ownerContact);
+
+                        break;
+                    }
+
+                })
+                .addOnFailureListener(e -> {
+
+                    bookingItemName.setText(
+                            "Error loading booking"
+                    );
+
+                });
+    }
 
     // ==================================================
     // OWNER ACCORDING TO ITEM

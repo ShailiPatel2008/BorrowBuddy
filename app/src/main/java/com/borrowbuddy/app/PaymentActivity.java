@@ -18,9 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
-
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.Query;
 import org.json.JSONObject;
 
 public class PaymentActivity extends AppCompatActivity
@@ -131,6 +133,13 @@ public class PaymentActivity extends AppCompatActivity
     int duration = 1;
 
     String itemName = "Item";
+    private String itemId;
+    private String ownerName;
+    private String ownerContact;
+    private String startDate;
+    private String endDate;
+    private String location;
+    private String rentalPrice;
 
 
     // ==================================================
@@ -143,7 +152,13 @@ public class PaymentActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_payment);
-
+        itemId = getIntent().getStringExtra("itemId");
+        ownerName = getIntent().getStringExtra("ownerName");
+        ownerContact = getIntent().getStringExtra("ownerContact");
+        startDate = getIntent().getStringExtra("startDate");
+        endDate = getIntent().getStringExtra("endDate");
+        location = getIntent().getStringExtra("location");
+        rentalPrice = getIntent().getStringExtra("rentalPrice");
 
         // ==================================================
         // TOOLBAR
@@ -426,10 +441,7 @@ public class PaymentActivity extends AppCompatActivity
 
             if (selectedId ==
                     R.id.radioCashOnDelivery) {
-
-                openBookingSuccess(
-                        paymentMethod
-                );
+                saveBooking(paymentMethod);
 
                 return;
             }
@@ -594,9 +606,7 @@ public class PaymentActivity extends AppCompatActivity
         }
 
 
-        openBookingSuccess(
-                paymentMethod
-        );
+        saveBooking(paymentMethod);
 
     }
 
@@ -622,7 +632,57 @@ public class PaymentActivity extends AppCompatActivity
     // ==================================================
     // OPEN BOOKING SUCCESS
     // ==================================================
+    private void saveBooking(String paymentMethod) {
 
+        String userId = com.google.firebase.auth.FirebaseAuth
+                .getInstance()
+                .getCurrentUser()
+                .getUid();
+        java.util.HashMap<String, Object> booking =
+                new java.util.HashMap<>();
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+         userId = auth.getCurrentUser().getUid();
+
+        booking.put("userId", userId);
+        booking.put("itemId", itemId);
+        booking.put("itemName", itemName);
+        ownerName = "Rahul Patel";
+        ownerContact = "9876543210";
+        booking.put("ownerName", ownerName);
+        booking.put("ownerContact", ownerContact);
+        booking.put("location", location);
+        booking.put("rentalPrice", rentalPrice);
+        booking.put("quantity", quantity);
+        booking.put("duration", duration);
+        booking.put("startDate", startDate);
+        booking.put("endDate", endDate);
+        booking.put("totalAmount", totalAmount);
+        booking.put("paymentMethod", paymentMethod);
+        booking.put("status", "Booked");
+        booking.put("bookingTime",
+                com.google.firebase.Timestamp.now());
+
+        com.google.firebase.firestore.FirebaseFirestore
+                .getInstance()
+                .collection("Bookings")
+                .add(booking)
+                .addOnSuccessListener(documentReference -> {
+
+                    openBookingSuccess(paymentMethod);
+
+                })
+                .addOnFailureListener(e -> {
+
+                    android.widget.Toast.makeText(
+                            PaymentActivity.this,
+                            "Booking failed",
+                            android.widget.Toast.LENGTH_SHORT
+                    ).show();
+
+                });
+    }
     private void openBookingSuccess(
             String paymentMethod) {
 
