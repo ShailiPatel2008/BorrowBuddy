@@ -14,7 +14,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.bumptech.glide.Glide;
 public class OwnerProfileActivity extends AppCompatActivity {
 
     private MaterialButton btnEditProfile;
@@ -91,7 +91,16 @@ public class OwnerProfileActivity extends AppCompatActivity {
                 .addOnSuccessListener(document -> {
 
                     if (document.exists()) {
+                        // Profile Image
+                        String imageUrl = document.getString("profileImageUrl");
 
+                        if (imageUrl != null && !imageUrl.isEmpty()) {
+
+                            Glide.with(OwnerProfileActivity.this)
+                                    .load(imageUrl)
+                                    .into(imgProfile);
+
+                        }
                         // Name
                         String name = document.getString("full_name");
                         if (name == null || name.isEmpty()) {

@@ -486,7 +486,10 @@ public class ManageListingRequestActivity extends AppCompatActivity {
                 ManageListingRequestActivity.this,
                 ListingRequestDetailsActivity.class
         );
+        ArrayList<String> imageUrls =
+                (ArrayList<String>) document.get("imageUrls");
 
+        intent.putStringArrayListExtra("imageUrls", imageUrls);
         intent.putExtra(
                 "itemName",
                 document.getString("itemName")

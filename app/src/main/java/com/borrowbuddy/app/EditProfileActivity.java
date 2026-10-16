@@ -21,14 +21,17 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.callback.UploadCallback;
+import com.cloudinary.android.callback.ErrorInfo;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.Map;
 
 public class EditProfileActivity extends AppCompatActivity {
 
     private MaterialToolbar toolbar;
-
+    private Uri selectedProfileImage;
     private ImageView profileImage;
 
     private TextView changePhotoButton;
@@ -252,6 +255,15 @@ public class EditProfileActivity extends AppCompatActivity {
                         editLocation.setText(
                                 document.getString("location")
                         );
+                        String imageUrl = document.getString("profileImageUrl");
+
+                        if(imageUrl != null && !imageUrl.isEmpty()) {
+
+                            com.bumptech.glide.Glide
+                                    .with(EditProfileActivity.this)
+                                    .load(imageUrl)
+                                    .into(profileImage);
+                        }
 
                     }
 
@@ -336,26 +348,128 @@ public class EditProfileActivity extends AppCompatActivity {
 
             if (selectedImage != null) {
 
-                profileImage.setImageURI(
-                        selectedImage
-                );
+                selectedProfileImage = selectedImage;
 
-                preferences.edit()
-                        .putString(
-                                "profilePhotoUri",
-                                selectedImage.toString()
-                        )
-                        .apply();
+                profileImage.setImageURI(selectedImage);
 
                 Toast.makeText(
                         this,
                         "Photo selected successfully",
                         Toast.LENGTH_SHORT
                 ).show();
+
             }
         }
     }
+    private void saveUserProfile(String uid, String imageUrl) {
 
+
+        Map<String,Object> updates = new HashMap<>();
+
+        updates.put("full_name",
+                editName.getText().toString().trim());
+
+        updates.put("email",
+                editEmail.getText().toString().trim());
+
+        updates.put("phone",
+                editPhone.getText().toString().trim());
+
+        updates.put("location",
+                editLocation.getText().toString().trim());
+
+
+        if(imageUrl != null){
+            updates.put("profileImageUrl", imageUrl);
+        }
+
+
+        db.collection("users")
+                .document(uid)
+                .update(updates)
+                .addOnSuccessListener(unused -> {
+
+                    Toast.makeText(
+                            this,
+                            "Profile Updated Successfully",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    finish();
+
+                })
+                .addOnFailureListener(e -> {
+
+                    Toast.makeText(
+                            this,
+                            "Update Failed",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                });
+
+    }
+    private void uploadProfileImage(String uid) {
+
+        if (selectedProfileImage == null) {
+            saveUserProfile(uid, null);
+            return;
+        }
+
+
+        MediaManager.get()
+                .upload(selectedProfileImage)
+                .unsigned("borrowbuddy_upload")
+                .callback(new UploadCallback() {
+
+                    @Override
+                    public void onStart(String requestId) {
+
+                    }
+
+
+                    @Override
+                    public void onProgress(String requestId,
+                                           long bytes,
+                                           long totalBytes) {
+
+                    }
+
+
+                    @Override
+                    public void onSuccess(String requestId,
+                                          Map resultData) {
+
+                        String imageUrl =
+                                resultData.get("secure_url").toString();
+
+
+                        saveUserProfile(uid, imageUrl);
+                    }
+
+
+                    @Override
+                    public void onError(String requestId,
+                                        ErrorInfo error) {
+
+                        Toast.makeText(
+                                EditProfileActivity.this,
+                                "Image upload failed",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                    }
+
+
+                    @Override
+                    public void onReschedule(String requestId,
+                                             ErrorInfo error) {
+
+                    }
+
+                })
+                .dispatch();
+    }
     private void saveProfile() {
 
         String name =
@@ -472,36 +586,8 @@ public class EditProfileActivity extends AppCompatActivity {
             return;
         }
 
-        Map<String, Object> updates = new HashMap<>();
-
-        updates.put("full_name", name);
-        updates.put("email", email);
-        updates.put("phone", phone);
-        updates.put("location", location);
-
-        db.collection("users")
-                .document(currentUser.getUid())
-                .update(updates)
-                .addOnSuccessListener(unused -> {
-
-                    Toast.makeText(
-                            EditProfileActivity.this,
-                            "Profile Updated Successfully",
-                            Toast.LENGTH_SHORT
-                    ).show();
-
-                    finish();
-
-                })
-                .addOnFailureListener(e -> {
-
-                    Toast.makeText(
-                            EditProfileActivity.this,
-                            "Update Failed",
-                            Toast.LENGTH_SHORT
-                    ).show();
-
-                });    }
+        uploadProfileImage(currentUser.getUid());
+    }
 
     private void applyTheme() {
 

@@ -21,12 +21,15 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.callback.UploadCallback;
+import com.cloudinary.android.callback.ErrorInfo;
 public class AdminEditProfileActivity extends AppCompatActivity {
 
     View mainLayout;
 
     ImageButton btnBack;
+    private Uri selectedImage;
     TextView btnChangePhoto;
     TextView btnSaveChanges;
 
@@ -169,29 +172,21 @@ public class AdminEditProfileActivity extends AppCompatActivity {
         updates.put("email", email);
         updates.put("phone", phone);
         updates.put("location", location);
+        if (selectedImage != null) {
 
-        db.collection("users")
-                .document(currentUser.getUid())
-                .update(updates)
-                .addOnSuccessListener(unused -> {
+            uploadProfileImage(
+                    currentUser.getUid(),
+                    updates
+            );
 
-                    Toast.makeText(
-                            this,
-                            "Profile Updated Successfully",
-                            Toast.LENGTH_SHORT
-                    ).show();
+        } else {
 
-                    finish();
+            updateAdminProfile(
+                    currentUser.getUid(),
+                    updates
+            );
 
-                })
-                .addOnFailureListener(e ->
-
-                        Toast.makeText(
-                                this,
-                                e.getMessage(),
-                                Toast.LENGTH_LONG
-                        ).show());
-
+        }
     }
 
     @Override
@@ -206,12 +201,100 @@ public class AdminEditProfileActivity extends AppCompatActivity {
                 && data != null
                 && data.getData() != null) {
 
-            Uri imageUri = data.getData();
+            selectedImage = data.getData();
 
-            imgProfile.setImageURI(imageUri);
+            imgProfile.setImageURI(selectedImage);
 
             // Cloudinary upload will be added later
         }
+    }
+    private void uploadProfileImage(
+            String uid,
+            Map<String,Object> updates
+    ){
+
+        MediaManager.get()
+                .upload(selectedImage)
+                .unsigned("borrowbuddy_upload")
+                .callback(new UploadCallback() {
+
+
+                    @Override
+                    public void onStart(String requestId){}
+
+
+                    @Override
+                    public void onProgress(
+                            String requestId,
+                            long bytes,
+                            long totalBytes){}
+
+
+                    @Override
+                    public void onSuccess(
+                            String requestId,
+                            Map resultData){
+
+                        String imageUrl =
+                                resultData.get("secure_url").toString();
+
+
+                        updates.put(
+                                "profileImageUrl",
+                                imageUrl
+                        );
+
+
+                        updateAdminProfile(
+                                uid,
+                                updates
+                        );
+                    }
+
+
+                    @Override
+                    public void onError(
+                            String requestId,
+                            ErrorInfo error){
+
+                        Toast.makeText(
+                                AdminEditProfileActivity.this,
+                                "Image upload failed",
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                    }
+
+
+                    @Override
+                    public void onReschedule(
+                            String requestId,
+                            ErrorInfo error){}
+
+
+                })
+                .dispatch();
+    }
+    private void updateAdminProfile(
+            String uid,
+            Map<String,Object> updates
+    ){
+
+        db.collection("users")
+                .document(uid)
+                .update(updates)
+                .addOnSuccessListener(unused -> {
+
+                    Toast.makeText(
+                            this,
+                            "Profile Updated Successfully",
+                            Toast.LENGTH_SHORT
+                    ).show();
+
+                    finish();
+
+                });
+
     }
 
     private void applyDarkMode() {

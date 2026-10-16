@@ -9,7 +9,7 @@ import android.app.Dialog;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-
+import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class BookingDetailsActivity extends AppCompatActivity {

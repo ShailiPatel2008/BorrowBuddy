@@ -15,6 +15,8 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class ListingRequestDetailsActivity extends AppCompatActivity {
@@ -140,7 +142,7 @@ public class ListingRequestDetailsActivity extends AppCompatActivity {
         photoContainer.removeAllViews();
 
         ArrayList<String> photoUris =
-                getIntent().getStringArrayListExtra("photoUris");
+                getIntent().getStringArrayListExtra("imageUrls");
 
         if (photoUris != null && !photoUris.isEmpty()) {
 
@@ -205,9 +207,11 @@ public class ListingRequestDetailsActivity extends AppCompatActivity {
 
             try {
 
-                imageView.setImageURI(
-                        Uri.parse(uriString)
-                );
+                Glide.with(this)
+                        .load(uriString)
+                        .placeholder(android.R.drawable.ic_menu_gallery)
+                        .error(android.R.drawable.ic_menu_report_image)
+                        .into(imageView);
 
             } catch (Exception e) {
 

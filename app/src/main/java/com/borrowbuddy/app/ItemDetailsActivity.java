@@ -174,42 +174,6 @@ public class ItemDetailsActivity extends AppCompatActivity {
 
         // ================= 5 IMAGES =================
 
-        List<Integer> images =
-                new ArrayList<>();
-
-        /*
-         * Existing image system is kept unchanged.
-         * Firebase images can be connected here later.
-         */
-
-        images.add(
-                R.drawable.ic_launcher_foreground
-        );
-
-        images.add(
-                R.drawable.ic_launcher_foreground
-        );
-
-        images.add(
-                R.drawable.ic_launcher_foreground
-        );
-
-        images.add(
-                R.drawable.ic_launcher_foreground
-        );
-
-        images.add(
-                R.drawable.ic_launcher_foreground
-        );
-
-
-        ItemImageAdapter adapter =
-                new ItemImageAdapter(images);
-
-        imageViewPager.setAdapter(adapter);
-
-
-        // ================= IMAGE SWIPE =================
 
         imageViewPager.registerOnPageChangeCallback(
                 new ViewPager2.OnPageChangeCallback() {
@@ -320,7 +284,18 @@ public class ItemDetailsActivity extends AppCompatActivity {
                     );
 
                     itemRating.setText("★★★★☆");
+                    ArrayList<String> imageUrls =
+                            (ArrayList<String>) document.get("imageUrls");
 
+                    if (imageUrls != null && !imageUrls.isEmpty()) {
+
+                        ItemImageAdapter adapter =
+                                new ItemImageAdapter(imageUrls);
+
+                        imageViewPager.setAdapter(adapter);
+
+                        showDot(0);
+                    }
                 });
 
     }

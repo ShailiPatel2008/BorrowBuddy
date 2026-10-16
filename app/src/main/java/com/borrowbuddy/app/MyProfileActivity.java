@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.bumptech.glide.Glide;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -221,26 +222,36 @@ public class MyProfileActivity extends AppCompatActivity {
     }
     private void loadProfilePhoto() {
 
-        String photoUri =
-                preferences.getString(
-                        "profilePhotoUri",
-                        ""
-                );
+        FirebaseUser currentUser = auth.getCurrentUser();
 
-        if (photoUri != null &&
-                !photoUri.isEmpty()) {
+        if (currentUser == null) return;
 
-            try {
+        db.collection("users")
+                .document(currentUser.getUid())
+                .get()
+                .addOnSuccessListener(document -> {
 
-                profileImage.setImageURI(
-                        Uri.parse(photoUri)
-                );
+                    if (!document.exists()) return;
 
-            } catch (Exception e) {
+                    String imageUrl =
+                            document.getString("profileImageUrl");
 
-                profileImage.setImageDrawable(null);
-            }
-        }
+                    if (imageUrl != null && !imageUrl.isEmpty()) {
+
+                        Glide.with(this)
+                                .load(imageUrl)
+                                .placeholder(R.drawable.ic_profile)
+                                .error(R.drawable.ic_profile)
+                                .into(profileImage);
+
+                    } else {
+
+                        profileImage.setImageResource(R.drawable.ic_profile);
+
+                    }
+
+                });
+
     }
 
     private void setupClickListeners() {

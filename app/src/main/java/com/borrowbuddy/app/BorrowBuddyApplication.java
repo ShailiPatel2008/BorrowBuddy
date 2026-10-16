@@ -2,7 +2,7 @@ package com.borrowbuddy.app;
 
 import android.app.Application;
 import android.content.SharedPreferences;
-
+import com.borrowbuddy.app.CloudinaryManager;
 import androidx.appcompat.app.AppCompatDelegate;
 
 public class BorrowBuddyApplication extends Application {
@@ -10,7 +10,7 @@ public class BorrowBuddyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        CloudinaryManager.init(this);
         SharedPreferences preferences =
                 getSharedPreferences("BorrowBuddySettings", MODE_PRIVATE);
 

@@ -15,7 +15,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.callback.UploadCallback;
+import com.cloudinary.android.callback.ErrorInfo;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +32,7 @@ public class EditOwnerProfileActivity extends AppCompatActivity {
     private MaterialButton btnChangePhoto;
 
     private ShapeableImageView imgProfile;
-
+    private Uri selectedImage;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
 
@@ -106,6 +108,15 @@ public class EditOwnerProfileActivity extends AppCompatActivity {
 
                         if (location != null)
                             etLocation.setText(location);
+                        String imageUrl = document.getString("profileImageUrl");
+
+                        if(imageUrl != null && !imageUrl.isEmpty()){
+
+                            com.squareup.picasso.Picasso.get()
+                                    .load(imageUrl)
+                                    .into(imgProfile);
+
+                        }
 
                     }
 
@@ -153,13 +164,135 @@ public class EditOwnerProfileActivity extends AppCompatActivity {
         updates.put("phone", phone);
         updates.put("location", location);
 
+
+        if(selectedImage != null){
+
+            uploadProfileImage(
+                    currentUser.getUid(),
+                    updates
+            );
+
+        }
+        else{
+
+            updateOwnerProfile(
+                    currentUser.getUid(),
+                    updates
+            );
+
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE &&
+                resultCode == RESULT_OK &&
+                data != null) {
+
+            selectedImage = data.getData();
+
+            if (selectedImage != null) {
+
+                imgProfile.setImageURI(selectedImage);
+
+            }
+        }
+    }
+    private void uploadProfileImage(
+            String uid,
+            Map<String,Object> updates
+    ){
+
+        MediaManager.get()
+                .upload(selectedImage)
+                .unsigned("borrowbuddy_upload")
+                .callback(new UploadCallback() {
+
+
+                    @Override
+                    public void onStart(String requestId) {
+
+                    }
+
+
+                    @Override
+                    public void onProgress(
+                            String requestId,
+                            long bytes,
+                            long totalBytes) {
+
+                    }
+
+
+                    @Override
+                    public void onSuccess(
+                            String requestId,
+                            Map resultData) {
+
+
+                        String imageUrl =
+                                resultData.get("secure_url")
+                                        .toString();
+
+
+                        updates.put(
+                                "profileImageUrl",
+                                imageUrl
+                        );
+
+
+                        updateOwnerProfile(
+                                uid,
+                                updates
+                        );
+
+                    }
+
+
+                    @Override
+                    public void onError(
+                            String requestId,
+                            ErrorInfo error) {
+
+
+                        Toast.makeText(
+                                EditOwnerProfileActivity.this,
+                                error.getDescription(),
+                                Toast.LENGTH_SHORT
+                        ).show();
+
+                    }
+
+
+                    @Override
+                    public void onReschedule(
+                            String requestId,
+                            ErrorInfo error) {
+
+                    }
+
+                })
+                .dispatch();
+
+    }
+
+
+
+    private void updateOwnerProfile(
+            String uid,
+            Map<String,Object> updates
+    ){
+
         db.collection("users")
-                .document(currentUser.getUid())
+                .document(uid)
                 .update(updates)
                 .addOnSuccessListener(unused -> {
 
                     Toast.makeText(
-                            EditOwnerProfileActivity.this,
+                            this,
                             "Profile Updated Successfully",
                             Toast.LENGTH_SHORT
                     ).show();
@@ -167,31 +300,15 @@ public class EditOwnerProfileActivity extends AppCompatActivity {
                     finish();
 
                 })
-                .addOnFailureListener(e ->
+                .addOnFailureListener(e -> {
 
-                        Toast.makeText(
-                                EditOwnerProfileActivity.this,
-                                e.getMessage(),
-                                Toast.LENGTH_LONG
-                        ).show()
+                    Toast.makeText(
+                            this,
+                            e.getMessage(),
+                            Toast.LENGTH_LONG
+                    ).show();
 
-                );
+                });
 
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == PICK_IMAGE &&
-                resultCode == RESULT_OK &&
-                data != null) {
-
-            Uri imageUri = data.getData();
-
-            if (imageUri != null) {
-                imgProfile.setImageURI(imageUri);
-            }
-        }
     }
 }

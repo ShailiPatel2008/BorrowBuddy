@@ -194,94 +194,6 @@ public class MyBookingsActivity extends AppCompatActivity {
         // VIEW DETAILS
         // ==================================================
 
-        viewDetailsButton.setOnClickListener(v -> {
-
-            Intent intent =
-                    new Intent(
-                            MyBookingsActivity.this,
-                            BookingDetailActivity.class
-                    );
-
-            // SAME ITEM
-            intent.putExtra(
-                    "itemName",
-                    itemName
-            );
-
-            // PRICE
-            intent.putExtra(
-                    "price",
-                    itemPrice
-            );
-
-            // DURATION
-            intent.putExtra(
-                    "duration",
-                    duration + " Days"
-            );
-
-            // STATUS
-            intent.putExtra("status", bookingStatusValue);
-
-            // QUANTITY
-            intent.putExtra(
-                    "quantity",
-                    quantity
-            );
-
-            // TOTAL AMOUNT
-            intent.putExtra(
-                    "totalAmount",
-                    totalAmount
-            );
-
-            // BOOKING ID
-            intent.putExtra(
-                    "bookingId",
-                    bookingId
-            );
-
-            // =========================
-            // OWNER
-            // =========================
-
-            intent.putExtra(
-                    "ownerName",
-                    ownerName
-            );
-
-            intent.putExtra(
-                    "ownerContact",
-                    ownerContact
-            );
-            intent.putExtra(
-                    "startDate",
-                    startDate
-            );
-            intent.putExtra(
-                    "endDate",
-                    endDate
-            );
-            intent.putExtra("itemId", itemId);
-            intent.putExtra("ownerId", ownerId);
-
-
-
-            // =========================
-            // ITEM IMAGE
-            // =========================
-
-            intent.putExtra(
-                    "imageResId",
-                    R.drawable.ic_launcher_foreground
-            );
-
-            startActivity(intent);
-        });
-
-        // ==================================================
-        // GIVE REVIEW
-        // ==================================================
 
         giveReviewButton.setOnClickListener(v -> {
 
@@ -333,6 +245,9 @@ public class MyBookingsActivity extends AppCompatActivity {
                 .addOnSuccessListener(queryDocumentSnapshots -> {
 
                     if(queryDocumentSnapshots.isEmpty()){
+
+                        bookingCard.setVisibility(View.GONE);
+
                         return;
                     }
 
@@ -385,9 +300,31 @@ public class MyBookingsActivity extends AppCompatActivity {
                         bookingDuration.setText(duration + " Days");
                         bookingTotal.setText("Total: ₹ " + totalAmount);
                         bookingStatus.setText(bookingStatusValue);
-                        System.out.println("Owner Name = " + ownerName);
-                        System.out.println("Owner Contact = " + ownerContact);
 
+                        viewDetailsButton.setOnClickListener(v -> {
+
+                            Intent intent = new Intent(
+                                    MyBookingsActivity.this,
+                                    BookingDetailActivity.class
+                            );
+
+                            intent.putExtra("itemName", itemName);
+                            intent.putExtra("price", itemPrice);
+                            intent.putExtra("duration", duration + " Days");
+
+                            intent.putExtra("status", bookingStatusValue);
+
+                            intent.putExtra("bookingId", bookingId);
+
+                            intent.putExtra("ownerName", ownerName);
+                            intent.putExtra("ownerContact", ownerContact);
+
+                            intent.putExtra("startDate", startDate);
+                            intent.putExtra("endDate", endDate);
+
+                            startActivity(intent);
+
+                        });
                         break;
                     }
 
@@ -395,7 +332,11 @@ public class MyBookingsActivity extends AppCompatActivity {
                 .addOnFailureListener(e -> {
 
                     bookingItemName.setText(
-                            "Error loading booking"
+                            "Error: " + e.getMessage()
+                    );
+
+                    System.out.println(
+                            "BOOKING ERROR = " + e.getMessage()
                     );
 
                 });

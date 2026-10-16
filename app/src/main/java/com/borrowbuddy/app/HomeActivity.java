@@ -9,9 +9,15 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
+import android.Manifest;
+import android.os.Build;
+import android.content.pm.PackageManager;
+import androidx.core.app.ActivityCompat;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 public class HomeActivity extends AppCompatActivity {
 
     private static final int PURPLE = Color.rgb(106, 27, 154);
@@ -60,6 +66,34 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_home);
+        FirebaseMessaging.getInstance().getToken()
+
+                .addOnCompleteListener(task -> {
+                    String token = task.getResult();
+
+                    String uid = FirebaseAuth.getInstance()
+                            .getCurrentUser()
+                            .getUid();
+
+                    FirebaseFirestore.getInstance()
+                            .collection("Users")
+                            .document(uid)
+                            .update("fcmToken", token);
+
+                    System.out.println("FCM TOKEN = " + token);
+                });
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+
+            if (checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        101
+                );
+            }
+        }
 
         initializeViews();
 

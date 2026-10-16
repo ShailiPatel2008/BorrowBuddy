@@ -19,11 +19,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.Query;
 import org.json.JSONObject;
+
+import java.util.HashMap;
 
 public class PaymentActivity extends AppCompatActivity
         implements PaymentResultListener {
@@ -634,16 +637,14 @@ public class PaymentActivity extends AppCompatActivity
     // ==================================================
     private void saveBooking(String paymentMethod) {
 
-        String userId = com.google.firebase.auth.FirebaseAuth
+        final String userId = com.google.firebase.auth.FirebaseAuth
                 .getInstance()
                 .getCurrentUser()
                 .getUid();
         java.util.HashMap<String, Object> booking =
                 new java.util.HashMap<>();
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-         userId = auth.getCurrentUser().getUid();
 
         booking.put("userId", userId);
         booking.put("itemId", itemId);
@@ -669,8 +670,12 @@ public class PaymentActivity extends AppCompatActivity
                 .collection("Bookings")
                 .add(booking)
                 .addOnSuccessListener(documentReference -> {
-
                     openBookingSuccess(paymentMethod);
+                    createNotification(
+                            userId,
+                            "Booking Created",
+                            "Your booking request has been submitted successfully"
+                    );
 
                 })
                 .addOnFailureListener(e -> {
@@ -682,6 +687,7 @@ public class PaymentActivity extends AppCompatActivity
                     ).show();
 
                 });
+
     }
     private void openBookingSuccess(
             String paymentMethod) {
@@ -730,7 +736,21 @@ public class PaymentActivity extends AppCompatActivity
 
     }
 
+    private void createNotification(String userId, String title, String message) {
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        HashMap<String, Object> notification = new HashMap<>();
+
+        notification.put("userId", userId);
+        notification.put("title", title);
+        notification.put("message", message);
+        notification.put("timestamp", System.currentTimeMillis());
+        notification.put("isRead", false);
+
+        db.collection("Notifications")
+                .add(notification);
+    }
     // ==================================================
     // DARK MODE
     // ==================================================

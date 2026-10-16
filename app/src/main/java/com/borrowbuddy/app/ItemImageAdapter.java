@@ -12,14 +12,16 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class ItemImageAdapter
         extends RecyclerView.Adapter<ItemImageAdapter.ViewHolder> {
 
-    private List<Integer> images;
+    private List<String> images;
 
-    public ItemImageAdapter(List<Integer> images) {
+    public ItemImageAdapter(List<String> images) {
         this.images = images;
     }
 
@@ -30,11 +32,7 @@ public class ItemImageAdapter
             int viewType) {
 
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(
-                        R.layout.item_image,
-                        parent,
-                        false
-                );
+                .inflate(R.layout.item_image, parent, false);
 
         return new ViewHolder(view);
     }
@@ -44,87 +42,48 @@ public class ItemImageAdapter
             @NonNull ViewHolder holder,
             int position) {
 
-        if (images != null &&
-                position < images.size()) {
+        String imageUrl = images.get(position);
 
-            int imageResource = images.get(position);
+        Glide.with(holder.itemView.getContext())
+                .load(imageUrl)
+                .into(holder.imageView);
 
-            holder.imageView.setImageResource(
-                    imageResource
-            );
+        holder.imageView.setOnClickListener(v -> {
 
-            // =========================
-            // FULL SCREEN IMAGE
-            // =========================
+            Dialog dialog = new Dialog(v.getContext());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-            holder.imageView.setOnClickListener(v -> {
+            ImageView fullImage = new ImageView(v.getContext());
+            fullImage.setBackgroundColor(Color.BLACK);
+            fullImage.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
-                final Dialog dialog =
-                        new Dialog(v.getContext());
+            Glide.with(v.getContext())
+                    .load(imageUrl)
+                    .into(fullImage);
 
-                dialog.requestWindowFeature(
-                        Window.FEATURE_NO_TITLE
+            fullImage.setOnClickListener(view -> dialog.dismiss());
+
+            dialog.setContentView(fullImage);
+
+            dialog.show();
+
+            Window window = dialog.getWindow();
+
+            if (window != null) {
+
+                window.setBackgroundDrawableResource(android.R.color.black);
+
+                window.setLayout(
+                        WindowManager.LayoutParams.MATCH_PARENT,
+                        WindowManager.LayoutParams.MATCH_PARENT
                 );
-
-                ImageView fullImageView =
-                        new ImageView(v.getContext());
-
-                fullImageView.setLayoutParams(
-                        new ViewGroup.LayoutParams(
-                                ViewGroup.LayoutParams.MATCH_PARENT,
-                                ViewGroup.LayoutParams.MATCH_PARENT
-                        )
-                );
-
-                fullImageView.setScaleType(
-                        ImageView.ScaleType.FIT_CENTER
-                );
-
-                fullImageView.setBackgroundColor(
-                        Color.BLACK
-                );
-
-                fullImageView.setImageResource(
-                        imageResource
-                );
-
-                dialog.setContentView(
-                        fullImageView
-                );
-
-                // Tap image to close full screen
-                fullImageView.setOnClickListener(
-                        view -> dialog.dismiss()
-                );
-
-                dialog.show();
-
-                Window window =
-                        dialog.getWindow();
-
-                if (window != null) {
-
-                    window.setBackgroundDrawableResource(
-                            android.R.color.black
-                    );
-
-                    window.setLayout(
-                            WindowManager.LayoutParams.MATCH_PARENT,
-                            WindowManager.LayoutParams.MATCH_PARENT
-                    );
-                }
-            });
-        }
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-
-        if (images == null) {
-            return 0;
-        }
-
-        return images.size();
+        return images == null ? 0 : images.size();
     }
 
     public static class ViewHolder
@@ -132,14 +91,10 @@ public class ItemImageAdapter
 
         ImageView imageView;
 
-        public ViewHolder(
-                @NonNull View itemView) {
-
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            imageView = itemView.findViewById(
-                    R.id.itemImage
-            );
+            imageView = itemView.findViewById(R.id.itemImage);
         }
     }
 }

@@ -23,7 +23,7 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import com.google.firebase.firestore.FirebaseFirestore;
 public class BookingDetailActivity extends AppCompatActivity {
 
     // =========================================================
@@ -35,7 +35,7 @@ public class BookingDetailActivity extends AppCompatActivity {
     // =========================================================
     // MAIN LAYOUT
     // =========================================================
-
+    private FirebaseFirestore db;
     private ScrollView bookingDetailScrollView;
     private LinearLayout bookingDetailMainLayout;
 
@@ -54,9 +54,7 @@ public class BookingDetailActivity extends AppCompatActivity {
 
     private ItemImageAdapter imageAdapter;
 
-    private ArrayList<Integer> images =
-            new ArrayList<>();
-
+    private ArrayList<String> images = new ArrayList<>();
     // =========================================================
     // BOOKING DETAILS
     // =========================================================
@@ -134,7 +132,7 @@ public class BookingDetailActivity extends AppCompatActivity {
         setContentView(
                 R.layout.activity_booking_detail
         );
-
+        db = FirebaseFirestore.getInstance();
         // =====================================================
         // TOOLBAR
         // =====================================================
@@ -460,27 +458,6 @@ public class BookingDetailActivity extends AppCompatActivity {
          * uploaded item images.
          */
 
-        images.clear();
-
-        images.add(
-                R.drawable.ic_launcher_foreground
-        );
-
-        images.add(
-                R.drawable.ic_launcher_foreground
-        );
-
-        images.add(
-                R.drawable.ic_launcher_foreground
-        );
-
-        images.add(
-                R.drawable.ic_launcher_foreground
-        );
-
-        images.add(
-                R.drawable.ic_launcher_foreground
-        );
 
         imageAdapter =
                 new ItemImageAdapter(
@@ -572,30 +549,25 @@ public class BookingDetailActivity extends AppCompatActivity {
                         "YES",
                         (dialog, which) -> {
 
-                            Intent intent =
-                                    new Intent(
-                                            BookingDetailActivity.this,
-                                            BookingCancelledActivity.class
-                                    );
 
-                            intent.putExtra(
-                                    "itemName",
-                                    bookingItemName
-                            );
 
-                            intent.putExtra(
-                                    "bookingId",
-                                    bookingId
-                            );
+                            db.collection("Bookings")
+                                    .document(bookingId)
+                                    .delete()
+                                    .addOnSuccessListener(unused -> {
 
-                            intent.putExtra(
-                                    "ownerName",
-                                    ownerName
-                            );
+                                        Intent intent = new Intent(
+                                                BookingDetailActivity.this,
+                                                BookingCancelledActivity.class
+                                        );
 
-                            startActivity(intent);
+                                        intent.putExtra("itemName", bookingItemName);
+                                        intent.putExtra("bookingId", bookingId);
+                                        intent.putExtra("ownerName", ownerName);
 
-                            finish();
+                                        startActivity(intent);
+                                        finish();
+                                    });
                         }
                 )
 

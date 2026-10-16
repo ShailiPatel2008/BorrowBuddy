@@ -49,6 +49,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import java.util.HashMap;
 import java.util.Map;
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.callback.UploadCallback;
+import com.cloudinary.android.callback.ErrorInfo;
+import android.graphics.Bitmap;
+import android.net.Uri;
+
+import java.io.ByteArrayOutputStream;
+import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 public class AddItemActivity extends AppCompatActivity {
 
     // =========================
@@ -101,6 +111,10 @@ public class AddItemActivity extends AppCompatActivity {
     private ArrayList<Object> selectedImages = new ArrayList<>();
     private FirebaseFirestore db;
     private FirebaseAuth auth;
+    private interface UploadCompleteListener {
+        void onSuccess(List<String> imageUrls);
+        void onFailure(String error);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -234,7 +248,46 @@ public class AddItemActivity extends AppCompatActivity {
     // =========================================================
     // SHOW CAMERA / GALLERY
     // =========================================================
+    private void uploadSingleImage(Uri imageUri, UploadCompleteListener listener) {
 
+        MediaManager.get()
+                .upload(imageUri)
+                .unsigned("borrowbuddy_upload")
+                .callback(new UploadCallback() {
+
+                    @Override
+                    public void onStart(String requestId) {
+                        // Upload started
+                    }
+
+                    @Override
+                    public void onProgress(String requestId, long bytes, long totalBytes) {
+                        // We'll add progress later if needed
+                    }
+
+                    @Override
+                    public void onSuccess(String requestId, Map resultData) {
+
+                        String imageUrl = (String) resultData.get("secure_url");
+
+                        List<String> urls = new ArrayList<>();
+                        urls.add(imageUrl);
+
+                        listener.onSuccess(urls);
+                    }
+
+                    @Override
+                    public void onError(String requestId, ErrorInfo error) {
+                        listener.onFailure(error.getDescription());
+                    }
+
+                    @Override
+                    public void onReschedule(String requestId, ErrorInfo error) {
+                        // Ignore
+                    }
+                })
+                .dispatch();
+    }
     private void showImageOptions() {
 
         String[] options = {
@@ -812,9 +865,9 @@ public class AddItemActivity extends AppCompatActivity {
             return;
         }
 
-        saveItemRequest();
+        uploadAllImagesAndSave();
     }
-    private void saveItemRequest() {
+    private void saveItemRequest(List<String> imageUrls) {
 
         FirebaseUser firebaseUser = auth.getCurrentUser();
 
@@ -874,7 +927,7 @@ public class AddItemActivity extends AppCompatActivity {
                 Integer.parseInt(
                         etQuantity.getText().toString().trim()));
 
-        item.put("imageurl", "");
+        item.put("imageUrls", imageUrls);
 
 
 
@@ -927,6 +980,165 @@ public class AddItemActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT
                         ).show()
                 );
+    }
+    private void uploadAllImagesAndSave() {
+
+        List<String> uploadedUrls = new ArrayList<>();
+
+        uploadNextImage(0, uploadedUrls);
+    }
+    private void uploadNextImage(int index, List<String> uploadedUrls) {
+
+        if (index >= selectedImages.size()) {
+
+            saveItemRequest(uploadedUrls);
+            return;
+        }
+
+
+        Object image = selectedImages.get(index);
+
+
+        if (image instanceof Uri) {
+
+            uploadUriImage((Uri) image, index, uploadedUrls);
+
+        }
+        else if (image instanceof Bitmap) {
+
+            uploadBitmapImage((Bitmap) image, index, uploadedUrls);
+
+        }
+        else {
+
+            uploadNextImage(index + 1, uploadedUrls);
+
+        }
+    }
+    private void uploadUriImage(Uri uri, int index, List<String> uploadedUrls) {
+
+
+        MediaManager.get()
+                .upload(uri)
+                .unsigned("borrowbuddy_upload")
+                .callback(new UploadCallback() {
+
+
+                    @Override
+                    public void onStart(String requestId) {
+
+                    }
+
+
+                    @Override
+                    public void onProgress(String requestId, long bytes, long totalBytes) {
+
+                    }
+
+
+                    @Override
+                    public void onSuccess(String requestId, Map resultData) {
+
+                        String url =
+                                resultData.get("secure_url").toString();
+
+
+                        uploadedUrls.add(url);
+
+
+                        uploadNextImage(index + 1, uploadedUrls);
+
+                    }
+
+
+                    @Override
+                    public void onError(String requestId, ErrorInfo error) {
+
+                        Toast.makeText(
+                                AddItemActivity.this,
+                                error.getDescription(),
+                                Toast.LENGTH_LONG
+                        ).show();
+
+                    }
+
+
+                    @Override
+                    public void onReschedule(String requestId, ErrorInfo error) {
+
+                    }
+
+                })
+                .dispatch();
+    }
+    private void uploadBitmapImage(Bitmap bitmap, int index, List<String> uploadedUrls) {
+
+
+        ByteArrayOutputStream stream =
+                new ByteArrayOutputStream();
+
+        bitmap.compress(
+                Bitmap.CompressFormat.JPEG,
+                80,
+                stream
+        );
+
+
+        byte[] imageBytes = stream.toByteArray();
+
+
+        MediaManager.get()
+                .upload(imageBytes)
+                .unsigned("borrowbuddy_upload")
+                .callback(new UploadCallback() {
+
+
+                    @Override
+                    public void onStart(String requestId) {
+
+                    }
+
+
+                    @Override
+                    public void onProgress(String requestId, long bytes, long totalBytes) {
+
+                    }
+
+
+                    @Override
+                    public void onSuccess(String requestId, Map resultData) {
+
+                        String url =
+                                resultData.get("secure_url").toString();
+
+
+                        uploadedUrls.add(url);
+
+
+                        uploadNextImage(index + 1, uploadedUrls);
+
+                    }
+
+
+                    @Override
+                    public void onError(String requestId, ErrorInfo error) {
+
+                        Toast.makeText(
+                                AddItemActivity.this,
+                                error.getDescription(),
+                                Toast.LENGTH_LONG
+                        ).show();
+
+                    }
+
+
+                    @Override
+                    public void onReschedule(String requestId, ErrorInfo error) {
+
+                    }
+
+                })
+                .dispatch();
     }
 
     // =========================================================

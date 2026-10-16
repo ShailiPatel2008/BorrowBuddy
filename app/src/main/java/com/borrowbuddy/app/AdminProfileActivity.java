@@ -183,7 +183,17 @@ public class AdminProfileActivity extends AppCompatActivity {
 
                         String location =
                                 documentSnapshot.getString("location");
+                        String imageUrl =
+                                documentSnapshot.getString("profileImageUrl");
 
+
+                        if(imageUrl != null && !imageUrl.isEmpty()){
+
+                            com.squareup.picasso.Picasso.get()
+                                    .load(imageUrl)
+                                    .into(imgAdminProfile);
+
+                        }
                         if (phone == null || phone.isEmpty()) {
                             phone = "Not Added";
                         }

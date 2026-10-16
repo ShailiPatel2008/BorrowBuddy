@@ -50,4 +50,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
 
     implementation("com.google.firebase:firebase-storage")
+    implementation("com.google.firebase:firebase-messaging")
+    implementation("com.cloudinary:cloudinary-android:3.1.3")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0")
+    implementation("com.squareup.picasso:picasso:2.8")
 }
